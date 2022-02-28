@@ -1,0 +1,47 @@
+.container {
+	display: grid;
+    place-items: center;
+	background-color: var(--clr-neutral-400);
+	margin: 2rem;
+	width: 200px;
+	height: 300px;
+}
+.searchInput {
+	outline: none;
+	padding: 0.25em;
+}
+
+.sportsList {
+	background-color: white;
+}
+.sportsList__item {
+	font-size: small;
+}
+
+.selectionContainer {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.selectionItemContainer {
+	margin-top: 0.5rem;
+	&:not(:first-of-type) {
+		margin-top: 0.5rem;
+	}
+}
+
+.selectionItemLabel {
+	font-size: small;
+    font-weight: normal;
+    color: var(--clr-secondary-100);
+}
+.selectItem {
+	width: 100%;
+	font-size: small;
+}
+.buttonContainer {
+	margin-top: 0.5rem;
+	display: flex;
+	justify-content: space-around;
+}
