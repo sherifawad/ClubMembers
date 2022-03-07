@@ -1,11 +1,11 @@
 import styles from "../styles/pages/Home.module.css";
-import SportsList from "../Components/SportsList";
+import PlayersList from "../Components/PlayersList";
 
 const HomePage = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>Calculate Sports Payments</div>
-			<SportsList />
+			<PlayersList />
 			<button>Add Member</button>
 		</div>
 	);

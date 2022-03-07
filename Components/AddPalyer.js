@@ -3,11 +3,24 @@ import styles from "../styles/components/AddPlayer.module.scss";
 
 const AddPlayer = () => {
 	const [name, setName] = useState("");
-	const [sportName, setSportName] = useState(" ");
-	const [sportCategoryList, setSportCategoryList] = useState([]);
-	const [sportCategory, setSportCategory] = useState(" ");
-	const [sportTypeList, setSportTypeList] = useState([]);
-	const [sportType, setSportType] = useState(" ");
+	const [isToggled, setIsToggled] = useState(false);
+	const [currentRadioValue, setCurrentRadioValue] = useState(0);
+
+	const toggleChange = () => {
+		setIsToggled(!isToggled);
+		if (isToggled) {
+			setCurrentRadioValue(0);
+		}
+	};
+
+	const handleRadioChange = e => {
+		if (!isToggled) {
+			setCurrentRadioValue(0);
+			return;
+		}
+
+		setCurrentRadioValue(parseInt(e.target.value));
+	};
 
 	return (
 		<div className={styles.container}>
@@ -21,15 +34,12 @@ const AddPlayer = () => {
 			<div className={styles.discountContainer}>
 				<div className={styles.discountItemContainer}>
 					<div className={styles.discountSwitchContainer}>
-						{/* <label className={styles.switchButton}>
-							<input type="checkbox" />
-							<span className={`${styles.slider} ${styles.round}`}></span>
-						</label> */}
-
 						<input
 							className={`${styles.tgl} ${styles.tglSkewed}`}
 							id="cb3"
 							type="checkbox"
+							checked={isToggled}
+							onChange={toggleChange}
 						/>
 						<label
 							className={styles.tglBtn}
@@ -38,25 +48,31 @@ const AddPlayer = () => {
 							htmlFor="cb3"
 						></label>
 					</div>
+
 					<div className={styles.radioContainer}>
-						<label htmlFor="f-option" className={styles.radio}>
+						<div>
 							<input
+								id="radio-item-1"
+								name="radio-item-1"
 								type="radio"
-								id="f-option"
-								name="selector"
-								tabIndex="1"
+								value={10}
+								onChange={handleRadioChange}
+								checked={currentRadioValue === 10}
 							/>
-							<span>10%</span>
-						</label>
-						<label htmlFor="s-option" className={styles.radio}>
+							<label htmlFor="radio-item-1">10</label>
+						</div>
+
+						<div>
 							<input
+								id="radio-item-2"
+								name="radio-item-2"
 								type="radio"
-								id="s-option"
-								name="selector"
-								tabIndex="2"
+								value={20}
+								onChange={handleRadioChange}
+								checked={currentRadioValue === 20}
 							/>
-							<span>20%</span>
-						</label>
+							<label htmlFor="radio-item-2">20</label>
+						</div>
 					</div>
 				</div>
 			</div>
