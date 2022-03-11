@@ -6,7 +6,6 @@ const HomePage = () => {
 		<div className={styles.container}>
 			<div className={styles.title}>Calculate Sports Payments</div>
 			<PlayersList />
-			<button>Add Member</button>
 		</div>
 	);
 };

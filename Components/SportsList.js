@@ -3,7 +3,11 @@ import deleteIcon from "../public/deleteIcon.svg";
 import { useEffect, useState } from "react";
 import styles from "../styles/components/SportsList.module.scss";
 
-const SportsList = ({ sport, setPlayerSportsList }) => {
+const SportsList = ({
+	sport,
+	setPlayerSportsList,
+	receivedPlayerSportsList
+}) => {
 	const [sportsList, setSportsList] = useState([]);
 	const removeSport = index => {
 		setSportsList(sportsList.filter((_, i) => i !== index));
@@ -25,6 +29,12 @@ const SportsList = ({ sport, setPlayerSportsList }) => {
 	useEffect(() => {
 		setPlayerSportsList(sportsList);
 	}, [setPlayerSportsList, sportsList]);
+
+	useEffect(() => {
+		if (receivedPlayerSportsList && receivedPlayerSportsList.length > 0) {
+			setSportsList(receivedPlayerSportsList);
+		}
+	}, [receivedPlayerSportsList]);
 
 	return (
 		<div className={styles.Container}>

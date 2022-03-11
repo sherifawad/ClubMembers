@@ -12,7 +12,7 @@ const Navbar = () => {
 				</li>
 				<li className={styles.listItem}>
 					<Link href="/AddPage">
-						<a className={styles.itemLink}>Add Sport</a>
+						<a className={styles.itemLink}>Add Player</a>
 					</Link>
 				</li>
 			</ul>

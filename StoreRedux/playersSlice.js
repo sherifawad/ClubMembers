@@ -85,7 +85,15 @@ const playersSlice = createSlice({
 		addPlayer: (state, { payload }) => {
 			const newPlayer = payload;
 			newPlayer.id = nextPlayerId(state);
+			// state.push(payload);
 			return [...state, newPlayer];
+		},
+		updatePlayer: (state, { payload }) => {
+			const playerExists = state.find(player => player.id === payload.id);
+			if (playerExists) {
+				playerExists.name = payload.name;
+				playerExists.sports = payload.sports;
+			}
 		}
 	}
 });
@@ -95,7 +103,8 @@ export const {
 	getPlayerName,
 	getPlayerId,
 	getPlayerSportsList,
-	addPlayer
+	addPlayer,
+	updatePlayer
 } = playersSlice.actions;
 
 export default playersSlice.reducer;
