@@ -1,16 +1,10 @@
 .container {
 	display: grid;
-    place-items: center;
+	place-content: center;
 	background-color: var(--clr-neutral-400);
-	margin: 2rem;
-	width: 200px;
-	height: 300px;
+	border: 1px solid var(--clr-neutral-400);
+	border-radius: 0.5rem;
 }
-.searchInput {
-	outline: none;
-	padding: 0.25em;
-}
-
 .sportsList {
 	background-color: white;
 }
@@ -19,7 +13,7 @@
 }
 
 .selectionContainer {
-	margin-top: 1rem;
+	margin-top: 0.25rem;
 	display: flex;
 	flex-direction: column;
 }
@@ -33,15 +27,15 @@
 
 .selectionItemLabel {
 	font-size: small;
-    font-weight: normal;
-    color: var(--clr-secondary-100);
+	font-weight: normal;
+	color: var(--clr-secondary-100);
 }
 .selectItem {
 	width: 100%;
 	font-size: small;
 }
 .buttonContainer {
-	margin-top: 0.5rem;
+	margin-block: 0.5rem;
 	display: flex;
 	justify-content: space-around;
 }

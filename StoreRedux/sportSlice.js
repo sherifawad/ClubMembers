@@ -6,52 +6,49 @@ const initialState = [
 		name: "Swimming",
 		categories: [
 			{
-				name: "normal",
-				type: [
+				normal: [
 					{
-						Category: "Special Schools",
+						type: "Special Schools",
 						price: 450
 					},
 					{
-						Category: "Schools",
+						type: "Schools",
 						price: 250
 					},
 					{
-						Category: "Preparation",
+						type: "Preparation",
 						price: 250
 					},
 					{
-						Category: "Team",
+						type: "Team",
 						price: 150
 					}
 				]
 			},
 			{
-				name: "private",
-				type: [
+				private: [
 					{
-						Category: "Full",
+						type: "Full",
 						price: 1000
 					},
 					{
-						Category: "Disconnected",
+						type: "Disconnected",
 						price: 600
 					},
 					{
-						Category: "Schools Group",
+						type: "Schools Group",
 						price: 1800
 					},
 					{
-						Category: "Single Session",
+						type: "Single Session",
 						price: 50
 					}
 				]
 			},
 			{
-				name: "Free",
-				type: [
+				other: [
 					{
-						Category: "Free Swimming",
+						type: "Free Swimming",
 						price: 30
 					}
 				]
@@ -63,8 +60,7 @@ const initialState = [
 		name: "HandBall",
 		categories: [
 			{
-				name: "normal",
-				type: [{ Category: "Hand Ball", price: 150 }]
+				normal: [{ type: "Hand Ball", price: 150 }]
 			}
 		]
 	}

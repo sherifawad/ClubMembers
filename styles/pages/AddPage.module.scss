@@ -1,0 +1,27 @@
+.container {
+	height: calc(100vh - 140px);
+	overflow-y: hidden;
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	margin: auto;
+	// place-content: center;
+	// justify-content: center;
+	// align-content: center;
+	// justify-items: center;
+
+	& > * {
+		margin-top: 0.5rem;
+	}
+
+	input {
+		outline: none;
+		border: 1px solid #333;
+		border-radius: 0.25rem;
+		padding: 0.5em;
+	}
+
+	button {
+		margin-bottom: 0.25rem;
+	}
+}

@@ -94,7 +94,8 @@ export const {
 	getPlayersList,
 	getPlayerName,
 	getPlayerId,
-	getPlayerSportsList
+	getPlayerSportsList,
+	addPlayer
 } = playersSlice.actions;
 
 export default playersSlice.reducer;
