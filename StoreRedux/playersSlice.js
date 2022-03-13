@@ -1,46 +1,48 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveToLocalStorage } from "../Data/utils";
 
-const initialState = [
-	{
-		id: 1,
-		name: "Ahmed",
-		sports: [
-			{
-				id: 1,
-				name: "Swimming",
-				categories: "Schools",
-				price: 250,
-				discount: 10,
-				visaFees: 0,
-				total: 225
-			}
-		]
-	},
-	{
-		id: 2,
-		name: "Ali",
-		sports: [
-			{
-				id: 1,
-				name: "Swimming",
-				categories: "Team",
-				price: 150,
-				discount: 0,
-				visaFees: 0,
-				total: 150
-			},
-			{
-				id: 2,
-				name: "HandBall",
-				categories: "Team",
-				price: 150,
-				discount: 10,
-				visaFees: 0,
-				total: 153
-			}
-		]
-	}
-];
+export const playersInitialState = [];
+// const initialState = [
+// 	{
+// 		id: 1,
+// 		name: "Ahmed",
+// 		sports: [
+// 			{
+// 				id: 1,
+// 				name: "Swimming",
+// 				categories: "Schools",
+// 				price: 250,
+// 				discount: 10,
+// 				visaFees: 0,
+// 				total: 225
+// 			}
+// 		]
+// 	},
+// 	{
+// 		id: 2,
+// 		name: "Ali",
+// 		sports: [
+// 			{
+// 				id: 1,
+// 				name: "Swimming",
+// 				categories: "Team",
+// 				price: 150,
+// 				discount: 0,
+// 				visaFees: 0,
+// 				total: 150
+// 			},
+// 			{
+// 				id: 2,
+// 				name: "HandBall",
+// 				categories: "Team",
+// 				price: 150,
+// 				discount: 10,
+// 				visaFees: 0,
+// 				total: 153
+// 			}
+// 		]
+// 	}
+// ];
 
 function nextPlayerId(players) {
 	const maxId = players.reduce(
@@ -52,7 +54,7 @@ function nextPlayerId(players) {
 
 const playersSlice = createSlice({
 	name: "players",
-	initialState,
+	initialState: playersInitialState,
 	reducers: {
 		getPlayersList: (state, { payload }) => {
 			return { ...state };
@@ -85,8 +87,8 @@ const playersSlice = createSlice({
 		addPlayer: (state, { payload }) => {
 			const newPlayer = payload;
 			newPlayer.id = nextPlayerId(state);
-			// state.push(payload);
-			return [...state, newPlayer];
+			state.push(payload);
+			// return [...state, newPlayer];
 		},
 		updatePlayer: (state, { payload }) => {
 			const playerExists = state.find(player => player.id === payload.id);

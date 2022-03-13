@@ -13,3 +13,7 @@ export const getCategory = () => {
 export function isBlank(str) {
 	return !str || /^\s*$/.test(str);
 }
+
+//save to local storage using key and value as inputs
+export const saveToLocalStorage = (key, value) =>
+	localStorage.setItem(key, JSON.stringify(value));
