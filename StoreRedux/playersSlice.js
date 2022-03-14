@@ -49,10 +49,11 @@ const addItemToArray = (state, { payload }) => {
 };
 
 const removeItemFromArray = (state, { payload }) => {
-	// Construct a new array immutably
-	const newState = state.filter(state => state.id !== payload);
-	// "Mutate" the existing state to save the new array
-	state = newState;
+	// // Construct a new array immutably
+	// const newState = state.filter(state => state.id !== payload);
+	// // "Mutate" the existing state to save the new array
+	// state = newState;
+    state.splice(state.findIndex((arrow) => arrow.id === payload), 1);
 };
 
 const playersSlice = createSlice({

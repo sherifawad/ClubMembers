@@ -19,19 +19,25 @@ $dark-pri: #0b5aa2;
 
 .items_head {
 	display: grid;
+	column-gap: 3em;
 	grid-template-columns: 10fr 1fr;
-	cursor: pointer;
+	place-content: center;
+	a {
+		cursor: pointer;
+	}
 	.item_icon {
 		align-self: center;
 		font-size: 15px;
-		color: $dark-pri;
+		color: red;
 		font-weight: bold;
-		animation: icon 1.5s infinite forwards;
+		cursor: pointer;
+
+		// animation: icon 1.5s infinite forwards;
 	}
 
 	p {
-		padding: 5px 20px;
-		margin: 10px;
+		padding-block: 5px;
+		margin-inline-start: 30px;
 		color: #0b5aa2;
 		font-weight: bold;
 		font-size: 20px;
@@ -40,7 +46,7 @@ $dark-pri: #0b5aa2;
 
 .items_head hr {
 	width: 20%;
-	margin: 0px 30px;
+	margin-inline: 30px;
 	border: 1px solid $dark-pri;
 }
 
@@ -53,12 +59,10 @@ $dark-pri: #0b5aa2;
 
 .items_body_content {
 	padding: 10px;
-	padding-right: 0px;
-	display: grid;
-	grid-template-columns: 10fr 1fr;
+	display: flex;
+	justify-content: space-around;
 	// background-color: lightblue;
 	font-size: 13px;
-	grid-gap: 10px;
 	border: 1px solid transparent;
 
 	&:hover {
