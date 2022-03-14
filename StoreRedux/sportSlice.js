@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
+export const sportsInitialState = [
 	{
 		id: 1,
 		name: "Swimming",
@@ -68,7 +68,7 @@ const initialState = [
 
 const sportSlice = createSlice({
 	name: "sports",
-	initialState,
+	initialState: sportsInitialState,
 	reducers: {
 		getSportsList: (state, { payload }) => {
 			return { ...state };

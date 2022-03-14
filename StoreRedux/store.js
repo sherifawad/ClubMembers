@@ -1,4 +1,4 @@
-import sportReducer from "./sportSlice";
+import sportReducer, { sportsInitialState } from "./sportSlice";
 import playersReducer, { playersInitialState } from "./playersSlice";
 import { useMemo } from "react";
 import { createStore, applyMiddleware, combineReducers } from "redux";
@@ -6,9 +6,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const reducer = {
-	sports: sportReducer,
-	players: playersReducer
+// const reducer = {
+// 	sports: sportReducer,
+// 	players: playersReducer
+// };
+
+const storeInitialState = {
+	players: playersInitialState,
+	sports: sportsInitialState
 };
 
 const rootReducer = combineReducers({
@@ -23,7 +28,7 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-function makeStore(initialState = playersInitialState) {
+function makeStore(initialState = storeInitialState) {
 	return createStore(
 		persistedReducer,
 		initialState,

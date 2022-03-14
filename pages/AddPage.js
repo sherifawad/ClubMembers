@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import AddSport from "../Components/AddSport";
 import SportsList from "../Components/SportsList";
 import { isBlank } from "../Data/utils";
-import {
-	addPlayer,
-	getPlayerId,
-	updatePlayer
-} from "../StoreRedux/playersSlice";
+import { addPlayer, updatePlayer } from "../StoreRedux/playersSlice";
 import styles from "../styles/pages/AddPage.module.scss";
 
 const AddPage = () => {
 	const router = useRouter();
-	const dispatch = useDispatch();
 	const [name, setName] = useState();
 	const [sport, setSport] = useState();
 	const [playerSportsList, setPlayerSportsList] = useState([]);
@@ -23,11 +18,13 @@ const AddPage = () => {
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [playerId, setPlayerId] = useState(0);
 	const players = useSelector(state => state.players);
+	const dispatch = useDispatch();
 
 	// check for queries
 	useEffect(() => {
 		const { pid } = router.query;
-		if (!pid || pid === 0) return;
+		console.log("🚀 ~ file: AddPage.js ~ line 30 ~ useEffect ~ pid", pid);
+		if (!pid || isBlank(pid) || pid === "0") return;
 		const playerExists = players.find(
 			player => player.id === parseInt(pid)
 		);

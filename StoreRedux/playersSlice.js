@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveToLocalStorage } from "../Data/utils";
+import { nextPlayerId, saveToLocalStorage } from "../Data/utils";
 
 export const playersInitialState = [];
 // const initialState = [
@@ -44,25 +44,27 @@ export const playersInitialState = [];
 // 	}
 // ];
 
-function nextPlayerId(players) {
-	const maxId = players.reduce(
-		(maxId, player) => Math.max(player.id, maxId),
-		-1
-	);
-	return maxId + 1;
-}
+const addItemToArray = (state, { payload }) => {
+	state.push(payload);
+};
+
+const removeItemFromArray = (state, { payload }) => {
+	// Construct a new array immutably
+	const newState = state.filter(state => state.id !== payload);
+	// "Mutate" the existing state to save the new array
+	state = newState;
+};
 
 const playersSlice = createSlice({
 	name: "players",
 	initialState: playersInitialState,
 	reducers: {
 		getPlayersList: (state, { payload }) => {
-			return { ...state };
+			return state;
 		},
 		getPlayerName: (state, { payload }) => {
 			const playerExists = state.find(
-				player =>
-					player.name.toLowerCase() === payload.name.toLowerCase()
+				player => player.name.toLowerCase() === payload.toLowerCase()
 			);
 			if (playerExists) {
 				return playerExists;
@@ -70,7 +72,7 @@ const playersSlice = createSlice({
 			return null;
 		},
 		getPlayerId: (state, { payload }) => {
-			const playerExists = state.find(player => player.id === payload.id);
+			const playerExists = state.find(player => player.id === payload);
 
 			if (playerExists) {
 				return playerExists;
@@ -78,7 +80,9 @@ const playersSlice = createSlice({
 			return null;
 		},
 		getPlayerSportsList: (state, { id }) => {
-			const playerExists = state.find(player => player.id === payload.id);
+			const playerExists = state.filter(
+				player => player.id === payload.id
+			);
 			if (playerExists) {
 				return playerExists.sports;
 			}
@@ -90,6 +94,7 @@ const playersSlice = createSlice({
 			state.push(payload);
 			// return [...state, newPlayer];
 		},
+		deletePlayer: removeItemFromArray,
 		updatePlayer: (state, { payload }) => {
 			const playerExists = state.find(player => player.id === payload.id);
 			if (playerExists) {
@@ -106,6 +111,7 @@ export const {
 	getPlayerId,
 	getPlayerSportsList,
 	addPlayer,
+	deletePlayer,
 	updatePlayer
 } = playersSlice.actions;
 
