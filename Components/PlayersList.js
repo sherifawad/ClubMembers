@@ -21,8 +21,8 @@ function PlayersList() {
 
 	return (
 		<div className={styles.container}>
-			{players.map(player => (
-				<div key={player.id} className={styles.items}>
+			{players.map((player, index) => (
+				<div key={index} className={styles.items}>
 					<div className={styles.items_head}>
 						<Link
 							href={{
@@ -44,9 +44,9 @@ function PlayersList() {
 					</div>
 
 					<div className={styles.items_body}>
-						{player.sports.map(sport => (
+						{player.sports.map((sport, index) => (
 							<div
-								key={sport.id}
+								key={index}
 								className={styles.items_body_content}
 							>
 								<span>{sport.name}</span>

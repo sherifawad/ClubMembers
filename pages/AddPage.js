@@ -9,7 +9,7 @@ import styles from "../styles/pages/AddPage.module.scss";
 
 const AddPage = () => {
 	const router = useRouter();
-	const [name, setName] = useState();
+	const [name, setName] = useState("");
 	const [sport, setSport] = useState();
 	const [playerSportsList, setPlayerSportsList] = useState([]);
 	const [receivedPlayerSportsList, setReceivedPlayerSportsList] = useState(
