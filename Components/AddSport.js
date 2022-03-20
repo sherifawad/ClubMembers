@@ -39,6 +39,7 @@ const AddSport = ({ setSport }) => {
 			setSportType(selectedType);
 			setSportTypeName(selectedType["type"]);
 			setSportPrice(selectedType["price"]);
+			setSportTypeDiscount(selectedType["canDiscount"]);
 		}
 	};
 
@@ -60,6 +61,7 @@ const AddSport = ({ setSport }) => {
 			setSportType(" ");
 			setSportPrice(0);
 			setSportTypeName("");
+			setSportTypeDiscount(false);
 		}
 	};
 
@@ -76,9 +78,12 @@ const AddSport = ({ setSport }) => {
 		const newSport = {
 			id: parseInt(selectedSportID),
 			name: selectedSport.name,
-			categories: sportCategory,
+			category: sportCategory,
 			type: sportTypeName,
-			price: sportPrice
+			canDiscount: sportTypeDiscount,
+			price: sportPrice,
+			discount: -1,
+			total: -1
 		};
 		if (newSport.price > 0 && !isNullOrEmpty(newSport)) {
 			setSport(newSport);
@@ -95,6 +100,7 @@ const AddSport = ({ setSport }) => {
 	const [sportType, setSportType] = useState(" ");
 	const [sportPrice, setSportPrice] = useState(0);
 	const [sportTypeName, setSportTypeName] = useState("");
+	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
 
 	return (
 		<div className={styles.container}>

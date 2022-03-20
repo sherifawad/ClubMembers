@@ -50,9 +50,12 @@ function PlayersList() {
 								className={styles.items_body_content}
 							>
 								<span>{sport.name}</span>
-								<span>{sport.categories}</span>
+								<span>{sport.category}</span>
 								<span>{sport.type}</span>
 								<span>{sport.price}$</span>
+								{sport.discount > 0 && (
+									<span>{sport.discount}$</span>
+								)}
 							</div>
 						))}
 					</div>

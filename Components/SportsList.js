@@ -18,8 +18,7 @@ const SportsList = ({
 			const duplicateSport = sportsList.find(
 				item =>
 					item.name === sport.name &&
-					item.categories === sport.categories &&
-					item.type === sport.type
+					item.category === sport.category 
 			);
 			if (duplicateSport) return;
 			setSportsList(oldList => [...oldList, sport]);
@@ -44,7 +43,7 @@ const SportsList = ({
 						<div className={styles.item_data}>
 							<div className={styles.item_header}>
 								<h4>{sport.name}</h4>
-								<h5>({sport.categories})</h5>
+								<h5>({sport.category})</h5>
 							</div>
 							<div className={styles.item_body}>
 								<h5>{sport.type}</h5>

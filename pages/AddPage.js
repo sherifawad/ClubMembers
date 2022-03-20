@@ -23,7 +23,6 @@ const AddPage = () => {
 	// check for queries
 	useEffect(() => {
 		const { pid } = router.query;
-		console.log("🚀 ~ file: AddPage.js ~ line 30 ~ useEffect ~ pid", pid);
 		if (!pid || isBlank(pid) || pid === "0") return;
 		const playerExists = players.find(
 			player => player.id === parseInt(pid)
@@ -39,9 +38,14 @@ const AddPage = () => {
 
 	const handlePlayerAddition = () => {
 		if (isBlank(name) || playerSportsList.length < 1) return;
+		//sort sports descending by price
+		const sports = playerSportsList
+			.slice()
+			.sort((a, b) => (a.price > b.price ? -1 : 1));
 		const player = {
 			name: name,
-			sports: playerSportsList
+			sports: sports,
+			discount: -1
 		};
 		const playerExists = players.find(
 			player =>
@@ -59,7 +63,7 @@ const AddPage = () => {
 			}
 			router.push("/");
 		} catch (err) {
-			console.log(
+			console.error(
 				"🚀 ~ file: AddPage.js ~ line 29 ~ handlePlayerAddition ~ err",
 				err
 			);

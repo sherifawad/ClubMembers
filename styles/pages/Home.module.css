@@ -114,3 +114,104 @@
 		flex-direction: column;
 	}
 }
+
+.adtable_wrapper {
+	margin: 1rem auto;
+	padding-bottom: 1rem;
+	box-shadow: var(--riverbed-box-shadow);
+	border-radius: 4px;
+	max-width: 80%;
+	min-width: 400px;
+}
+
+.adtable_header {
+	margin-bottom: 1rem;
+	text-align: left;
+}
+.adtable_header > .title {
+	font-size: 1.5rem;
+	font-weight: 900;
+	color: var(--riverbed-light);
+	background-color: var(--riverbed-orange);
+	width: 100%;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	padding: 0.375rem;
+	opacity: 0.8;
+}
+.adtable_header > p {
+	font-size: 0.8rem;
+	font-style: italic;
+	padding: 0.375rem;
+	opacity: 0.8;
+}
+.icon svg {
+	font-size: 1.25rem;
+	margin-top: -0.25rem;
+}
+
+.adtable_table {
+	overflow: hidden;
+	overflow-x: auto;
+}
+.adtable_row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	margin: 0rem 0.375rem;
+	width: calc(100% - 0.75rem);
+	min-width: 400px;
+}
+.adtable_row.headers {
+	font-weight: bolder;
+}
+
+.adtable_row .adtable_table_header,
+.adtable_row .adtable_table_data_cell {
+	padding: 0.375rem;
+	margin: 0px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 0.5rem;
+	flex: 1;
+	flex-grow: 1;
+	flex-basis: 150px;
+	flex-shrink: 0;
+}
+.adtable_row .adtable_table_header {
+	cursor: pointer;
+}
+
+.adtable_row.headers .adtable_table_header {
+	padding: 0.75rem 0.375rem;
+	border: 1px solid var(--riverbed-border-color);
+	border-left: none;
+	border-right: none;
+}
+
+.adtable_row .adtable_table_header .sortable_badge svg {
+	stroke: var(--riverbed-information-color);
+	fill: var(--riverbed-information-color);
+}
+.adtable_table_body {
+	max-height: 80vh;
+}
+.adtable_table_body .adtable_row.table_data:nth-of-type(2n),
+.adtable_table_body
+	.adtable_row.table_data:nth-of-type(2n)
+	.adtable_table_data_cell {
+	background-color: var(--riverbed-table-row-alternate-background);
+}
+.adtable_row .adtable_table_data_cell {
+	padding: 0.5rem auto;
+	text-align: left;
+}
+
+.adtable_row .adtable_table_data_cell.empty {
+	font-weight: 400;
+	opacity: 0.7;
+	font-style: italic;
+	justify-content: center;
+}

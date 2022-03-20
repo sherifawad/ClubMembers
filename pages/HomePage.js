@@ -1,324 +1,376 @@
 import styles from "../styles/pages/Home.module.css";
 import PlayersList from "../Components/PlayersList";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const HomePage = () => {
+	const [privatePlayersNumbers, setPrivatePlayersNumbers] = useState(0);
+	const [regularPlayersNumbers, setRegularPlayersNumbers] = useState(0);
+	const [withDiscountList, setWithDiscountList] = useState([]);
+	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
+	const [privateList, setPrivateList] = useState([]);
+
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [maxDiscount, setMaxDiscount] = useState(0);
-	const players = useSelector(state => state.players) ?? [];
+	const players = useSelector(state => state.players) || [];
 
-	const calculateMultipleSports = playersList => {
-		let playerDiscount = 0;
-		playersList.forEach(player => {
-			console.log(
-				"🚀 ~ file: HomePage.js ~ line 52 ~ HomePage ~ playerName",
-				player.name
+	const firstTimeRender = useRef(true);
+
+	useEffect(() => {
+		if (firstTimeRender.current) {
+			handleNoDiscountList(withNoDiscountList);
+			handlePrivateSwimmingList(privateList);
+			handleDiscountList(withDiscountList);
+			firstTimeRender.current = false;
+		}
+	}, [firstTimeRender.current]);
+
+	useEffect(() => {
+		firstTimeRender.current = false;
+	}, []);
+
+	// divide player sports to categories and subCategories
+	//main category is sports with applied discount and others
+	//divide sports with applied discount to two subCategories (private - regular)
+	const playerDivider = playerToDivide => {
+		let dividedPlayer = {
+			id: playerToDivide.id,
+			name: playerToDivide.name,
+			discountSports: null,
+			noDiscountSports: null
+		};
+		//sports with applied discount
+		const sportsWithDiscount = playerToDivide.sports.filter(
+			s => s.canDiscount === true
+		);
+		if (sportsWithDiscount.length > 0) {
+			//divide to subCategories  (private - regular)
+			const regularSports = sportsWithDiscount.filter(
+				s => s.category !== "private"
 			);
-
-			let playerTotalPrice = 0;
-			// get number of sports
-			let playerSportsLength = player.sports.length;
-
-			const orderedSport = player.sports
-				.slice()
-				.sort((a, b) => (a.price > b.price ? -1 : 1));
-			switch (playerSportsLength) {
-				//two sports
-				case 2:
-					playerTotalPrice += orderedSport[0].price * 0.9;
-					playerTotalPrice += orderedSport[1].price;
-					playerDiscount = playerDiscount > 10 ? playerDiscount : 10;
-					break;
-
-				case 3:
-					// three sports
-					playerTotalPrice += orderedSport[0].price * 0.8;
-					playerTotalPrice += orderedSport[1].price * 0.9;
-					playerTotalPrice += orderedSport[2].price;
-					playerDiscount = 20;
-					break;
-
-				default:
-					// more than three sports
-					playerTotalPrice += orderedSport[0].price * 0.8;
-					playerTotalPrice += orderedSport[1].price * 0.9;
-					for (
-						let index = 2;
-						index < playerSportsLength.length;
-						index++
-					) {
-						playerTotalPrice += orderedSport[index].price;
+			//add to list
+			if (regularSports.length > 0) {
+				setWithDiscountList(oldList => [
+					...oldList,
+					{
+						id: playerToDivide.id,
+						name: playerToDivide.name,
+						sports: regularSports
 					}
-
-					playerDiscount = 20;
-					break;
+				]);
 			}
-			setTotalPrice((totalPrice += playerTotalPrice));
-			console.log(
-				"🚀 ~ file: HomePage.js ~ line 56 ~ HomePage ~ playerTotalPrice",
-				playerTotalPrice
+			const privateSports = sportsWithDiscount.filter(
+				s => s.category === "private"
 			);
-			maxDiscount = playerDiscount;
-			console.log(
-				"🚀 ~ file: HomePage.js ~ line 56 ~ HomePage ~ maxDiscount",
-				maxDiscount
-			);
-		});
-		// setMaxDiscount(prevState =>
-		// 	playerDiscount > prevState ? playerDiscount : prevState
-		// );
+			//add to list
+			if (privateSports.length > 0) {
+				setPrivateList(oldList => [
+					...oldList,
+					{
+						id: playerToDivide.id,
+						name: playerToDivide.name,
+						sports: privateSports
+					}
+				]);
+			}
+			const discountSportsResult = {
+				regular: regularSports.length > 0 ? regularSports : null,
+				private: privateSports.length > 0 ? privateSports : null
+			};
+			dividedPlayer.discountSports = discountSportsResult;
+		}
+
+		//sports without discount
+		const sportsWithOutDiscount = playerToDivide.sports.filter(
+			s => s.canDiscount === false
+		);
+		if (sportsWithOutDiscount.length > 0) {
+			dividedPlayer.noDiscountSports = sportsWithOutDiscount;
+			setWithNoDiscountList(oldList => [
+				...oldList,
+				{
+					id: playerToDivide.id,
+					name: playerToDivide.name,
+					sports: sportsWithOutDiscount
+				}
+			]);
+			// withNoDiscountList = [
+			// 	...withNoDiscountList,
+			// 	{
+			// 		id: playerToDivide.id,
+			// 		name: playerToDivide.name,
+			// 		sports: sportsWithOutDiscount
+			// 	}
+			// ];
+		}
+		return dividedPlayer;
 	};
 
-	const calculateSingleSport = playersList => {
-		const playersLength = playersList.length;
-		let playerTotalPrice = 0;
-		let playerDiscount = 0;
-		let hasPreviousDiscount = false;
-		//check if there were a brother with more than one sport
-		//by checking if there are a discount used in pervious function => max discount
-		// if there were discount start with 10%  discount
-		//else first sport had no discount
-		if (maxDiscount > 0) {
-			hasPreviousDiscount = true;
-		}
-		console.log(
-			"🚀 ~ file: HomePage.js ~ line 79 ~ HomePage ~ hasPreviousDiscount",
-			hasPreviousDiscount
-		);
-		// brother discount according to no of players
-		switch (playersLength) {
-			case 1:
-				if (hasPreviousDiscount) {
-					playerTotalPrice += playersList[0].sports[0].price * 0.9;
-					console.log(
-						`Name: ${playersList[0].name} ---- price: ${
-							playersList[0].sports[0].price * 0.9
-						}`
-					);
-				} else {
-					playerTotalPrice += playersList[0].sports[0].price;
-					console.log(
-						`Name: ${playersList[0].name} ---- price: ${playersList[0].sports[0].price}`
-					);
+	const handleNoDiscountList = list => {
+		let totalPrice = 0;
+		const players = list?.reduce((accPlayers, player) => {
+			const sports = player.sports?.reduce((accSports, sport) => {
+				totalPrice += sport.price;
+				sport.discount = 0;
+				sport.total = sport.price;
+				accSports.push(sport);
+				return accSports;
+			}, []);
+			player.sports = sports;
+			accPlayers.push(player);
+			return accPlayers;
+		}, []);
+		setTotalPrice(oldPrice => (oldPrice += totalPrice));
+		setWithNoDiscountList(players);
+	};
+
+	const handlePrivateSwimmingList = list => {
+		let totalPrice = 0;
+		//check the current day
+		let newDate = new Date();
+		//get today as integer
+		let today = parseInt(newDate.getDate());
+		//get player with schools group sport type
+		let filteredPlayer;
+		list.forEach(player => {
+			player.sports.forEach(sport => {
+				if (sport.type === "Schools Group") {
+					filteredPlayer = player;
 				}
-				break;
-
-			case 2:
-				if (hasPreviousDiscount) {
-					playerTotalPrice += playersList[0].sports[0].price * 0.8;
-					playerTotalPrice += playersList[1].sports[0].price * 0.9;
-					console.log(
-						`Name: ${playersList[0].name} ---- price: ${
-							playersList[0].sports[0].price * 0.8
-						} Name: ${playersList[1].name} ---- price: ${
-							playersList[1].sports[0].price * 0.9
-						}`
-					);
-				} else {
-					playerTotalPrice += playersList[0].sports[0].price * 0.9;
-					playerTotalPrice += playersList[1].sports[0].price;
-					console.log(
-						`Name: ${playersList[0].name} ---- price: ${
-							playersList[0].sports[0].price * 0.8
-						} Name: ${playersList[1].name} ---- price: ${
-							playersList[1].sports[0].price * 0.9
-						}`
-					);
-				}
-				break;
-
-			default:
-				// more than three brothers
-				playerTotalPrice += playersList[0].sports[0].price * 0.8;
-				playerTotalPrice += playersList[1].sports[0].price * 0.9;
-
-				console.log(
-					`Name: ${playersList[0].name} ---- price: ${
-						playersList[0].sports[0].price * 0.8
-					} Name: ${playersList[1].name} ---- price: ${
-						playersList[1].sports[0].price * 0.9
-					}`
+			});
+		});
+		if (filteredPlayer) {
+			//remove from list then add it last on accumulated players and at last sort by sport pruce
+			list = list
+				.filter(player => player.id !== filteredPlayer.id)
+				.sort((a, b) =>
+					a.sports[0].price > b.sports[0].price ? -1 : 1
 				);
-				for (let index = 2; index < playersList.length; index++) {
-					playerTotalPrice += playersList[index].sports[0].price;
-
-					console.log(
-						`Name: ${playersList[index].name} ---- price: ${playersList[index].sports[0].price}`
-					);
-				}
-
-				break;
+			//check if calculation within first 5 days of the month
+			if (today <= 5) {
+				totalPrice += filteredPlayer.sports[0].price * 0.9;
+				filteredPlayer.sports[0].discount = 10;
+				filteredPlayer.sports[0].total = filteredPlayer.sports[0].price;
+			} else {
+				totalPrice += filteredPlayer.sports[0].price;
+				filteredPlayer.sports[0].discount = 0;
+				filteredPlayer.sports[0].total = filteredPlayer.sports[0].price;
+			}
 		}
-		// playersList.forEach((player, pIndex) => {
-		// 	console.log(
-		// 		"🚀 ~ file: HomePage.js ~ line 89 ~ playersList.forEach ~ playerName",
-		// 		player.name
-		// 	);
-		// 	// let playerTotalPrice = 0;
-		// 	// switch (playerDiscount) {
-		// 	// 	case 20:
-		// 	// 		console.log("no discount");
-		// 	// 		playerTotalPrice += player.sports[0].price;
-		// 	// 		break;
 
-		// 	// 	case 10:
-		// 	// 		console.log("20% discount");
-		// 	// 		playerTotalPrice += player.sports[0].price * 0.8;
-		// 	// 		playerDiscount = 20;
-		// 	// 		break;
+		const players = list?.reduce((accPlayers, player, playerIndex) => {
+			const sports = player.sports?.reduce((accSports, sport) => {
+				switch (list.length) {
+					case 1:
+						//check if calculation within first 5 days of the month
+						if (today <= 5) {
+							totalPrice += sport.price * 0.9;
+							sport.discount = 10;
+							sport.total = sport.price * 0.9;
+						} else {
+							totalPrice += sport.price;
+							sport.discount = 0;
+							sport.total = sport.price;
+						}
+						break;
 
-		// 	// 	case 0:
-		// 	// 		if (playersLength > 1) {
-		// 	// 			console.log("20% discount");
-		// 	// 			playerTotalPrice += player.sports[0].price * 0.8;
-		// 	// 			playerDiscount = 20;
-		// 	// 		} else {
-		// 	// 			console.log("10% discount");
-		// 	// 			playerTotalPrice += player.sports[0].price * 0.9;
-		// 	// 			playerDiscount = 20;
-		// 	// 		}
-		// 	// 		break;
+					//There is a second brother
+					case 2:
+						if (playerIndex == 0) {
+							totalPrice += sport.price * 0.8;
+							sport.discount = 20;
+							sport.total = sport.price * 0.8;
+						} else {
+							if (today <= 5) {
+								totalPrice += sport.price * 0.9;
+								sport.discount = 10;
+								sport.total = sport.price * 0.9;
+							} else {
+								totalPrice += sport.price;
+								sport.discount = 0;
+								sport.total = sport.price;
+							}
+						}
+						break;
 
-		// 	// 	default:
-		// 	// 		break;
-		// 	// }
-		// 	// setMaxDiscount(prevState =>
-		// 	// 	playerDiscount > prevState ? playerDiscount : prevState
-		// 	// );
-		// });
-		setTotalPrice((totalPrice += playerTotalPrice));
+					//There is a three or more  brother
+					default:
+						if (playerIndex == 0) {
+							totalPrice += sport.price * 0.7;
+							sport.discount = 30;
+							sport.total = sport.price * 0.7;
+						} else if (playerIndex == 1) {
+							totalPrice += sport.price * 0.8;
+							sport.discount = 20;
+							sport.total = sport.price * 0.8;
+						} else if (playerIndex == 2) {
+							if (today <= 5) {
+								totalPrice += sport.price * 0.9;
+								sport.discount = 10;
+								sport.total = sport.price * 0.9;
+							} else {
+								totalPrice += sport.price;
+								sport.discount = 0;
+								sport.total = sport.price;
+							}
+						} else {
+							totalPrice += sport.price;
+							sport.discount = 0;
+							sport.total = sport.price;
+						}
+						break;
+				}
+				accSports.push(sport);
+				return accSports;
+			}, []);
+			player.sports = sports;
+			accPlayers.push(player);
+			return accPlayers;
+		}, []);
+		// add filteredPlayer if exist
+		if (filteredPlayer) {
+			players.push(filteredPlayer);
+		}
+		setTotalPrice(oldPrice => (oldPrice += totalPrice));
+		setPrivateList(players);
+	};
+
+	const handleDiscountList = list => {
+		let totalPrice = 0;
+		//filter players with multiple sports
+		let playersWithMultiple = list?.filter(p => p?.sports.length > 1);
+		if (playersWithMultiple.length > 0) {
+			const multiple = playersWithMultiple?.reduce(
+				(accPlayers, player) => {
+					const sports = player.sports?.reduce(
+						(accSports, sport, sportIndex) => {
+							switch (player.sports.length) {
+								case 2:
+									if (sportIndex == 0) {
+										totalPrice += sport.price * 0.9;
+										sport.discount = 10;
+										sport.total = sport.price * 0.9;
+									} else {
+										totalPrice += sport.price;
+										sport.discount = 0;
+										sport.total = sport.price;
+									}
+									break;
+
+								default:
+									if (sportIndex == 0) {
+										totalPrice += sport.price * 0.8;
+										sport.discount = 20;
+										sport.total = sport.price * 0.8;
+									} else if (playerIndex == 1) {
+										totalPrice += sport.price * 0.9;
+										sport.discount = 10;
+										sport.total = sport.price * 0.9;
+									} else {
+										totalPrice += sport.price;
+										sport.discount = 0;
+										sport.total = sport.price;
+									}
+									break;
+							}
+							accSports.push(sport);
+							return accSports;
+						},
+						[]
+					);
+					player.sports = sports;
+					accPlayers.push(player);
+					return accPlayers;
+				},
+				[]
+			);
+			setWithDiscountList(multiple);
+		}
+		//filter players with one sport then sort descendant by price
+		const playersWithOne = list
+			?.filter(p => p?.sports.length === 1)
+			.sort((a, b) => (a.sports[0].price > b.sports[0].price ? -1 : 1));
+		if (playersWithOne.length < 1) return;
+		const single = playersWithOne?.reduce(
+			(accPlayers, player, playerIndex) => {
+				let sports = player.sports?.reduce((accSports, sport) => {
+					switch (playersWithOne.length) {
+						case 1:
+							if (playersWithMultiple.length > 0) {
+								totalPrice += sport.price * 0.9;
+								sport.discount = 10;
+								sport.total = sport.price * 0.9;
+							} else {
+								totalPrice += sport.price;
+								sport.discount = 0;
+								sport.total = sport.price;
+							}
+							break;
+						case 2:
+							if (playersWithMultiple.length > 0) {
+								if (playerIndex == 0) {
+									totalPrice += sport.price * 0.8;
+									sport.discount = 20;
+									sport.total = sport.price * 0.8;
+								} else if (playerIndex == 1) {
+									totalPrice += sport.price * 0.9;
+									sport.discount = 10;
+									sport.total = sport.price * 0.9;
+								}
+							} else {
+								if (playerIndex == 0) {
+									totalPrice += sport.price * 0.9;
+									sport.discount = 10;
+									sport.total = sport.price * 0.9;
+								} else if (playerIndex == 1) {
+									totalPrice += sport.price;
+									sport.discount = 0;
+									sport.total = sport.price;
+								}
+							}
+							break;
+
+						default:
+							if (playerIndex == 0) {
+								totalPrice += sport.price * 0.8;
+								sport.discount = 20;
+								sport.total = sport.price * 0.8;
+							} else if (playerIndex == 1) {
+								totalPrice += sport.price * 0.9;
+								sport.discount = 10;
+								sport.total = sport.price * 0.9;
+							} else {
+								totalPrice += sport.price;
+								sport.discount = 0;
+								sport.total = sport.price;
+							}
+							break;
+					}
+					accSports.push(sport);
+					return accSports;
+				}, []);
+				player.sports = sports;
+				accPlayers.push(player);
+				return accPlayers;
+			},
+			[]
+		);
+		setWithDiscountList(old => [...old, ...single]);
+		setTotalPrice(oldPrice => (oldPrice += totalPrice));
 	};
 
 	const calculate = () => {
 		if (!players) return;
+		setWithDiscountList([]);
+		setPrivateList([]);
+		setWithNoDiscountList([]);
+		setTotalPrice(0);
+		firstTimeRender.current = false;
+		players.forEach(element => {
+			playerDivider(element);
+		});
 
-		//copt of the array
-		// const items = [...players];
-		let orderedPlayers;
-		//check if all players has one sport
-		//if true sort by price ascending
-		//if false filter with number of sports then sort by price
-		const playersHasOneSport = players.every(p => p.sports.length === 1);
-		if (!playersHasOneSport) {
-			//filter players with multiple sports
-			const playersWithMultiple = players.filter(
-				p => p.sports.length > 1
-			);
-			calculateMultipleSports(playersWithMultiple);
-		}
-		//filter players with one sport the sort
-		const playersWithOne = players
-			.filter(p => p.sports.length === 1)
-			.sort((a, b) => (a.sports[0].price > b.sports[0].price ? -1 : 1));
-		calculateSingleSport(playersWithOne);
-
-		// //order plyer by number of sports
-		// orderedPlayers = players
-		// 	.slice()
-		// 	.sort((a, b) =>
-		// 		a.sports.length > b.sports.length
-		// 			? -1
-		// 			: 1 || a.sports[0].price > b.sports[0].price
-		// 			? -1
-		// 			: 1
-		// 	);
-		// console.log(
-		// 	"🚀 ~ file: HomePage.js ~ line 18 ~ calculate ~ orderedPlayers",
-		// 	orderedPlayers
-		// );
-		// let previousPlayerMaxDiscount = 0;
-		// totalPrice = 0;
-
-		// console.log(
-		// 	"🚀 ~ file: HomePage.js ~ line 32 ~ calculate ~ playerWithOneSport",
-		// 	playerWithOneSport
-		// );
-		// orderedPlayers.forEach((player, index) => {
-		// 	// total price for individualPlayer
-		// 	let playerTotalPrice = 0;
-		// 	//check if player has more than one sport
-		// 	if (player.sports.length > 1) {
-		// 		// get number of sports
-		// 		let playerSportsLength = player.sports.length;
-
-		// 		const orderedSport = player.sports
-		// 			.slice()
-		// 			.sort((a, b) => (a.price > b.price ? -1 : 1));
-		// 		switch (playerSportsLength) {
-		// 			//two sports
-		// 			case 2:
-		// 				playerTotalPrice += orderedSport[0].price * 0.9;
-		// 				playerTotalPrice += orderedSport[1].price;
-		// 				if (playerWithOneSport) {
-		// 					previousPlayerMaxDiscount = 10;
-		// 				}
-		// 				break;
-
-		// 			case 3:
-		// 				// three sports
-		// 				playerTotalPrice += orderedSport[0].price * 0.8;
-		// 				playerTotalPrice += orderedSport[1].price * 0.9;
-		// 				playerTotalPrice += orderedSport[2].price;
-		// 				if (playerWithOneSport) {
-		// 					previousPlayerMaxDiscount = 20;
-		// 				}
-		// 				break;
-
-		// 			default:
-		// 				// more than three sports
-		// 				playerTotalPrice += orderedSport[0].price * 0.8;
-		// 				playerTotalPrice += orderedSport[1].price * 0.9;
-		// 				for (
-		// 					let index = 2;
-		// 					index < playerSportsLength.length;
-		// 					index++
-		// 				) {
-		// 					playerTotalPrice += orderedSport[1].price;
-		// 				}
-		// 				if (playerWithOneSport) {
-		// 					previousPlayerMaxDiscount = 20;
-		// 				}
-		// 				break;
-		// 		}
-		// 	} else {
-		// 		//if player has one sport and index less than 3 apply brother discount
-		// 		if (index < 3) {
-		// 			switch (previousPlayerMaxDiscount) {
-		// 				case 20:
-		// 					console.log("no discount");
-		// 					playerTotalPrice += player.sports[0].price;
-		// 					break;
-
-		// 				case 10:
-		// 					console.log("20% discount");
-		// 					playerTotalPrice += player.sports[0].price * 0.8;
-
-		// 					previousPlayerMaxDiscount = 20;
-
-		// 					break;
-
-		// 				case 0:
-		// 					console.log("10% discount");
-
-		// 					playerTotalPrice += player.sports[0].price * 0.9;
-		// 					previousPlayerMaxDiscount = 10;
-		// 					break;
-
-		// 				default:
-		// 					break;
-		// 			}
-		// 		} else {
-		// 			//if player has one sport and index at least 3 apply brother discount
-
-		// 			playerTotalPrice += player.sports[0].price;
-		// 		}
-		// 	}
-		// 	console.log(
-		// 		`playerTotalPrice -index: ${index} => ${playerTotalPrice}$`
-		// 	);
-		// 	setTotalPrice((totalPrice += playerTotalPrice));
-		// });
+		firstTimeRender.current = true;
 	};
 
 	return (
@@ -329,13 +381,150 @@ const HomePage = () => {
 			<button
 				type="button"
 				onClick={() => {
-					maxDiscount = 0;
-					totalPrice = 0;
 					calculate();
 				}}
 			>
 				Calculate
 			</button>
+			<div>
+				<div className={styles.adtable_wrapper}>
+					<div className={styles.adtable_header}>
+						<div className={styles.title}>private</div>
+						<div
+							className={` ${styles.adtable_row.headers} ${styles.adtable_table_header} ${styles.adtable_row}`}
+						>
+							<p>Name</p>
+							<p>Category</p>
+							<p>Price</p>
+							<p>Discount</p>
+							<p>Total</p>
+						</div>
+					</div>
+					<ul className={styles.adtable_table_body}>
+						{privateList?.map((item, index) => (
+							<li
+								key={index}
+								className={styles.adtable_row.table_data}
+							>
+								<p>{item.name}</p>
+								<ul>
+									{item.sports?.map((sport, index) => (
+										<li key={index}>
+											{" "}
+											<div
+												className={
+													styles.adtable_table_data_cell
+												}
+											>
+												{sport.name}
+											</div>
+											<div
+												className={
+													styles.adtable_table_data_cell
+												}
+											>
+												{sport.categories}
+											</div>
+											<div
+												className={
+													styles.adtable_table_data_cell
+												}
+											>
+												{sport.type}
+											</div>
+											<div
+												className={
+													styles.adtable_table_data_cell
+												}
+											>
+												{sport.price}$
+											</div>
+											{sport.discount > -1 && (
+												<div
+													className={
+														styles.adtable_table_data_cell
+													}
+												>
+													{sport.discount}%
+												</div>
+											)}
+											{sport.discount > -1 && (
+												<div
+													className={
+														styles.adtable_table_data_cell
+													}
+												>
+													{sport.total}$
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div className={styles.adtable_wrapper}>
+					<h5>Discount</h5>
+					<ul>
+						{withDiscountList?.map((item, index) => (
+							<li key={index}>
+								<h5>{item.name}</h5>
+								<ul>
+									{item.sports?.map((sport, index) => (
+										<li key={index}>
+											{" "}
+											<div>{sport.name}</div>
+											<div>{sport.category}</div>
+											<div>{sport.type}</div>
+											<div>{sport.price}$</div>
+											{sport.discount > -1 && (
+												<div>
+													<div>
+														{sport.discount}%
+													</div>
+													<div>{sport.total}$</div>
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div className={styles.adtable_wrapper}>
+					<h5>No-Discount</h5>
+					<ul>
+						{withNoDiscountList?.map((item, index) => (
+							<li key={index}>
+								<h5>{item.name}</h5>
+								<ul>
+									{item.sports?.map((sport, index) => (
+										<li key={index}>
+											{" "}
+											<div>{sport.name}</div>
+											<div>{sport.categories}</div>
+											<div>{sport.type}</div>
+											<div>{sport.price}$</div>
+											{sport.discount > -1 && (
+												<div>
+													<div>
+														{sport.discount}%
+													</div>
+													<div>{sport.total}$</div>
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
 		</div>
 	);
 };

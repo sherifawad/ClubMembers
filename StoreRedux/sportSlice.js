@@ -43,7 +43,7 @@ export const sportsInitialState = [
 					},
 					{
 						type: "Schools Group",
-						canDiscount: false,
+						canDiscount: true,
 						price: 1800
 					},
 					{
