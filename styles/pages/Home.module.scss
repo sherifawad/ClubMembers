@@ -1,3 +1,4 @@
+@use "../abstracts/mixins" as *;
 .container {
 	padding: 0 2rem;
 }
@@ -214,4 +215,114 @@
 	opacity: 0.7;
 	font-style: italic;
 	justify-content: center;
+}
+
+.table_wrapper {
+	margin: 1rem auto;
+	padding-bottom: 1rem;
+	border-radius: 4px;
+	max-width: 80%;
+	min-width: 400px;
+	.dataWrapper {
+		display: grid;
+		grid-template-columns: 1fr 7fr;
+
+		.table_head {
+			display: grid;
+			grid-template-rows: repeat(7, 1fr);
+
+			background-color: lightblue;
+			.table_row_header,
+			.table_column_header {
+				display: grid;
+				place-items: center;
+				font-weight: bold;
+				// width: 15ch;
+
+				border-block-end: 1px solid black;
+				border-inline-start: 1px solid black;
+			}
+			@include mq(small, max) {
+				opacity: 0;
+			}
+		}
+
+		.table_body {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+
+			.table_row {
+				display: grid;
+				grid-template-rows: 1fr 6fr;
+
+				grid-template-columns: repeat(var(--sports-length), 1fr);
+
+				&:nth-of-type(2n) {
+					background-color: lightgray;
+				}
+				.table_column_header {
+					grid-column: 1 / 3;
+					grid-row: 1 / 2;
+					font-style: italic;
+					background-color: lightblue;
+
+					text-align: center;
+					font-size: 0.85rem;
+					font-weight: bold;
+
+					display: flex;
+					justify-content: space-around;
+					align-items: center;
+					border-inline-end: 1px solid black;
+					border-block: 1px solid black;
+					&:first-of-type {
+						border-inline-start: 1px solid black;
+					}
+				}
+
+				.table_data_wrapper {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+				}
+				.table_data {
+					display: grid;
+					grid-template-rows: repeat(6, 1fr);
+					&:first-of-type {
+						border-inline-start: 1px solid black;
+					}
+					.data_cell {
+						display: flex;
+						justify-content: space-around;
+						align-items: center;
+						padding: 0.3em;
+						border-block-end: 1px solid black;
+						border-inline-end: 1px solid black;
+
+						p {
+							text-align: center;
+						}
+					}
+				}
+			}
+
+			.table_column:nth-of-type(2n) {
+				background-color: lightgray;
+			}
+		}
+	}
+
+	.table_header {
+		font-weight: bold;
+		.title {
+			text-decoration-style: italic;
+			color: lightblue;
+			&:after {
+				content: "";
+				width: 120%;
+			}
+		}
+		.table_column {
+			background-color: lightblue;
+		}
+	}
 }

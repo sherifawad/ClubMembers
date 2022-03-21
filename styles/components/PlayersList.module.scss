@@ -1,3 +1,5 @@
+@use "../abstracts/mixins" as *;
+
 $pri: #128cfc;
 $sec: #fffffe;
 $dark-pri: #0b5aa2;
@@ -7,7 +9,10 @@ $dark-pri: #0b5aa2;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1.5rem;
-	place-content: center;
+    @include mq(small) {
+        place-content: center;
+    }
+
 }
 
 .items {

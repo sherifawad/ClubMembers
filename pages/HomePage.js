@@ -1,4 +1,4 @@
-import styles from "../styles/pages/Home.module.css";
+import styles from "../styles/pages/Home.module.scss";
 import PlayersList from "../Components/PlayersList";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
@@ -387,142 +387,203 @@ const HomePage = () => {
 				Calculate
 			</button>
 			<div>
-				<div className={styles.adtable_wrapper}>
-					<div className={styles.adtable_header}>
+				<div className={styles.table_wrapper}>
+					<div className={styles.table_header}>
 						<div className={styles.title}>private</div>
-						<div
-							className={` ${styles.adtable_row.headers} ${styles.adtable_table_header} ${styles.adtable_row}`}
-						>
-							<p>Name</p>
-							<p>Category</p>
-							<p>Price</p>
-							<p>Discount</p>
-							<p>Total</p>
-						</div>
 					</div>
-					<ul className={styles.adtable_table_body}>
-						{privateList?.map((item, index) => (
-							<li
-								key={index}
-								className={styles.adtable_row.table_data}
-							>
-								<p>{item.name}</p>
-								<ul>
+
+					<div className={styles.dataWrapper}>
+						<div className={` ${styles.table_head}`}>
+							<p className={styles.table_column_header}></p>
+							<p className={styles.table_row_header}>Name</p>
+							<p className={styles.table_row_header}>Category</p>
+							<p className={styles.table_row_header}>type</p>
+							<p className={styles.table_row_header}>Price</p>
+							<p className={styles.table_row_header}>Discount</p>
+							<p className={styles.table_row_header}>Total</p>
+						</div>
+						<ul className={styles.table_body}>
+							{privateList?.map((item, index) => (
+								<li
+									key={index}
+									style={{
+										"--sports-length": item.sports?.length
+									}}
+									className={styles.table_row}
+								>
+									<p className={styles.table_column_header}>
+										{item.name}
+									</p>
 									{item.sports?.map((sport, index) => (
-										<li key={index}>
-											{" "}
-											<div
-												className={
-													styles.adtable_table_data_cell
-												}
-											>
-												{sport.name}
-											</div>
-											<div
-												className={
-													styles.adtable_table_data_cell
-												}
-											>
-												{sport.categories}
-											</div>
-											<div
-												className={
-													styles.adtable_table_data_cell
-												}
-											>
-												{sport.type}
-											</div>
-											<div
-												className={
-													styles.adtable_table_data_cell
-												}
-											>
-												{sport.price}$
-											</div>
+										<ul
+											key={index}
+											className={styles.table_data}
+										>
+											<li className={styles.data_cell}>
+												<p>{sport.name}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.category}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.type}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.price}$</p>
+											</li>
 											{sport.discount > -1 && (
-												<div
-													className={
-														styles.adtable_table_data_cell
-													}
+												<li
+													className={styles.data_cell}
 												>
-													{sport.discount}%
-												</div>
+													<p>{sport.discount}%</p>
+												</li>
 											)}
 											{sport.discount > -1 && (
-												<div
-													className={
-														styles.adtable_table_data_cell
-													}
+												<li
+													className={styles.data_cell}
 												>
-													{sport.total}$
-												</div>
+													<p>{sport.total}$</p>
+												</li>
 											)}
-										</li>
+										</ul>
 									))}
-								</ul>
-							</li>
-						))}
-					</ul>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 
-				<div className={styles.adtable_wrapper}>
-					<h5>Discount</h5>
-					<ul>
-						{withDiscountList?.map((item, index) => (
-							<li key={index}>
-								<h5>{item.name}</h5>
-								<ul>
+				<div className={styles.table_wrapper}>
+					<div className={styles.table_header}>
+						<div className={styles.title}>Discount</div>
+					</div>
+
+					<div className={styles.dataWrapper}>
+						<div className={` ${styles.table_head}`}>
+							<p className={styles.table_column_header}></p>
+							<p className={styles.table_row_header}>Name</p>
+							<p className={styles.table_row_header}>Category</p>
+							<p className={styles.table_row_header}>type</p>
+							<p className={styles.table_row_header}>Price</p>
+							<p className={styles.table_row_header}>Discount</p>
+							<p className={styles.table_row_header}>Total</p>
+						</div>
+						<ul className={styles.table_body}>
+							{withDiscountList?.map((item, index) => (
+								<li
+									key={index}
+									style={{
+										"--sports-length": item.sports?.length
+									}}
+									className={styles.table_row}
+								>
+									<p className={styles.table_column_header}>
+										{item.name}
+									</p>
+
 									{item.sports?.map((sport, index) => (
-										<li key={index}>
-											{" "}
-											<div>{sport.name}</div>
-											<div>{sport.category}</div>
-											<div>{sport.type}</div>
-											<div>{sport.price}$</div>
+										<ul
+											key={index}
+											className={styles.table_data}
+										>
+											<li className={styles.data_cell}>
+												<p>{sport.name}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.category}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.type}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.price}$</p>
+											</li>
 											{sport.discount > -1 && (
-												<div>
-													<div>
-														{sport.discount}%
-													</div>
-													<div>{sport.total}$</div>
-												</div>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.discount}%</p>
+												</li>
 											)}
-										</li>
+											{sport.discount > -1 && (
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.total}$</p>
+												</li>
+											)}
+										</ul>
 									))}
-								</ul>
-							</li>
-						))}
-					</ul>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 
-				<div className={styles.adtable_wrapper}>
-					<h5>No-Discount</h5>
-					<ul>
-						{withNoDiscountList?.map((item, index) => (
-							<li key={index}>
-								<h5>{item.name}</h5>
-								<ul>
+				<div className={styles.table_wrapper}>
+					<div className={styles.table_header}>
+						<div className={styles.title}>No-Discount</div>
+					</div>
+
+					<div className={styles.dataWrapper}>
+						<div className={` ${styles.table_head}`}>
+							<p className={styles.table_column_header}></p>
+							<p className={styles.table_row_header}>Name</p>
+							<p className={styles.table_row_header}>Category</p>
+							<p className={styles.table_row_header}>type</p>
+							<p className={styles.table_row_header}>Price</p>
+							<p className={styles.table_row_header}>Discount</p>
+							<p className={styles.table_row_header}>Total</p>
+						</div>
+						<ul className={styles.table_body}>
+							{withNoDiscountList?.map((item, index) => (
+								<li
+									key={index}
+									style={{
+										"--sports-length": item.sports?.length
+									}}
+									className={styles.table_row}
+								>
+									<p className={styles.table_column_header}>
+										{item.name}
+									</p>
 									{item.sports?.map((sport, index) => (
-										<li key={index}>
-											{" "}
-											<div>{sport.name}</div>
-											<div>{sport.categories}</div>
-											<div>{sport.type}</div>
-											<div>{sport.price}$</div>
+										<ul
+											key={index}
+											className={styles.table_data}
+										>
+											<li className={styles.data_cell}>
+												<p>{sport.name}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.category}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.type}</p>
+											</li>
+											<li className={styles.data_cell}>
+												<p>{sport.price}$</p>
+											</li>
 											{sport.discount > -1 && (
-												<div>
-													<div>
-														{sport.discount}%
-													</div>
-													<div>{sport.total}$</div>
-												</div>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.discount}%</p>
+												</li>
 											)}
-										</li>
+											{sport.discount > -1 && (
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.total}$</p>
+												</li>
+											)}
+										</ul>
 									))}
-								</ul>
-							</li>
-						))}
-					</ul>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
