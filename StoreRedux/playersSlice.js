@@ -1,48 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nextPlayerId, saveToLocalStorage } from "../Data/utils";
+import { nextPlayerId } from "../Data/utils";
 
-export const playersInitialState = [];
-// const initialState = [
-// 	{
-// 		id: 1,
-// 		name: "Ahmed",
-// 		sports: [
-// 			{
-// 				id: 1,
-// 				name: "Swimming",
-// 				categories: "Schools",
-// 				price: 250,
-// 				discount: 10,
-// 				visaFees: 0,
-// 				total: 225
-// 			}
-// 		]
-// 	},
-// 	{
-// 		id: 2,
-// 		name: "Ali",
-// 		sports: [
-// 			{
-// 				id: 1,
-// 				name: "Swimming",
-// 				categories: "Team",
-// 				price: 150,
-// 				discount: 0,
-// 				visaFees: 0,
-// 				total: 150
-// 			},
-// 			{
-// 				id: 2,
-// 				name: "HandBall",
-// 				categories: "Team",
-// 				price: 150,
-// 				discount: 10,
-// 				visaFees: 0,
-// 				total: 153
-// 			}
-// 		]
-// 	}
-// ];
+export const playersInitialState = {
+	SchoolGroupSelected: false,
+	playersState: []
+};
 
 const addItemToArray = (state, { payload }) => {
 	state.push(payload);
@@ -53,7 +15,10 @@ const removeItemFromArray = (state, { payload }) => {
 	// const newState = state.filter(state => state.id !== payload);
 	// // "Mutate" the existing state to save the new array
 	// state = newState;
-    state.splice(state.findIndex((arrow) => arrow.id === payload), 1);
+	state.playersState.splice(
+		state.playersState.findIndex(arrow => arrow.id === payload),
+		1
+	);
 };
 
 const playersSlice = createSlice({
@@ -61,10 +26,10 @@ const playersSlice = createSlice({
 	initialState: playersInitialState,
 	reducers: {
 		getPlayersList: (state, { payload }) => {
-			return state;
+			return state.playersState;
 		},
 		getPlayerName: (state, { payload }) => {
-			const playerExists = state.find(
+			const playerExists = state.playersState.find(
 				player => player.name.toLowerCase() === payload.toLowerCase()
 			);
 			if (playerExists) {
@@ -73,7 +38,9 @@ const playersSlice = createSlice({
 			return null;
 		},
 		getPlayerId: (state, { payload }) => {
-			const playerExists = state.find(player => player.id === payload);
+			const playerExists = state.playersState.find(
+				player => player.id === payload
+			);
 
 			if (playerExists) {
 				return playerExists;
@@ -81,7 +48,7 @@ const playersSlice = createSlice({
 			return null;
 		},
 		getPlayerSportsList: (state, { id }) => {
-			const playerExists = state.filter(
+			const playerExists = state.playersState.filter(
 				player => player.id === payload.id
 			);
 			if (playerExists) {
@@ -91,17 +58,32 @@ const playersSlice = createSlice({
 		},
 		addPlayer: (state, { payload }) => {
 			const newPlayer = payload;
-			newPlayer.id = nextPlayerId(state);
-			state.push(payload);
-			// return [...state, newPlayer];
+			newPlayer.id = nextPlayerId(state.playersState);
+			state.playersState.push(newPlayer);
+			// return [...state.playersState, newPlayer];
 		},
 		deletePlayer: removeItemFromArray,
 		updatePlayer: (state, { payload }) => {
-			const playerExists = state.find(player => player.id === payload.id);
-			if (playerExists) {
-				playerExists.name = payload.name;
-				playerExists.sports = payload.sports;
+			const playerIndex = state.playersState.findIndex(
+				player => player.id === payload.id
+			);
+			if (playerIndex > -1) {
+                state.playersState[playerIndex].name = payload.name;
+                state.playersState[playerIndex].sports = payload.sports;
+
 			}
+		},
+		setSchoolGroup: (state, { payload }) => {
+			return {
+				...state,
+				SchoolGroupSelected: true
+			};
+		},
+		removeSchoolGroup: (state, { payload }) => {
+			return {
+				...state,
+				SchoolGroupSelected: false
+			};
 		}
 	}
 });
@@ -113,7 +95,9 @@ export const {
 	getPlayerSportsList,
 	addPlayer,
 	deletePlayer,
-	updatePlayer
+	updatePlayer,
+	setSchoolGroup,
+	removeSchoolGroup
 } = playersSlice.actions;
 
 export default playersSlice.reducer;

@@ -6,6 +6,7 @@ import SportsList from "../Components/SportsList";
 import { isBlank } from "../Data/utils";
 import { addPlayer, updatePlayer } from "../StoreRedux/playersSlice";
 import styles from "../styles/pages/AddPage.module.scss";
+import { createSelector } from "@reduxjs/toolkit";
 
 const AddPage = () => {
 	const router = useRouter();
@@ -17,7 +18,12 @@ const AddPage = () => {
 	);
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [playerId, setPlayerId] = useState(0);
-	const players = useSelector(state => state.players);
+	const selectPlayers = createSelector(
+		state => state.players,
+		players => players.playersState
+	);
+	const players = useSelector(selectPlayers);
+
 	const dispatch = useDispatch();
 
 	// check for queries

@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
 	key: "primary",
 	storage,
+	whitelist: ["players"],
 	blacklist: ["sports"]
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

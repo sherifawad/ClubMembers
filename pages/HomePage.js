@@ -4,15 +4,13 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
 const HomePage = () => {
-	const [privatePlayersNumbers, setPrivatePlayersNumbers] = useState(0);
-	const [regularPlayersNumbers, setRegularPlayersNumbers] = useState(0);
 	const [withDiscountList, setWithDiscountList] = useState([]);
 	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
 	const [privateList, setPrivateList] = useState([]);
+	const [players, setPlayers] = useState([]);
 
 	const [totalPrice, setTotalPrice] = useState(0);
-	const [maxDiscount, setMaxDiscount] = useState(0);
-	const players = useSelector(state => state.players) || [];
+	// const players = useSelector(state => state.players.playersState) || [];
 
 	const firstTimeRender = useRef(true);
 
@@ -110,10 +108,12 @@ const HomePage = () => {
 		let totalPrice = 0;
 		const players = list?.reduce((accPlayers, player) => {
 			const sports = player.sports?.reduce((accSports, sport) => {
+				//copy sport to edit as redux set values as read only
+				let newSport = { ...sport };
 				totalPrice += sport.price;
-				sport.discount = 0;
-				sport.total = sport.price;
-				accSports.push(sport);
+				newSport.discount = 0;
+				newSport.total = sport.price;
+				accSports.push(newSport);
 				return accSports;
 			}, []);
 			player.sports = sports;
@@ -125,6 +125,7 @@ const HomePage = () => {
 	};
 
 	const handlePrivateSwimmingList = list => {
+		if (!list || list.length < 1) return;
 		let totalPrice = 0;
 		//check the current day
 		let newDate = new Date();
@@ -135,7 +136,11 @@ const HomePage = () => {
 		list.forEach(player => {
 			player.sports.forEach(sport => {
 				if (sport.type === "Schools Group") {
-					filteredPlayer = player;
+					//copy player as redux set values as read only
+					filteredPlayer = {
+						...player,
+						sports: [{ ...player.sports[0] }]
+					};
 				}
 			});
 		});
@@ -157,20 +162,21 @@ const HomePage = () => {
 				filteredPlayer.sports[0].total = filteredPlayer.sports[0].price;
 			}
 		}
-
 		const players = list?.reduce((accPlayers, player, playerIndex) => {
 			const sports = player.sports?.reduce((accSports, sport) => {
+				//copy sport to edit as redux set values as read only
+				let newSport = { ...sport };
 				switch (list.length) {
 					case 1:
 						//check if calculation within first 5 days of the month
 						if (today <= 5) {
 							totalPrice += sport.price * 0.9;
-							sport.discount = 10;
-							sport.total = sport.price * 0.9;
+							newSport.discount = 10;
+							newSport.total = sport.price * 0.9;
 						} else {
 							totalPrice += sport.price;
-							sport.discount = 0;
-							sport.total = sport.price;
+							newSport.discount = 0;
+							newSport.total = sport.price;
 						}
 						break;
 
@@ -178,17 +184,17 @@ const HomePage = () => {
 					case 2:
 						if (playerIndex == 0) {
 							totalPrice += sport.price * 0.8;
-							sport.discount = 20;
-							sport.total = sport.price * 0.8;
+							newSport.discount = 20;
+							newSport.total = sport.price * 0.8;
 						} else {
 							if (today <= 5) {
 								totalPrice += sport.price * 0.9;
-								sport.discount = 10;
-								sport.total = sport.price * 0.9;
+								newSport.discount = 10;
+								newSport.total = sport.price * 0.9;
 							} else {
 								totalPrice += sport.price;
-								sport.discount = 0;
-								sport.total = sport.price;
+								newSport.discount = 0;
+								newSport.total = sport.price;
 							}
 						}
 						break;
@@ -197,30 +203,30 @@ const HomePage = () => {
 					default:
 						if (playerIndex == 0) {
 							totalPrice += sport.price * 0.7;
-							sport.discount = 30;
-							sport.total = sport.price * 0.7;
+							newSport.discount = 30;
+							newSport.total = sport.price * 0.7;
 						} else if (playerIndex == 1) {
 							totalPrice += sport.price * 0.8;
-							sport.discount = 20;
-							sport.total = sport.price * 0.8;
+							newSport.discount = 20;
+							newSport.total = sport.price * 0.8;
 						} else if (playerIndex == 2) {
 							if (today <= 5) {
 								totalPrice += sport.price * 0.9;
-								sport.discount = 10;
-								sport.total = sport.price * 0.9;
+								newSport.discount = 10;
+								newSport.total = sport.price * 0.9;
 							} else {
 								totalPrice += sport.price;
-								sport.discount = 0;
-								sport.total = sport.price;
+								newSport.discount = 0;
+								newSport.total = sport.price;
 							}
 						} else {
 							totalPrice += sport.price;
-							sport.discount = 0;
-							sport.total = sport.price;
+							newSport.discount = 0;
+							newSport.total = sport.price;
 						}
 						break;
 				}
-				accSports.push(sport);
+				accSports.push(newSport);
 				return accSports;
 			}, []);
 			player.sports = sports;
@@ -244,36 +250,38 @@ const HomePage = () => {
 				(accPlayers, player) => {
 					const sports = player.sports?.reduce(
 						(accSports, sport, sportIndex) => {
+							//copy sport to edit as redux set values as read only
+							let newSport = { ...sport };
 							switch (player.sports.length) {
 								case 2:
 									if (sportIndex == 0) {
 										totalPrice += sport.price * 0.9;
-										sport.discount = 10;
-										sport.total = sport.price * 0.9;
+										newSport.discount = 10;
+										newSport.total = sport.price * 0.9;
 									} else {
 										totalPrice += sport.price;
-										sport.discount = 0;
-										sport.total = sport.price;
+										newSport.discount = 0;
+										newSport.total = sport.price;
 									}
 									break;
 
 								default:
 									if (sportIndex == 0) {
 										totalPrice += sport.price * 0.8;
-										sport.discount = 20;
-										sport.total = sport.price * 0.8;
+										newSport.discount = 20;
+										newSport.total = sport.price * 0.8;
 									} else if (playerIndex == 1) {
 										totalPrice += sport.price * 0.9;
-										sport.discount = 10;
-										sport.total = sport.price * 0.9;
+										newSport.discount = 10;
+										newSport.total = sport.price * 0.9;
 									} else {
 										totalPrice += sport.price;
-										sport.discount = 0;
-										sport.total = sport.price;
+										newSport.discount = 0;
+										newSport.total = sport.price;
 									}
 									break;
 							}
-							accSports.push(sport);
+							accSports.push(newSport);
 							return accSports;
 						},
 						[]
@@ -294,38 +302,40 @@ const HomePage = () => {
 		const single = playersWithOne?.reduce(
 			(accPlayers, player, playerIndex) => {
 				let sports = player.sports?.reduce((accSports, sport) => {
+					//copy sport to edit as redux set values as read only
+					let newSport = { ...sport };
 					switch (playersWithOne.length) {
 						case 1:
 							if (playersWithMultiple.length > 0) {
 								totalPrice += sport.price * 0.9;
-								sport.discount = 10;
-								sport.total = sport.price * 0.9;
+								newSport.discount = 10;
+								newSport.total = sport.price * 0.9;
 							} else {
 								totalPrice += sport.price;
-								sport.discount = 0;
-								sport.total = sport.price;
+								newSport.discount = 0;
+								newSport.total = sport.price;
 							}
 							break;
 						case 2:
 							if (playersWithMultiple.length > 0) {
 								if (playerIndex == 0) {
 									totalPrice += sport.price * 0.8;
-									sport.discount = 20;
-									sport.total = sport.price * 0.8;
+									newSport.discount = 20;
+									newSport.total = sport.price * 0.8;
 								} else if (playerIndex == 1) {
 									totalPrice += sport.price * 0.9;
-									sport.discount = 10;
-									sport.total = sport.price * 0.9;
+									newSport.discount = 10;
+									newSport.total = sport.price * 0.9;
 								}
 							} else {
 								if (playerIndex == 0) {
 									totalPrice += sport.price * 0.9;
-									sport.discount = 10;
-									sport.total = sport.price * 0.9;
+									newSport.discount = 10;
+									newSport.total = sport.price * 0.9;
 								} else if (playerIndex == 1) {
 									totalPrice += sport.price;
-									sport.discount = 0;
-									sport.total = sport.price;
+									newSport.discount = 0;
+									newSport.total = sport.price;
 								}
 							}
 							break;
@@ -333,20 +343,20 @@ const HomePage = () => {
 						default:
 							if (playerIndex == 0) {
 								totalPrice += sport.price * 0.8;
-								sport.discount = 20;
-								sport.total = sport.price * 0.8;
+								newSport.discount = 20;
+								newSport.total = sport.price * 0.8;
 							} else if (playerIndex == 1) {
 								totalPrice += sport.price * 0.9;
-								sport.discount = 10;
-								sport.total = sport.price * 0.9;
+								newSport.discount = 10;
+								newSport.total = sport.price * 0.9;
 							} else {
 								totalPrice += sport.price;
-								sport.discount = 0;
-								sport.total = sport.price;
+								newSport.discount = 0;
+								newSport.total = sport.price;
 							}
 							break;
 					}
-					accSports.push(sport);
+					accSports.push(newSport);
 					return accSports;
 				}, []);
 				player.sports = sports;
@@ -376,7 +386,7 @@ const HomePage = () => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>Calculate Sports Payments</div>
-			<PlayersList />
+			<PlayersList playersList={setPlayers} />
 			<h3 style={{ color: "red" }}>{totalPrice}</h3>
 			<button
 				type="button"

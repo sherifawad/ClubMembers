@@ -2,6 +2,8 @@ import Image from "next/image";
 import deleteIcon from "../public/deleteIcon.svg";
 import { useEffect, useState } from "react";
 import styles from "../styles/components/SportsList.module.scss";
+import { useDispatch } from "react-redux";
+import { removeSchoolGroup } from "../StoreRedux/playersSlice";
 
 const SportsList = ({
 	sport,
@@ -9,7 +11,12 @@ const SportsList = ({
 	receivedPlayerSportsList
 }) => {
 	const [sportsList, setSportsList] = useState([]);
+	const dispatch = useDispatch();
 	const removeSport = index => {
+		const sportType = sportsList[index].type;
+		if (sportType === "Schools Group") {
+			dispatch(removeSchoolGroup());
+		}
 		setSportsList(sportsList.filter((_, i) => i !== index));
 	};
 
@@ -17,8 +24,7 @@ const SportsList = ({
 		if (sport) {
 			const duplicateSport = sportsList.find(
 				item =>
-					item.name === sport.name &&
-					item.category === sport.category 
+					item.name === sport.name && item.category === sport.category
 			);
 			if (duplicateSport) return;
 			setSportsList(oldList => [...oldList, sport]);

@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/components/PlayersList.module.scss";
 import { deletePlayer } from "../StoreRedux/playersSlice";
+import { createSelector } from "@reduxjs/toolkit";
 
-function PlayersList() {
+function PlayersList({ playersList }) {
 	// Extracting players state from redux store
-	const playersItems = useSelector(state => state.players);
+	const selectPlayers = createSelector(
+		state => state.players,
+		players => players.playersState
+	);
+	const playersItems = useSelector(selectPlayers);
 	const dispatch = useDispatch();
 	const [players, setPlayers] = useState([]);
 	useEffect(() => {
 		setPlayers(playersItems);
-	}, [playersItems]);
+		playersList(playersItems);
+	}, [playersItems, playersList]);
 
 	const handleDeletePlayer = playerId => {
 		dispatch(deletePlayer(playerId));

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSchoolGroup } from "../StoreRedux/playersSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
 const AddSport = ({ setSport }) => {
 	// Extracting sports state from redux store
 	const SportsItems = useSelector(state => state.sports);
+	const dispatch = useDispatch();
+	const privateSchoolGroupSelected = useSelector(
+		state => state.players.SchoolGroupSelected
+	);
 
 	const handleSelectedSport = sportID => {
 		if (!sportID && !SportsItems) return;
@@ -75,6 +80,8 @@ const AddSport = ({ setSport }) => {
 		});
 
 	const addSport = () => {
+		if (privateSchoolGroupSelected && sportTypeName === "Schools Group")
+			return;
 		const newSport = {
 			id: parseInt(selectedSportID),
 			name: selectedSport.name,
@@ -87,6 +94,9 @@ const AddSport = ({ setSport }) => {
 		};
 		if (newSport.price > 0 && !isNullOrEmpty(newSport)) {
 			setSport(newSport);
+			if (sportTypeName === "Schools Group") {
+				dispatch(setSchoolGroup());
+			}
 		}
 		resetValues();
 	};
