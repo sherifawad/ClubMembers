@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import { createSelector } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSchoolGroup } from "../StoreRedux/playersSlice";
+import { fetchAllSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
 const AddSport = ({ setSport }) => {
-	// Extracting sports state from redux store
-	const SportsItems = useSelector(state => state.sports);
+	// Extracting players state from redux store
+	const selectSports = createSelector(
+		state => state.sports,
+		sports => sports
+	);
+	const { list, loading, error } = useSelector(selectSports);
 	const dispatch = useDispatch();
 	const privateSchoolGroupSelected = useSelector(
 		state => state.players.SchoolGroupSelected
 	);
 
+	useEffect(() => {
+		if (list.length === 0) {
+			dispatch(fetchAllSports());
+		}
+	}, [dispatch, list.length]);
+
 	const handleSelectedSport = sportID => {
-		if (!sportID && !SportsItems) return;
+		if (!sportID && !list) return;
 		resetValues(false, true);
-		const sportExist = SportsItems.find(sport => sport.id == sportID);
+		const sportExist = list.find(sport => sport.id == sportID);
 		if (sportExist) {
 			setSelectedSport(sportExist);
 			setSelectedSportID(sportID);
@@ -112,6 +124,13 @@ const AddSport = ({ setSport }) => {
 	const [sportTypeName, setSportTypeName] = useState("");
 	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
 
+	if (loading) {
+		return <h1>....Loading</h1>;
+	}
+
+	if (error) {
+		return <h1>Error</h1>;
+	}
 	return (
 		<div className={styles.container}>
 			<div className={styles.selectionContainer}>
@@ -125,7 +144,7 @@ const AddSport = ({ setSport }) => {
 						<option value={0} disabled>
 							Choose Sport
 						</option>
-						{SportsItems.map(x => (
+						{list.map(x => (
 							<option key={x.id} value={x.id}>
 								{x.name}
 							</option>

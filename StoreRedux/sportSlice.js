@@ -1,426 +1,52 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import sportsApi from "../services/sportsApi";
 
-export const sportsInitialState = [
-	{
-		id: 1,
-		name: "Swimming",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Special Schools",
-						canDiscount: true,
-						price: 450
-					},
-					{
-						type: "Schools",
-						canDiscount: true,
-						price: 250
-					},
-					{
-						type: "Preparation",
-						canDiscount: true,
-						price: 250
-					},
-					{
-						type: "Team",
-						canDiscount: true,
-						price: 150
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Full",
-						canDiscount: true,
-						price: 1000
-					},
-					{
-						type: "Disconnected",
-						canDiscount: true,
-						price: 600
-					},
-					{
-						type: "Schools Group",
-						canDiscount: true,
-						price: 1800
-					},
-					{
-						type: "Single Session",
-						canDiscount: false,
-						price: 50
-					}
-				]
-			},
-			{
-				other: [
-					{
-						type: "Free Swimming",
-						canDiscount: false,
-						price: 30
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 2,
-		name: "HandBall",
-		categories: [
-			{
-				normal: [{ type: "Hand Ball", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 3,
-		name: "BasketBall",
-		categories: [
-			{
-				normal: [{ type: "Basket Ball", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 4,
-		name: "VolleyBall",
-		categories: [
-			{
-				normal: [{ type: "Volley Ball", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 5,
-		name: "FootBall",
-		categories: [
-			{
-				normal: [
-					{ type: "Special", canDiscount: true, price: 250 },
-					{ type: "regular", canDiscount: true, price: 150 }
-				]
-			}
-		]
-	},
-	{
-		id: 6,
-		name: "Taekwondo",
-		categories: [
-			{
-				normal: [{ type: "Taekwondo", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 7,
-		name: "Karate",
-		categories: [
-			{
-				normal: [{ type: "Karate", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 8,
-		name: "Boxing",
-		categories: [
-			{
-				normal: [{ type: "Boxing", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 9,
-		name: "Judo",
-		categories: [
-			{
-				normal: [{ type: "Judo", canDiscount: true, price: 150 }]
-			}
-		]
-	},
-	{
-		id: 10,
-		name: "Bodybuilding",
-		categories: [
-			{
-				normal: [
-					{ type: "Bodybuilding", canDiscount: true, price: 150 }
-				]
-			}
-		]
-	},
-	{
-		id: 11,
-		name: "Weightlifting",
-		categories: [
-			{
-				normal: [
-					{ type: "Weightlifting", canDiscount: true, price: 150 }
-				]
-			}
-		]
-	},
-	{
-		id: 12,
-		name: "PingPong",
-		categories: [
-			{
-				normal: [{ type: "PingPong", canDiscount: true, price: 150 }]
-			},
-			{
-				other: [
-					{
-						type: "Rental",
-						canDiscount: false,
-						price: 25
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 13,
-		name: "ModernPentathlon",
-		categories: [
-			{
-				normal: [
-					{ type: "laser-run", canDiscount: true, price: 200 },
-					{
-						type: "Swimming laser-run",
-						canDiscount: true,
-						price: 250
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 14,
-		name: "Squash",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Schools",
-						canDiscount: true,
-						price: 350
-					},
-					{
-						type: "Team",
-						canDiscount: true,
-						price: 400
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Private",
-						canDiscount: false,
-						price: 75
-					}
-				]
-			},
-			{
-				other: [
-					{
-						type: "Team-Rental",
-						canDiscount: false,
-						price: 35
-					},
+export const sportsInitialState = {
+	loading: false,
+	error: false,
+	errorMessage: "",
+	list: []
+};
 
-					{
-						type: "Regular-Rental",
-						canDiscount: false,
-						price: 75
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 15,
-		name: "Tennis",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Schools",
-						canDiscount: true,
-						price: 300
-					},
-					{
-						type: "Team",
-						canDiscount: true,
-						price: 450
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Morning-Single",
-						canDiscount: false,
-						price: 60
-					},
-					{
-						type: "Morning-Double",
-						canDiscount: false,
-						price: 70
-					},
-					{
-						type: "Morning-Triple",
-						canDiscount: false,
-						price: 90
-					},
-					{
-						type: "Evening-Single",
-						canDiscount: false,
-						price: 90
-					},
-					{
-						type: "Evening-Double",
-						canDiscount: false,
-						price: 130
-					},
-					{
-						type: "Evening-Triple",
-						canDiscount: false,
-						price: 135
-					}
-				]
-			},
-			{
-				other: [
-					{
-						type: "Morning-Rental",
-						canDiscount: false,
-						price: 40
-					},
+// const localServer = "http://localhost:3000/";
+// export const fetchData = createAsyncThunk(
+// 	"sports/fetchData",
+// 	async (url, { dispatch }) => {
+// 		const { data } = await axios(localServer + url);
+// 		url === "channels"
+// 			? dispatch(toolkitSlice.actions.setChannels(data))
+// 			: dispatch(toolkitSlice.actions.setFilms(data));
+// 	}
+// );
 
-					{
-						type: "Evening-Rental",
-						canDiscount: false,
-						price: 100
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 16,
-		name: "Athletics",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Normal",
-						canDiscount: true,
-						price: 200
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Private",
-						canDiscount: false,
-						price: 100
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 17,
-		name: "Gymnastics",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Artistic",
-						canDiscount: true,
-						price: 200
-					},
-					{
-						type: "Aerobic",
-						canDiscount: true,
-						price: 300
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Single Session",
-						canDiscount: false,
-						price: 50
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 18,
-		name: "Sheesh",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Sheesh",
-						canDiscount: true,
-						price: 200
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Single Session",
-						canDiscount: false,
-						price: 40
-					}
-				]
-			}
-		]
-	},
-	{
-		id: 19,
-		name: "GYM",
-		categories: [
-			{
-				normal: [
-					{
-						type: "Regular",
-						canDiscount: true,
-						price: 200
-					},
-
-					{
-						type: "only-Steel",
-						canDiscount: true,
-						price: 150
-					}
-				]
-			},
-			{
-				private: [
-					{
-						type: "Single Session",
-						canDiscount: false,
-						price: 40
-					},
-					{
-						type: "Full",
-						canDiscount: false,
-						price: 325
-					}
-				]
-			}
-		]
+export const fetchAllSports = createAsyncThunk(
+	"sports/fetchAll",
+	async (_, { rejectWithValue }) => {
+		try {
+			// thunkAPI has a method to get any state value from the redux store
+			return await sportsApi.fetchAll();
+		} catch (error) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return rejectWithValue(message);
+		}
 	}
-];
+);
+
+const setLoading = state => {
+	state.loading = true;
+	state.error = false;
+};
+
+const setError = (state, { payload }) => {
+	state.loading = false;
+	state.error = true;
+	state.errorMessage = payload;
+};
 
 const sportSlice = createSlice({
 	name: "sports",
@@ -454,6 +80,16 @@ const sportSlice = createSlice({
 			}
 			return null;
 		}
+	},
+	// NOTE: Functions in here will NOT be automatically converted to action creators
+	extraReducers: {
+		[fetchAllSports.pending]: setLoading,
+		[fetchAllSports.fulfilled]: (state, { payload: sports }) => {
+			state.loading = false;
+			state.error = false;
+			state.list = sports;
+		},
+		[fetchAllSports.rejected]: setError
 	}
 });
 
