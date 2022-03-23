@@ -22,30 +22,31 @@ const updatePlayersSportsData = (state, { payload }) => {
 				// get sport discount option and price to update
 				//get sport categories
 				const sportsCategories = sportExist["categories"];
-				if (sportsCategories?.length < 1) return;
+				if (sportsCategories?.length < 1) return accSports;
 				// find a key which categories sub keys equal to player sport category => private === private
 				const categoryKey = sportsCategories.find(
 					cat => Object.keys(cat) == sport.category
 				);
-				if (!categoryKey) return;
+				if (!categoryKey) return accSports;
 				// get selected category sport types
 				const sportTypes = categoryKey[`${sport.category}`];
 				//then find in the object key array a type equal to sport type  => full === full
-				if (sportTypes?.length < 1) return;
-				const { canDiscount, price } = sportTypes.find(
+				if (sportTypes?.length < 1) return accSports;
+				const sportDetails = sportTypes.find(
 					t => t["type"] === sport.type
 				);
+				if (!sportDetails || sportDetails === undefined) return accSports;
 				// const { canDiscount, price } = sportExist["categories"]
 				// 	?.find(cat => Object.keys(cat) == sport.category)
 				// 	[`${sport.category}`]?.find(t => t["type"] === sport.type);
-
+				// if (!canDiscount || !price) return;
 				const newSport = {
 					id: sport.id,
 					name: sport.name,
 					category: sport.category,
 					type: sport.type,
-					canDiscount: canDiscount,
-					price: price,
+					canDiscount: sportDetails.canDiscount,
+					price: sportDetails.price,
 					discount: -1,
 					total: -1
 				};
@@ -53,11 +54,13 @@ const updatePlayersSportsData = (state, { payload }) => {
 			}
 			return accSports;
 		}, []);
-		er.sports = newSports || [];
+		player.sports = newSports || [];
 		accPlayers.push(player || {});
+        console.log("🚀 ~ file: playersSlice.js ~ line 59 ~ players ~ player", player)
 		return accPlayers;
 	}, []);
 
+    console.log("🚀 ~ file: playersSlice.js ~ line 63 ~ updatePlayersSportsData ~ players", players)
 	state.playersState = players;
 };
 
