@@ -2,26 +2,16 @@ import { createSelector } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSchoolGroup } from "../StoreRedux/playersSlice";
-import { fetchAllSports } from "../StoreRedux/sportSlice";
+import { selectSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
 const AddSport = ({ setSport }) => {
-	// Extracting players state from redux store
-	const selectSports = createSelector(
-		state => state.sports,
-		sports => sports
-	);
+	// Extracting sports state from redux store
 	const { list, loading, error } = useSelector(selectSports);
 	const dispatch = useDispatch();
 	const privateSchoolGroupSelected = useSelector(
 		state => state.players.SchoolGroupSelected
 	);
-
-	useEffect(() => {
-		if (list.length === 0) {
-			dispatch(fetchAllSports());
-		}
-	}, [dispatch, list.length]);
 
 	const handleSelectedSport = sportID => {
 		if (!sportID && !list) return;

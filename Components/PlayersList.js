@@ -3,18 +3,23 @@ import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/components/PlayersList.module.scss";
-import { deletePlayer } from "../StoreRedux/playersSlice";
+import { deletePlayer, selectPlayers } from "../StoreRedux/playersSlice";
 import { createSelector } from "@reduxjs/toolkit";
+import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 
 function PlayersList({ playersList }) {
 	// Extracting players state from redux store
-	const selectPlayers = createSelector(
-		state => state.players,
-		players => players.playersState
-	);
 	const playersItems = useSelector(selectPlayers);
+	// Extracting sports state from redux store
+	const { list, loading, error } = useSelector(selectSports);
 	const dispatch = useDispatch();
 	const [players, setPlayers] = useState([]);
+
+	useEffect(() => {
+		if (list.length === 0) {
+			dispatch(fetchAllSports());
+		}
+	}, [dispatch, list, list.length]);
 	useEffect(() => {
 		setPlayers(playersItems);
 		playersList(playersItems);

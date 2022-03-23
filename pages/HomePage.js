@@ -1,7 +1,8 @@
 import styles from "../styles/pages/Home.module.scss";
 import PlayersList from "../Components/PlayersList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 
 const HomePage = () => {
 	const [withDiscountList, setWithDiscountList] = useState([]);
@@ -9,23 +10,43 @@ const HomePage = () => {
 	const [privateList, setPrivateList] = useState([]);
 	const [players, setPlayers] = useState([]);
 
+	const [isToggled, setIsToggled] = useState(false);
+	const [currentRadioValue, setCurrentRadioValue] = useState(0);
+
 	const [totalPrice, setTotalPrice] = useState(0);
-	// const players = useSelector(state => state.players.playersState) || [];
+
+	const dispatch = useDispatch();
 
 	const firstTimeRender = useRef(true);
+	const dialogRef = useRef();
 
 	useEffect(() => {
 		if (firstTimeRender.current) {
 			handleNoDiscountList(withNoDiscountList);
 			handlePrivateSwimmingList(privateList);
 			handleDiscountList(withDiscountList);
+			setTotalPrice(price => (price += price * currentRadioValue));
 			firstTimeRender.current = false;
 		}
 	}, [firstTimeRender.current]);
 
-	useEffect(() => {
-		firstTimeRender.current = false;
-	}, []);
+
+
+	const toggleChange = () => {
+		setIsToggled(!isToggled);
+		if (isToggled) {
+			setCurrentRadioValue(0);
+		}
+	};
+
+	const handleRadioChange = e => {
+		if (!isToggled) {
+			setCurrentRadioValue(0);
+			return;
+		}
+
+		setCurrentRadioValue(parseFloat(e.target.value));
+	};
 
 	// divide player sports to categories and subCategories
 	//main category is sports with applied discount and others
@@ -385,216 +406,356 @@ const HomePage = () => {
 
 	return (
 		<div className={styles.container}>
+			<dialog ref={dialogRef}>
+				<div className={styles.discountContainer}>
+					<div className={styles.discountItemContainer}>
+						<div className={styles.discountSwitchContainer}>
+							<input
+								className={`${styles.tgl} ${styles.tglSkewed}`}
+								id="cb3"
+								type="checkbox"
+								checked={isToggled}
+								onChange={toggleChange}
+							/>
+							<label
+								className={styles.tglBtn}
+								data-tg-off="VISA OFF"
+								data-tg-on="VISA ON"
+								htmlFor="cb3"
+							></label>
+						</div>
+
+						<div className={styles.radioContainer}>
+							<div>
+								<input
+									id="radio-item-1"
+									name="radio-item-1"
+									type="radio"
+									value={0.01}
+									onChange={handleRadioChange}
+									checked={currentRadioValue === 0.01}
+								/>
+								<label htmlFor="radio-item-1"> Ahly Bank</label>
+							</div>
+
+							<div>
+								<input
+									id="radio-item-2"
+									name="radio-item-2"
+									type="radio"
+									value={0.02}
+									onChange={handleRadioChange}
+									checked={currentRadioValue === 0.02}
+								/>
+								<label htmlFor="radio-item-2">
+									{" "}
+									Other Bank
+								</label>
+							</div>
+						</div>
+					</div>
+					<div>
+						{" "}
+						<button
+							type="button"
+							onClick={() => {
+								calculate();
+							}}
+						>
+							Calculate
+						</button>
+						<button
+							type="button"
+							onClick={() => {
+								// calculate();
+								dialogRef.current.close();
+							}}
+						>
+							Cancel
+						</button>
+					</div>
+				</div>
+			</dialog>
 			<div className={styles.title}>Calculate Sports Payments</div>
 			<PlayersList playersList={setPlayers} />
 			<h3 style={{ color: "red" }}>{totalPrice}</h3>
 			<button
 				type="button"
 				onClick={() => {
-					calculate();
+					// calculate();
+					dialogRef.current.showModal();
 				}}
 			>
 				Calculate
 			</button>
 			<div>
-				<div className={styles.table_wrapper}>
-					<div className={styles.table_header}>
-						<div className={styles.title}>private</div>
-					</div>
-
-					<div className={styles.dataWrapper}>
-						<div className={` ${styles.table_head}`}>
-							<p className={styles.table_column_header}></p>
-							<p className={styles.table_row_header}>Name</p>
-							<p className={styles.table_row_header}>Category</p>
-							<p className={styles.table_row_header}>type</p>
-							<p className={styles.table_row_header}>Price</p>
-							<p className={styles.table_row_header}>Discount</p>
-							<p className={styles.table_row_header}>Total</p>
+				{privateList?.length > 0 && (
+					<div className={styles.table_wrapper}>
+						<div className={styles.table_header}>
+							<div className={styles.title}>private</div>
 						</div>
-						<ul className={styles.table_body}>
-							{privateList?.map((item, index) => (
-								<li
-									key={index}
-									style={{
-										"--sports-length": item.sports?.length
-									}}
-									className={styles.table_row}
-								>
-									<p className={styles.table_column_header}>
-										{item.name}
-									</p>
-									{item.sports?.map((sport, index) => (
-										<ul
-											key={index}
-											className={styles.table_data}
+
+						<div className={styles.dataWrapper}>
+							<div className={` ${styles.table_head}`}>
+								<p className={styles.table_column_header}></p>
+								<p className={styles.table_row_header}>Name</p>
+								<p className={styles.table_row_header}>
+									Category
+								</p>
+								<p className={styles.table_row_header}>type</p>
+								<p className={styles.table_row_header}>Price</p>
+								<p className={styles.table_row_header}>
+									Discount
+								</p>
+								<p className={styles.table_row_header}>Total</p>
+							</div>
+							<ul className={styles.table_body}>
+								{privateList?.map((item, index) => (
+									<li
+										key={index}
+										style={{
+											"--sports-length":
+												item.sports?.length
+										}}
+										className={styles.table_row}
+									>
+										<p
+											className={
+												styles.table_column_header
+											}
 										>
-											<li className={styles.data_cell}>
-												<p>{sport.name}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.category}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.type}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.price}$</p>
-											</li>
-											{sport.discount > -1 && (
+											{item.name}
+										</p>
+										{item.sports?.map((sport, index) => (
+											<ul
+												key={index}
+												className={styles.table_data}
+											>
 												<li
 													className={styles.data_cell}
 												>
-													<p>{sport.discount}%</p>
+													<p>{sport.name}</p>
 												</li>
-											)}
-											{sport.discount > -1 && (
 												<li
 													className={styles.data_cell}
 												>
-													<p>{sport.total}$</p>
+													<p>{sport.category}</p>
 												</li>
-											)}
-										</ul>
-									))}
-								</li>
-							))}
-						</ul>
-					</div>
-				</div>
-
-				<div className={styles.table_wrapper}>
-					<div className={styles.table_header}>
-						<div className={styles.title}>Discount</div>
-					</div>
-
-					<div className={styles.dataWrapper}>
-						<div className={` ${styles.table_head}`}>
-							<p className={styles.table_column_header}></p>
-							<p className={styles.table_row_header}>Name</p>
-							<p className={styles.table_row_header}>Category</p>
-							<p className={styles.table_row_header}>type</p>
-							<p className={styles.table_row_header}>Price</p>
-							<p className={styles.table_row_header}>Discount</p>
-							<p className={styles.table_row_header}>Total</p>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.type}</p>
+												</li>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.price}$</p>
+												</li>
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.discount}%</p>
+													</li>
+												)}
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.total}$</p>
+													</li>
+												)}
+											</ul>
+										))}
+									</li>
+								))}
+							</ul>
 						</div>
-						<ul className={styles.table_body}>
-							{withDiscountList?.map((item, index) => (
-								<li
-									key={index}
-									style={{
-										"--sports-length": item.sports?.length
-									}}
-									className={styles.table_row}
-								>
-									<p className={styles.table_column_header}>
-										{item.name}
-									</p>
-
-									{item.sports?.map((sport, index) => (
-										<ul
-											key={index}
-											className={styles.table_data}
-										>
-											<li className={styles.data_cell}>
-												<p>{sport.name}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.category}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.type}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.price}$</p>
-											</li>
-											{sport.discount > -1 && (
-												<li
-													className={styles.data_cell}
-												>
-													<p>{sport.discount}%</p>
-												</li>
-											)}
-											{sport.discount > -1 && (
-												<li
-													className={styles.data_cell}
-												>
-													<p>{sport.total}$</p>
-												</li>
-											)}
-										</ul>
-									))}
-								</li>
-							))}
-						</ul>
 					</div>
-				</div>
+				)}
 
-				<div className={styles.table_wrapper}>
-					<div className={styles.table_header}>
-						<div className={styles.title}>No-Discount</div>
-					</div>
-
-					<div className={styles.dataWrapper}>
-						<div className={` ${styles.table_head}`}>
-							<p className={styles.table_column_header}></p>
-							<p className={styles.table_row_header}>Name</p>
-							<p className={styles.table_row_header}>Category</p>
-							<p className={styles.table_row_header}>type</p>
-							<p className={styles.table_row_header}>Price</p>
-							<p className={styles.table_row_header}>Discount</p>
-							<p className={styles.table_row_header}>Total</p>
+				{withDiscountList?.length > 0 && (
+					<div className={styles.table_wrapper}>
+						<div className={styles.table_header}>
+							<div className={styles.title}>Discount</div>
 						</div>
-						<ul className={styles.table_body}>
-							{withNoDiscountList?.map((item, index) => (
-								<li
-									key={index}
-									style={{
-										"--sports-length": item.sports?.length
-									}}
-									className={styles.table_row}
-								>
-									<p className={styles.table_column_header}>
-										{item.name}
-									</p>
-									{item.sports?.map((sport, index) => (
-										<ul
-											key={index}
-											className={styles.table_data}
+
+						<div className={styles.dataWrapper}>
+							<div className={` ${styles.table_head}`}>
+								<p className={styles.table_column_header}></p>
+								<p className={styles.table_row_header}>Name</p>
+								<p className={styles.table_row_header}>
+									Category
+								</p>
+								<p className={styles.table_row_header}>type</p>
+								<p className={styles.table_row_header}>Price</p>
+								<p className={styles.table_row_header}>
+									Discount
+								</p>
+								<p className={styles.table_row_header}>Total</p>
+							</div>
+							<ul className={styles.table_body}>
+								{withDiscountList?.map((item, index) => (
+									<li
+										key={index}
+										style={{
+											"--sports-length":
+												item.sports?.length
+										}}
+										className={styles.table_row}
+									>
+										<p
+											className={
+												styles.table_column_header
+											}
 										>
-											<li className={styles.data_cell}>
-												<p>{sport.name}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.category}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.type}</p>
-											</li>
-											<li className={styles.data_cell}>
-												<p>{sport.price}$</p>
-											</li>
-											{sport.discount > -1 && (
+											{item.name}
+										</p>
+
+										{item.sports?.map((sport, index) => (
+											<ul
+												key={index}
+												className={styles.table_data}
+											>
 												<li
 													className={styles.data_cell}
 												>
-													<p>{sport.discount}%</p>
+													<p>{sport.name}</p>
 												</li>
-											)}
-											{sport.discount > -1 && (
 												<li
 													className={styles.data_cell}
 												>
-													<p>{sport.total}$</p>
+													<p>{sport.category}</p>
 												</li>
-											)}
-										</ul>
-									))}
-								</li>
-							))}
-						</ul>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.type}</p>
+												</li>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.price}$</p>
+												</li>
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.discount}%</p>
+													</li>
+												)}
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.total}$</p>
+													</li>
+												)}
+											</ul>
+										))}
+									</li>
+								))}
+							</ul>
+						</div>
 					</div>
-				</div>
+				)}
+
+				{withNoDiscountList?.length > 0 && (
+					<div className={styles.table_wrapper}>
+						<div className={styles.table_header}>
+							<div className={styles.title}>No-Discount</div>
+						</div>
+
+						<div className={styles.dataWrapper}>
+							<div className={` ${styles.table_head}`}>
+								<p className={styles.table_column_header}></p>
+								<p className={styles.table_row_header}>Name</p>
+								<p className={styles.table_row_header}>
+									Category
+								</p>
+								<p className={styles.table_row_header}>type</p>
+								<p className={styles.table_row_header}>Price</p>
+								<p className={styles.table_row_header}>
+									Discount
+								</p>
+								<p className={styles.table_row_header}>Total</p>
+							</div>
+							<ul className={styles.table_body}>
+								{withNoDiscountList?.map((item, index) => (
+									<li
+										key={index}
+										style={{
+											"--sports-length":
+												item.sports?.length
+										}}
+										className={styles.table_row}
+									>
+										<p
+											className={
+												styles.table_column_header
+											}
+										>
+											{item.name}
+										</p>
+										{item.sports?.map((sport, index) => (
+											<ul
+												key={index}
+												className={styles.table_data}
+											>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.name}</p>
+												</li>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.category}</p>
+												</li>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.type}</p>
+												</li>
+												<li
+													className={styles.data_cell}
+												>
+													<p>{sport.price}$</p>
+												</li>
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.discount}%</p>
+													</li>
+												)}
+												{sport.discount > -1 && (
+													<li
+														className={
+															styles.data_cell
+														}
+													>
+														<p>{sport.total}$</p>
+													</li>
+												)}
+											</ul>
+										))}
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);

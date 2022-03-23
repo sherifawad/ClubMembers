@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { nextPlayerId } from "../Data/utils";
 
 export const playersInitialState = {
@@ -8,6 +8,33 @@ export const playersInitialState = {
 
 const addItemToArray = (state, { payload }) => {
 	state.push(payload);
+};
+
+const updatePlayersSportsData = (state, { payload }) => {
+    if(!state?.playersState) return;
+console.log("🚀 ~ file: playersSlice.js ~ line 14 ~ updatePlayersSportsData ~ state", state)
+	const players = state.playersState.reduce((accPlayers, player) => {
+		const sports = player.sports.reduce((accSports, sport) => {
+			let newSport = { ...sport };
+			// check sport in payload list
+			// if exists update data
+			let sportExist = payload.find(s => s.id === newSport.id);
+			if (sportExist) {
+				newSport = { ...sportExist };
+				accSports.push(newSport);
+			}
+			return accSports;
+		}, []);
+		player.sports = sports;
+		accPlayers.push(player);
+		return accPlayers;
+	}, []);
+
+	console.log(
+		"🚀 ~ file: playersSlice.js ~ line 30 ~ state.playersState=state.playersState.reduce ~ state.playersState",
+		players
+	);
+	state.playersState = players;
 };
 
 const removeItemFromArray = (state, { payload }) => {
@@ -68,9 +95,8 @@ const playersSlice = createSlice({
 				player => player.id === payload.id
 			);
 			if (playerIndex > -1) {
-                state.playersState[playerIndex].name = payload.name;
-                state.playersState[playerIndex].sports = payload.sports;
-
+				state.playersState[playerIndex].name = payload.name;
+				state.playersState[playerIndex].sports = payload.sports;
 			}
 		},
 		setSchoolGroup: (state, { payload }) => {
@@ -84,7 +110,8 @@ const playersSlice = createSlice({
 				...state,
 				SchoolGroupSelected: false
 			};
-		}
+		},
+		updatePlayersSports: updatePlayersSportsData
 	}
 });
 
@@ -97,7 +124,13 @@ export const {
 	deletePlayer,
 	updatePlayer,
 	setSchoolGroup,
-	removeSchoolGroup
+	removeSchoolGroup,
+	updatePlayersSports
 } = playersSlice.actions;
+
+export const selectPlayers = createSelector(
+	state => state.players,
+	players => players.playersState
+);
 
 export default playersSlice.reducer;

@@ -1,5 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+	createAsyncThunk,
+	createSelector,
+	createSlice
+} from "@reduxjs/toolkit";
 import sportsApi from "../services/sportsApi";
+import { updatePlayersSports } from "./playersSlice";
 
 export const sportsInitialState = {
 	loading: false,
@@ -21,10 +26,12 @@ export const sportsInitialState = {
 
 export const fetchAllSports = createAsyncThunk(
 	"sports/fetchAll",
-	async (_, { rejectWithValue }) => {
+	async (_, { rejectWithValue, dispatch }) => {
 		try {
 			// thunkAPI has a method to get any state value from the redux store
-			return await sportsApi.fetchAll();
+			const data = await sportsApi.fetchAll();
+			dispatch(updatePlayersSports(data));
+			return data;
 		} catch (error) {
 			const message =
 				(error.response &&
@@ -95,5 +102,40 @@ const sportSlice = createSlice({
 
 export const { getSportsList, getSportName, gerSportId, gerSportsCategories } =
 	sportSlice.actions;
+
+export const selectSports = createSelector(
+	// state => {
+	// 	if (!state?.players?.playersState) return;
+	// 	console.log(
+	// 		"🚀 ~ file: playersSlice.js ~ line 14 ~ updatePlayersSportsData ~ state",
+	// 		state
+	// 	);
+	// 	const players = state.players.playersState.reduce(
+	// 		(accPlayers, player) => {
+	// 			const newSports = player.sports.reduce((accSports, sport) => {
+	// 				let newSport = { ...sport };
+	// 				// check sport in payload list
+	// 				// if exists update data
+	// 				let sportExist = state.sports.list.find(
+	// 					s => s.id === newSport.id
+	// 				);
+	// 				if (sportExist) {
+	// 					newSport = { ...sportExist };
+	// 					accSports.push(newSport);
+	// 				}
+	// 				return accSports;
+	// 			}, []);
+	// 			player.sports = newSports;
+	// 			accPlayers.push(player);
+	// 			return accPlayers;
+	// 		},
+	// 		[]
+	// 	);
+	// 	state.players.playersState = players;
+	// 	return state.sports;
+	// },
+	state => state.sports,
+	sports => sports
+);
 
 export default sportSlice.reducer;

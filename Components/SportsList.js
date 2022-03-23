@@ -44,7 +44,7 @@ const SportsList = ({
 	return (
 		<div className={styles.Container}>
 			<ul className={styles.items}>
-				{sportsList.map((sport, index) => (
+				{sportsList?.map((sport, index) => (
 					<li key={index} className={styles.item_content}>
 						<div className={styles.item_data}>
 							<div className={styles.item_header}>
