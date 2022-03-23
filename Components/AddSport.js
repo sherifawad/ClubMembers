@@ -1,13 +1,22 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSchoolGroup } from "../StoreRedux/playersSlice";
 import { selectSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
 const AddSport = ({ setSport }) => {
+	const [selectedSportID, setSelectedSportID] = useState(0);
+	const [selectedSport, setSelectedSport] = useState({});
+	const [sportCategoryList, setSportCategoryList] = useState([]);
+	const [sportCategoryIndex, setSportCategoryIndex] = useState(" ");
+	const [sportCategory, setSportCategory] = useState(" ");
+	const [sportTypeList, setSportTypeList] = useState([]);
+	const [sportType, setSportType] = useState(" ");
+	const [sportPrice, setSportPrice] = useState(0);
+	const [sportTypeName, setSportTypeName] = useState("");
+	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
 	// Extracting sports state from redux store
-	const { list, loading, error } = useSelector(selectSports);
+	const { list, loading, error, errorMessage } = useSelector(selectSports);
 	const dispatch = useDispatch();
 	const privateSchoolGroupSelected = useSelector(
 		state => state.players.SchoolGroupSelected
@@ -103,23 +112,12 @@ const AddSport = ({ setSport }) => {
 		resetValues();
 	};
 
-	const [selectedSportID, setSelectedSportID] = useState(0);
-	const [selectedSport, setSelectedSport] = useState({});
-	const [sportCategoryList, setSportCategoryList] = useState([]);
-	const [sportCategoryIndex, setSportCategoryIndex] = useState(" ");
-	const [sportCategory, setSportCategory] = useState(" ");
-	const [sportTypeList, setSportTypeList] = useState([]);
-	const [sportType, setSportType] = useState(" ");
-	const [sportPrice, setSportPrice] = useState(0);
-	const [sportTypeName, setSportTypeName] = useState("");
-	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
-
 	if (loading) {
 		return <h1>....Loading</h1>;
 	}
 
 	if (error) {
-		return <h1>Error</h1>;
+		return <h1>{errorMessage}</h1>;
 	}
 	return (
 		<div className={styles.container}>

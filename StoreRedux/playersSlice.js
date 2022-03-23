@@ -11,29 +11,53 @@ const addItemToArray = (state, { payload }) => {
 };
 
 const updatePlayersSportsData = (state, { payload }) => {
-    if(!state?.playersState) return;
-console.log("🚀 ~ file: playersSlice.js ~ line 14 ~ updatePlayersSportsData ~ state", state)
+	if (state?.playersState.length < 1) return { ...state };
 	const players = state.playersState.reduce((accPlayers, player) => {
-		const sports = player.sports.reduce((accSports, sport) => {
-			let newSport = { ...sport };
+		if (player?.sports?.length < 1) return null;
+		const newSports = player.sports.reduce((accSports, sport) => {
 			// check sport in payload list
 			// if exists update data
-			let sportExist = payload.find(s => s.id === newSport.id);
+			let sportExist = payload.find(s => s.id === sport.id);
 			if (sportExist) {
-				newSport = { ...sportExist };
+				// get sport discount option and price to update
+				//get sport categories
+				const sportsCategories = sportExist["categories"];
+				if (sportsCategories?.length < 1) return;
+				// find a key which categories sub keys equal to player sport category => private === private
+				const categoryKey = sportsCategories.find(
+					cat => Object.keys(cat) == sport.category
+				);
+				if (!categoryKey) return;
+				// get selected category sport types
+				const sportTypes = categoryKey[`${sport.category}`];
+				//then find in the object key array a type equal to sport type  => full === full
+				if (sportTypes?.length < 1) return;
+				const { canDiscount, price } = sportTypes.find(
+					t => t["type"] === sport.type
+				);
+				// const { canDiscount, price } = sportExist["categories"]
+				// 	?.find(cat => Object.keys(cat) == sport.category)
+				// 	[`${sport.category}`]?.find(t => t["type"] === sport.type);
+
+				const newSport = {
+					id: sport.id,
+					name: sport.name,
+					category: sport.category,
+					type: sport.type,
+					canDiscount: canDiscount,
+					price: price,
+					discount: -1,
+					total: -1
+				};
 				accSports.push(newSport);
 			}
 			return accSports;
 		}, []);
-		player.sports = sports;
-		accPlayers.push(player);
+		er.sports = newSports || [];
+		accPlayers.push(player || {});
 		return accPlayers;
 	}, []);
 
-	console.log(
-		"🚀 ~ file: playersSlice.js ~ line 30 ~ state.playersState=state.playersState.reduce ~ state.playersState",
-		players
-	);
 	state.playersState = players;
 };
 

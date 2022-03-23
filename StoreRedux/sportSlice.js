@@ -28,17 +28,21 @@ export const fetchAllSports = createAsyncThunk(
 	"sports/fetchAll",
 	async (_, { rejectWithValue, dispatch }) => {
 		try {
-			// thunkAPI has a method to get any state value from the redux store
+			// fetch sports list from server
 			const data = await sportsApi.fetchAll();
+			// run updatePlayersSports action in players slice
 			dispatch(updatePlayersSports(data));
+			// return data as payload
 			return data;
 		} catch (error) {
+			// set custom error message
 			const message =
 				(error.response &&
 					error.response.data &&
 					error.response.data.message) ||
 				error.message ||
 				error.toString();
+			// return custom message as payload
 			return rejectWithValue(message);
 		}
 	}
@@ -105,33 +109,69 @@ export const { getSportsList, getSportName, gerSportId, gerSportsCategories } =
 
 export const selectSports = createSelector(
 	// state => {
-	// 	if (!state?.players?.playersState) return;
-	// 	console.log(
-	// 		"🚀 ~ file: playersSlice.js ~ line 14 ~ updatePlayersSportsData ~ state",
-	// 		state
-	// 	);
+	// 	if (state?.players?.playersState.length < 1) return state.sports;
+
 	// 	const players = state.players.playersState.reduce(
 	// 		(accPlayers, player) => {
+	// 			console.log(
+	// 				"🚀 ~ file: sportSlice.js ~ line 115 ~ player",
+	// 				player
+	// 			);
+	// 			if (player?.sports?.length < 1) return;
+
 	// 			const newSports = player.sports.reduce((accSports, sport) => {
-	// 				let newSport = { ...sport };
 	// 				// check sport in payload list
 	// 				// if exists update data
 	// 				let sportExist = state.sports.list.find(
-	// 					s => s.id === newSport.id
+	// 					s => s.id === sport.id
 	// 				);
 	// 				if (sportExist) {
-	// 					newSport = { ...sportExist };
+	// 					console.log(
+	// 						"🚀 ~ file: sportSlice.js ~ line 128 ~ newSports ~ sportExist",
+	// 						sportExist
+	// 					);
+	// 					//get sport discount option and price to update
+	// 					//get sport categories
+	// 					const sportsCategories = sportExist["categories"];
+	// 					if (sportsCategories?.length < 1) return;
+	// 					// find a key which categories sub keys equal to player sport category => private === private
+	// 					const categoryKey = sportsCategories.find(
+	// 						cat => Object.keys(cat) == sport.category
+	// 					);
+	// 					if (!categoryKey) return;
+	// 					// get selected category sport types
+	// 					const sportTypes = categoryKey[`${sport.category}`];
+	// 					//then find in the object key array a type equal to sport type  => full === full
+	// 					if (sportTypes?.length < 1) return;
+	// 					const { canDiscount, price } = sportTypes.find(
+	// 						t => t["type"] === sport.type
+	// 					);
+	// 					// const { canDiscount, price } = sportExist["categories"]
+	// 					// 	?.find(cat => Object.keys(cat) == sport.category)
+	// 					// 	[`${sport.category}`]?.find(t => t["type"] === sport.type);
+
+	// 					const newSport = {
+	// 						...sportExist,
+	// 						canDiscount: canDiscount,
+	// 						price: price,
+	// 						discount: -1,
+	// 						total: -1
+	// 					};
 	// 					accSports.push(newSport);
 	// 				}
+    //                 console.log("🚀 ~ file: sportSlice.js ~ line 164 ~ newSports ~ accSports", accSports)
 	// 				return accSports;
 	// 			}, []);
-	// 			player.sports = newSports;
-	// 			accPlayers.push(player);
+	// 			let p = { ...player, sports: newSports };
+    //             console.log("🚀 ~ file: sportSlice.js ~ line 166 ~ p", p)
+	// 			accPlayers.push({ ...player, sports: newSports });
+
 	// 			return accPlayers;
 	// 		},
 	// 		[]
 	// 	);
-	// 	state.players.playersState = players;
+	// 	console.log("🚀 ~ file: sportSlice.js ~ line 166 ~ players", players);
+	// 	state.players = { ...state.players, playersState: players };
 	// 	return state.sports;
 	// },
 	state => state.sports,
