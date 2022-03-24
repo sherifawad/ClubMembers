@@ -11,6 +11,10 @@ const MainLayout = ({ children }) => {
 			<div>
 				<Head>
 					<title>Club Members</title>
+					<meta
+						name="description"
+						content="A site that Save sports subscriptions an calculate the total payments including the discounts that may be applied and the payment type cash or with credit card"
+					></meta>
 					<meta name="theme-color" content="#fff" />
 					<meta
 						name="viewport"

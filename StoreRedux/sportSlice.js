@@ -26,12 +26,15 @@ export const sportsInitialState = {
 
 export const fetchAllSports = createAsyncThunk(
 	"sports/fetchAll",
-	async (_, { rejectWithValue, dispatch }) => {
+	// async (_, { rejectWithValue, dispatch }) => {
+	async (updatePlayers = true, { rejectWithValue, dispatch }) => {
 		try {
 			// fetch sports list from server
 			const data = await sportsApi.fetchAll();
-			// run updatePlayersSports action in players slice
-			dispatch(updatePlayersSports(data));
+			if (updatePlayers) {
+				// run updatePlayersSports action in players slice
+				dispatch(updatePlayersSports(data));
+			}
 			// return data as payload
 			return data;
 		} catch (error) {
@@ -159,11 +162,11 @@ export const selectSports = createSelector(
 	// 					};
 	// 					accSports.push(newSport);
 	// 				}
-    //                 console.log("🚀 ~ file: sportSlice.js ~ line 164 ~ newSports ~ accSports", accSports)
+	//                 console.log("🚀 ~ file: sportSlice.js ~ line 164 ~ newSports ~ accSports", accSports)
 	// 				return accSports;
 	// 			}, []);
 	// 			let p = { ...player, sports: newSports };
-    //             console.log("🚀 ~ file: sportSlice.js ~ line 166 ~ p", p)
+	//             console.log("🚀 ~ file: sportSlice.js ~ line 166 ~ p", p)
 	// 			accPlayers.push({ ...player, sports: newSports });
 
 	// 			return accPlayers;

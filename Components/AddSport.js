@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSchoolGroup } from "../StoreRedux/playersSlice";
-import { selectSports } from "../StoreRedux/sportSlice";
+import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
 const AddSport = ({ setSport }) => {
@@ -11,7 +11,7 @@ const AddSport = ({ setSport }) => {
 	const [sportCategoryIndex, setSportCategoryIndex] = useState(" ");
 	const [sportCategory, setSportCategory] = useState(" ");
 	const [sportTypeList, setSportTypeList] = useState([]);
-	const [sportType, setSportType] = useState(" ");
+	const [sportTypeIndex, setSportTypeIndex] = useState(" ");
 	const [sportPrice, setSportPrice] = useState(0);
 	const [sportTypeName, setSportTypeName] = useState("");
 	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
@@ -21,6 +21,12 @@ const AddSport = ({ setSport }) => {
 	const privateSchoolGroupSelected = useSelector(
 		state => state.players.SchoolGroupSelected
 	);
+
+	useEffect(() => {
+		if (list?.length < 1) {
+			dispatch(fetchAllSports(false));
+		}
+	}, [dispatch, list?.length]);
 
 	const handleSelectedSport = sportID => {
 		if (!sportID && !list) return;
@@ -52,7 +58,7 @@ const AddSport = ({ setSport }) => {
 		if (!selectedTypeIndex) return;
 		const selectedType = sportTypeList[selectedTypeIndex];
 		if (selectedType) {
-			setSportType(selectedType);
+			setSportTypeIndex(selectedTypeIndex);
 			setSportTypeName(selectedType["type"]);
 			setSportPrice(selectedType["price"]);
 			setSportTypeDiscount(selectedType["canDiscount"]);
@@ -74,7 +80,7 @@ const AddSport = ({ setSport }) => {
 		}
 		if (category) {
 			setSportTypeList([]);
-			setSportType(" ");
+			setSportTypeIndex(" ");
 			setSportPrice(0);
 			setSportTypeName("");
 			setSportTypeDiscount(false);
@@ -163,7 +169,7 @@ const AddSport = ({ setSport }) => {
 					<select
 						className={styles.selectItem}
 						onChange={e => handleSelectedType(e.target.value)}
-						value={sportType}
+						value={sportTypeIndex}
 					>
 						<option value=" " disabled></option>
 						{sportTypeList.map((x, i) => (
