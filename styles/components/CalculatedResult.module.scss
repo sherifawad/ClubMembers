@@ -1,0 +1,267 @@
+@use "../abstracts/mixins" as *;
+.container {
+	margin-inline: auto;
+
+	width: 100%;
+	height: 100%;
+	padding: 0 2rem;
+	display: flex;
+	flex-direction: column;
+
+	dialog {
+		position: fixed;
+		margin: auto;
+		width: 35ch;
+		padding: 1em 0.25em;
+		.dialogButtonsContainer {
+			display: flex;
+			justify-content: space-evenly;
+			width: 100%;
+			margin-block-start: 0.5em;
+		}
+	}
+
+	.price {
+		color: green;
+		margin: 2em auto;
+	}
+	.calcButton {
+	}
+}
+
+.table_wrapper {
+	margin: 1rem auto;
+	padding-bottom: 1rem;
+	border-radius: 4px;
+	max-width: 80%;
+	min-width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.dataWrapper {
+		display: grid;
+		grid-template-columns: 1fr 7fr;
+		width: 100%;
+		.table_head {
+			display: grid;
+			grid-template-rows: repeat(7, 1fr);
+
+			background-color: lightblue;
+			.table_row_header,
+			.table_column_header {
+				display: grid;
+				place-items: center;
+				font-weight: bold;
+				// width: 15ch;
+
+				border-block-end: 1px solid black;
+				border-inline-start: 1px solid black;
+			}
+			@include mq(small, max) {
+				opacity: 0;
+				width: 1px;
+			}
+		}
+
+		.table_body {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+
+			.table_row {
+				display: grid;
+				grid-template-rows: 1fr 6fr;
+
+				grid-template-columns: repeat(var(--sports-length), 1fr);
+
+				&:nth-of-type(2n) {
+					background-color: lightgray;
+				}
+				.table_column_header {
+					grid-column: 1 / 3;
+					grid-row: 1 / 2;
+					font-style: italic;
+					background-color: lightblue;
+
+					text-align: center;
+					font-size: 0.85rem;
+					font-weight: bold;
+
+					display: flex;
+					justify-content: space-around;
+					align-items: center;
+					border-inline-end: 1px solid black;
+					border-block: 1px solid black;
+					&:first-of-type {
+						border-inline-start: 1px solid black;
+					}
+				}
+
+				.table_data_wrapper {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+				}
+				.table_data {
+					display: grid;
+					grid-template-rows: repeat(6, 1fr);
+					&:first-of-type {
+						border-inline-start: 1px solid black;
+					}
+					.data_cell {
+						display: flex;
+						justify-content: space-around;
+						align-items: center;
+						padding: 0.3em;
+						border-block-end: 1px solid black;
+						border-inline-end: 1px solid black;
+
+						p {
+							text-align: center;
+						}
+					}
+				}
+			}
+
+			.table_column:nth-of-type(2n) {
+				background-color: lightgray;
+			}
+		}
+	}
+
+	.table_header {
+		font-weight: bold;
+		.title {
+			text-decoration-style: italic;
+			color: lightblue;
+			margin-bottom: 0.5em;
+			&:after {
+				content: "";
+				width: 120%;
+			}
+		}
+		.table_column {
+			background-color: lightblue;
+		}
+	}
+}
+
+.discountContainer {
+	display: grid;
+	place-items: center;
+	.discountItemContainer {
+		display: flex;
+		.discountSwitchContainer {
+			margin-inline-end: 0.5em;
+
+			.tgl {
+				display: none;
+
+				// add default box-sizing for this scope
+				&,
+				&:after,
+				&:before,
+				& *,
+				& *:after,
+				& *:before,
+				& + .tglBtn {
+					box-sizing: border-box;
+					&::selection {
+						background: none;
+					}
+				}
+
+				+ .tglBtn {
+					outline: 0;
+					display: block;
+					width: 4em;
+					height: 2em;
+					position: relative;
+					cursor: pointer;
+					user-select: none;
+					&:after,
+					&:before {
+						position: relative;
+						display: block;
+						content: "";
+						width: 50%;
+						height: 100%;
+					}
+
+					&:after {
+						left: 0;
+					}
+
+					&:before {
+						display: none;
+					}
+				}
+
+				&:checked + .tglBtn:after {
+					left: 50%;
+				}
+			}
+
+			.tglSkewed {
+				+ .tglBtn {
+					overflow: hidden;
+					transform: skew(-10deg);
+					backface-visibility: hidden;
+					transition: all 0.2s ease;
+					font-family: sans-serif;
+					background: #888;
+					&:after,
+					&:before {
+						transform: skew(10deg);
+						display: inline-block;
+						transition: all 0.2s ease;
+						width: 100%;
+						text-align: center;
+						position: absolute;
+						line-height: 2em;
+						font-weight: bold;
+						color: #fff;
+						text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+					}
+
+					&:after {
+						left: 100%;
+						content: attr(data-tg-on);
+					}
+
+					&:before {
+						left: 0;
+						content: attr(data-tg-off);
+					}
+
+					&:active {
+						background: #888;
+						&:before {
+							left: -10%;
+						}
+					}
+				}
+
+				&:checked + .tglBtn {
+					background: #86d993;
+					&:before {
+						left: -100%;
+					}
+
+					&:after {
+						left: 0;
+					}
+
+					&:active:after {
+						left: 10%;
+					}
+				}
+			}
+		}
+
+		.radioContainer {
+			display: flex;
+			input {
+				margin-inline-start: 0.5em;
+			}
+		}
+	}
+}

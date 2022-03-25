@@ -1,7 +1,7 @@
 const localServer = "http://localhost:3000";
 const sportsApi = {
 	async fetchAll() {
-		let res = await fetch(`${localServer}/api/sports`);
+		let res = await fetch("/api/sports");
 		res = await res.json();
 		return res || [];
 	},

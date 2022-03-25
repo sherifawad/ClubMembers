@@ -35,7 +35,8 @@ const updatePlayersSportsData = (state, { payload }) => {
 				const sportDetails = sportTypes.find(
 					t => t["type"] === sport.type
 				);
-				if (!sportDetails || sportDetails === undefined) return accSports;
+				if (!sportDetails || sportDetails === undefined)
+					return accSports;
 				// const { canDiscount, price } = sportExist["categories"]
 				// 	?.find(cat => Object.keys(cat) == sport.category)
 				// 	[`${sport.category}`]?.find(t => t["type"] === sport.type);
@@ -56,11 +57,9 @@ const updatePlayersSportsData = (state, { payload }) => {
 		}, []);
 		player.sports = newSports || [];
 		accPlayers.push(player || {});
-        console.log("🚀 ~ file: playersSlice.js ~ line 59 ~ players ~ player", player)
 		return accPlayers;
 	}, []);
 
-    console.log("🚀 ~ file: playersSlice.js ~ line 63 ~ updatePlayersSportsData ~ players", players)
 	state.playersState = players;
 };
 
