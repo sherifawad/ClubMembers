@@ -16,7 +16,22 @@ function MyApp({ Component, pageProps }) {
 	});
 	return (
 		<Provider store={store}>
-			<PersistGate loading={<div>loading</div>} persistor={persister}>
+			<PersistGate
+				loading={
+					<h2
+						style={{
+							display: "grid",
+							placeContent: "center",
+							placeItems: "center",
+							margin: "auto",
+							height: "100vh"
+						}}
+					>
+						....loading
+					</h2>
+				}
+				persistor={persister}
+			>
 				<MainLayout>
 					<Component {...pageProps} />
 				</MainLayout>

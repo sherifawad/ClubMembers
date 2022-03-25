@@ -10,7 +10,6 @@ const HomePage = () => {
 		<div className={styles.container}>
 			<div className={styles.title}>Calculate Sports Payments</div>
 			<PlayersList playersList={setPlayers} />
-
 			<CalculatedResult players={players} />
 		</div>
 	);
