@@ -271,7 +271,7 @@ function CalculatedResult({ players = [] }) {
 		if (playersWithMultiple.length > 0) {
 			const multiple = playersWithMultiple?.reduce(
 				(accPlayers, player) => {
-					const sports = player.sports?.reduce(
+					const newSports = player.sports?.reduce(
 						(accSports, sport, sportIndex) => {
 							//copy sport to edit as redux set values as read only
 							let newSport = { ...sport };
@@ -293,7 +293,7 @@ function CalculatedResult({ players = [] }) {
 										totalPrice += sport.price * 0.8;
 										newSport.discount = 20;
 										newSport.total = sport.price * 0.8;
-									} else if (playerIndex == 1) {
+									} else if (sportIndex == 1) {
 										totalPrice += sport.price * 0.9;
 										newSport.discount = 10;
 										newSport.total = sport.price * 0.9;
@@ -309,8 +309,8 @@ function CalculatedResult({ players = [] }) {
 						},
 						[]
 					);
-					player.sports = sports;
-					accPlayers.push(player);
+					player.sports = newSports;
+					accPlayers.push({ ...player, Sports: newSports });
 					return accPlayers;
 				},
 				[]
@@ -388,6 +388,7 @@ function CalculatedResult({ players = [] }) {
 			},
 			[]
 		);
+
 		setWithDiscountList(old => [...old, ...single]);
 		setTotalPrice(oldPrice => (oldPrice += totalPrice));
 	};
@@ -408,10 +409,10 @@ function CalculatedResult({ players = [] }) {
 	};
 
 	const handlePaymentOPtions = () => {
-		// setWithDiscountList([]);
-		// setPrivateList([]);
-		// setWithNoDiscountList([]);
-		// setTotalPrice(0);
+		setWithDiscountList([]);
+		setPrivateList([]);
+		setWithNoDiscountList([]);
+		setTotalPrice(0);
 		firstTimeRender.current = true;
 
 		if (firstTimeRender.current) {
@@ -605,6 +606,7 @@ function CalculatedResult({ players = [] }) {
 																}
 															>
 																<p>
+																	-{" "}
 																	{
 																		sport.discount
 																	}
@@ -735,6 +737,7 @@ function CalculatedResult({ players = [] }) {
 																}
 															>
 																<p>
+																	-{" "}
 																	{
 																		sport.discount
 																	}
