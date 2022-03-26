@@ -1,30 +1,12 @@
 import React from "react";
 import Head from "next/head";
+import styles from "../styles/layouts/mainLayout.module.scss";
 import Footer from "../Components/footer";
 import Navbar from "../Components/Navbar";
 
 const MainLayout = ({ children }) => {
 	return (
-		<div>
-			<Head>
-				<title>Club Members</title>
-				<meta
-					name="description"
-					content="A site that Save sports subscriptions an calculate the total payments including the discounts that may be applied and the payment type cash or with credit card"
-				></meta>
-				<meta name="theme-color" content="#fff" />
-				<meta
-					name="viewport"
-					content="initial-scale=1.0, width=device-width"
-				/>
-				<link rel="manifest" href="/manifest.json" />
-				<link rel="apple-touch-icon" href="/icon.png"></link>
-				<link
-					rel="shortcut icon"
-					href="favicon.ico"
-					type="image/x-icon"
-				/>
-			</Head>
+		<div className={styles.mainLayoutContainer}>
 			<header>
 				<Navbar />
 			</header>

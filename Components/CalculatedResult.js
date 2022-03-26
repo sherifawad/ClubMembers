@@ -507,11 +507,13 @@ function CalculatedResult({ players = [] }) {
 				Calculate
 			</button>
 			{firstTimeRender.current === true && (
-				<div>
+				<div className={styles.result__tablesContainer}>
 					{privateList?.length > 0 && (
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
-								<div className={styles.title}>private</div>
+								<div className={styles.title}>
+									private Sports
+								</div>
 							</div>
 
 							<div className={styles.dataWrapper}>
@@ -638,7 +640,9 @@ function CalculatedResult({ players = [] }) {
 					{withDiscountList?.length > 0 && (
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
-								<div className={styles.title}>Discount</div>
+								<div className={styles.title}>
+									Discount Sports
+								</div>
 							</div>
 
 							<div className={styles.dataWrapper}>
@@ -766,7 +770,9 @@ function CalculatedResult({ players = [] }) {
 					{withNoDiscountList?.length > 0 && (
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
-								<div className={styles.title}>No-Discount</div>
+								<div className={styles.title}>
+									No-Discount Sports
+								</div>
 							</div>
 
 							<div className={styles.dataWrapper}>

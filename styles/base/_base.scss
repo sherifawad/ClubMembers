@@ -2,7 +2,7 @@ body {
 	min-height: 100vh;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
-    overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 *,
@@ -22,7 +22,11 @@ ul {
 	list-style-type: none;
 }
 
-main {
-	height: calc(100vh - var(--header-height));
-	overflow-y: auto;
+input {
+	color: var(--clr-primary-200);
+	font-weight: bold;
+}
+
+button {
+	color: var(--clr-primary-200);
 }
