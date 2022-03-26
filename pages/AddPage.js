@@ -7,6 +7,7 @@ import { isBlank } from "../Data/utils";
 import { addPlayer, updatePlayer } from "../StoreRedux/playersSlice";
 import styles from "../styles/pages/AddPage.module.scss";
 import { createSelector } from "@reduxjs/toolkit";
+import Head from "next/head";
 
 const AddPage = () => {
 	const router = useRouter();
@@ -77,25 +78,34 @@ const AddPage = () => {
 	};
 
 	return (
-		<div className={styles.container}>
-			<input
-				type="text"
-				className={styles.searchInput}
-				placeholder="Player Name"
-				value={name}
-				onChange={e => setName(e.target.value)}
-			/>
-			<AddSport setSport={setSport} />
+		<>
+			<Head>
+				<title>Club Members: Player</title>
+				<meta
+					name="description"
+					content="Add or update player information player name and plyer sports"
+				></meta>
+			</Head>
+			<div className={styles.container}>
+				<input
+					type="text"
+					className={styles.searchInput}
+					placeholder="Player Name"
+					value={name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<AddSport setSport={setSport} />
 
-			<SportsList
-				sport={sport}
-				setPlayerSportsList={setPlayerSportsList}
-				receivedPlayerSportsList={receivedPlayerSportsList}
-			/>
-			<button type="button" onClick={handlePlayerAddition}>
-				{isUpdate ? "Update Player" : "Add Player"}
-			</button>
-		</div>
+				<SportsList
+					sport={sport}
+					setPlayerSportsList={setPlayerSportsList}
+					receivedPlayerSportsList={receivedPlayerSportsList}
+				/>
+				<button type="button" onClick={handlePlayerAddition}>
+					{isUpdate ? "Update Player" : "Add Player"}
+				</button>
+			</div>
+		</>
 	);
 };
 
