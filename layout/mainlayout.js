@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import styles from "../styles/layouts/mainLayout.module.scss";
-import Footer from "../Components/footer";
+import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 
 const MainLayout = ({ children }) => {

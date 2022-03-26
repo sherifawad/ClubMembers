@@ -4,9 +4,6 @@ const Footer = () => {
 	return (
 		<div className={styles.center}>
 			Awad &copy; {new Date().getFullYear().toString()}
-			{/* <script type="text/javascript">
-				document.write()
-			</script> */}
 		</div>
 	);
 };

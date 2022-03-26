@@ -2,10 +2,10 @@ import sportReducer, { sportsInitialState } from "./sportSlice";
 import playersReducer, { playersInitialState } from "./playersSlice";
 import { useMemo } from "react";
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "@redux-devtools/extension";
 
 // const reducer = {
 // 	sports: sportReducer,
