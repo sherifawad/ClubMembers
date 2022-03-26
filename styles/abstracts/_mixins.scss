@@ -5,7 +5,7 @@ $compare: (
 	min: min-width
 );
 @mixin mq($key, $compare: min) {
-	$size: map-get($breakpoints, $key);
+	$size: map-get($breakPoints, $key);
 	@if $compare == max {
 		@media (max-width: $size) {
 			@content;
