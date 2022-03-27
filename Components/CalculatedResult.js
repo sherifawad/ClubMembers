@@ -1,6 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CalculatedResult.module.scss";
+import dynamic from "next/dynamic";
+// import QrGenerate from "./QrGenerate";
 function CalculatedResult({ players = [] }) {
+	const QrGenerate = dynamic(() => import("./QrGenerate"), {
+		loading: () => <h1>....Loading</h1>,
+		ssr: false
+	});
 	const [withDiscountList, setWithDiscountList] = useState([]);
 	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
 	const [privateList, setPrivateList] = useState([]);
@@ -9,10 +15,11 @@ function CalculatedResult({ players = [] }) {
 	const [currentRadioValue, setCurrentRadioValue] = useState(0);
 
 	const [totalPrice, setTotalPrice] = useState(0);
+	const [qrString, setQrString] = useState("");
 
 	const firstTimeRender = useRef(false);
 	const dialogRef = useRef();
-
+	const QrDialogRef = useRef();
 	// useEffect(() => {
 	// 	setCalculate(() => {
 	// 		if (!dialogRef.current.open) {
@@ -426,6 +433,14 @@ function CalculatedResult({ players = [] }) {
 		}
 	};
 
+	const handleQrGeneration = () => {
+		const playersAsString = JSON.stringify(players);
+		setQrString(playersAsString);
+		if (!QrDialogRef.current.open) {
+			QrDialogRef.current.showModal();
+		}
+	};
+
 	return (
 		<div className={styles.container}>
 			<dialog ref={dialogRef}>
@@ -496,6 +511,14 @@ function CalculatedResult({ players = [] }) {
 							Cancel
 						</button>
 					</div>
+				</div>
+			</dialog>
+
+			<dialog ref={QrDialogRef}>
+				<div className={styles.discountContainer}>
+					<Suspense>
+						<QrGenerate qrStringProp={qrString} />
+					</Suspense>
 				</div>
 			</dialog>
 			{totalPrice > 0 && <h3 className={styles.price}>{totalPrice} $</h3>}
@@ -899,6 +922,11 @@ function CalculatedResult({ players = [] }) {
 						</div>
 					)}
 				</div>
+			)}
+			{firstTimeRender.current === true && (
+				<button type="button" onClick={handleQrGeneration}>
+					QR Code
+				</button>
 			)}
 		</div>
 	);

@@ -15,6 +15,11 @@ const Navbar = () => {
 						<a className={styles.itemLink}>Add Player</a>
 					</Link>
 				</li>
+				<li className={styles.listItem}>
+					<Link href="/ScanPage">
+						<a className={styles.itemLink}>Scan</a>
+					</Link>
+				</li>
 			</ul>
 		</div>
 	);
