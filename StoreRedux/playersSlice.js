@@ -55,6 +55,8 @@ const updatePlayersSportsData = (state, { payload }) => {
 			}
 			return accSports;
 		}, []);
+		// if no sports skip
+		if (newSports?.length < 1) return accPlayers;
 		player.sports = newSports || [];
 		accPlayers.push(player || {});
 		return accPlayers;
