@@ -1,7 +1,7 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/components/TabComponent.module.scss";
-function TabComponent({ players = [] }) {
+function TabComponent({ players = [], handleEvent }) {
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
 		loading: () => <h1>....Loading</h1>,
 		ssr: false
@@ -12,6 +12,22 @@ function TabComponent({ players = [] }) {
 	const [error, setError] = useState("");
 	const [checkedPlayers, setCheckedPlayers] = useState([]);
 	const [qrString, setQrString] = useState("");
+
+	const listRef = useRef();
+
+	// listen to escape keydown which closes the dialog box then reset values
+	useEffect(() => {
+		const handleEsc = event => {
+			if (event.keyCode === 27) {
+				reset();
+			}
+		};
+		window.addEventListener("keydown", handleEsc);
+
+		return () => {
+			window.removeEventListener("keydown", handleEsc);
+		};
+	}, []);
 
 	const handleRadioChange = e => {
 		setCurrentRadioValue(e.target.value);
@@ -60,6 +76,7 @@ function TabComponent({ players = [] }) {
 				const checkPlayerIndex = prevState.findIndex(
 					player => player.id === players[playerIndex].id
 				);
+				if (checkPlayerIndex < 0) return prevState;
 
 				if (prevState[checkPlayerIndex].sports.length < 2) {
 					return prevState.filter(
@@ -135,7 +152,21 @@ function TabComponent({ players = [] }) {
 		setCurrentRadioValue("two");
 	};
 
-	const handleClick = () => {};
+	const handleClick = e => {
+		handleEvent();
+		reset();
+	};
+	const reset = () => {
+		setCurrentRadioValue("one");
+		setMemberYear("");
+		setMemberCode("");
+		setError("");
+		setCheckedPlayers([]);
+		setQrString("");
+		listRef.current
+			.querySelectorAll("input[type=checkbox]")
+			.forEach(el => (el.checked = false));
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -239,8 +270,8 @@ function TabComponent({ players = [] }) {
 								}}
 							/>
 						</div>
-						<p>{error}</p>
 					</div>
+					<p className={styles.err}>{error}</p>
 					<div className={styles.panel_buttons_container}>
 						<button
 							type="button"
@@ -269,7 +300,7 @@ function TabComponent({ players = [] }) {
 				>
 					<div className={styles.panel_title}>Select Players</div>
 					{
-						<ul>
+						<ul ref={listRef}>
 							{players?.map((p, playerIndex) => (
 								<li key={playerIndex}>
 									<p className={styles.playerTitle}>

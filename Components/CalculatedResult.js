@@ -518,7 +518,7 @@ function CalculatedResult({ players = [] }) {
 			<dialog ref={QrDialogRef}>
 				<div className={styles.discountContainer}>
 					<Suspense>
-                        <TabComponent />
+						<TabComponent handleEvent={handleQrGeneration} />
 						{/* <QrGenerate qrStringProp={qrString} /> */}
 					</Suspense>
 				</div>

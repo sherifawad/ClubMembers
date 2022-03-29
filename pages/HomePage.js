@@ -1,13 +1,24 @@
 import styles from "../styles/pages/Home.module.scss";
 import PlayersList from "../Components/PlayersList";
-import { useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import CalculatedResult from "../Components/CalculatedResult";
 import Head from "next/head";
 import TabComponent from "../Components/TabComponent";
 
 const HomePage = () => {
 	const [players, setPlayers] = useState([]);
+	const QrDialogRef = useRef();
+	const handleCloseModel = () => {
+		if (QrDialogRef.current.open) {
+			QrDialogRef.current.close();
+		}
+	};
 
+	const handleOpenModel = () => {
+		if (!QrDialogRef.current.open) {
+			QrDialogRef.current.showModal();
+		}
+	};
 	return (
 		<>
 			<Head>
@@ -32,8 +43,20 @@ const HomePage = () => {
 			<div className={styles.container}>
 				<div className={styles.title}>Calculate Sports Payments</div>
 				<PlayersList playersList={setPlayers} />
-				<TabComponent players={players} />
+				<dialog ref={QrDialogRef}>
+					<div className={styles.discountContainer}>
+						<Suspense>
+							<TabComponent
+								players={players}
+								handleEvent={handleCloseModel}
+							/>
+						</Suspense>
+					</div>
+				</dialog>
 				{players?.length > 0 && <CalculatedResult players={players} />}
+				<button type="button" onClick={handleOpenModel}>
+					Share
+				</button>
 			</div>
 		</>
 	);
