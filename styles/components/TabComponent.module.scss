@@ -51,9 +51,9 @@
 				border: 1px solid #ffcb00;
 			}
 			.sportsContainer {
-                color: #000;
+				color: #000;
 				display: grid;
-				grid-template-columns: repeat(3, 1fr);
+				grid-template-columns: 3fr 2fr 1fr;
 				align-items: center;
 				&:nth-of-type(2n) {
 					background-color: lightgray;
@@ -76,6 +76,12 @@
 						font-weight: bold;
 					}
 				}
+			}
+			.panel_buttons_container {
+				display: flex;
+                justify-content:center;
+                gap: 2em;
+				margin-block-start: 1em;
 			}
 		}
 		.active {

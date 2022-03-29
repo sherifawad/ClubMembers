@@ -115,7 +115,11 @@ function TabComponent({ players = [] }) {
 
 	const handleSecondTabNext = () => {
 		if (checkedPlayers?.length < 1) return;
-		const playersAsString = JSON.stringify(players);
+		const playersAsString = JSON.stringify({
+			year: memberYear,
+			code: memberCode,
+			list: checkedPlayers
+		});
 		if (playersAsString && playersAsString.length > 0) {
 			setCurrentRadioValue("three");
 			setQrString(playersAsString);
@@ -123,9 +127,15 @@ function TabComponent({ players = [] }) {
 	};
 
 	const handleSecondTabPrev = () => {
-		setQrString("");
 		setCurrentRadioValue("one");
 	};
+
+	const handleThirdTabPrev = () => {
+		setQrString("");
+		setCurrentRadioValue("two");
+	};
+
+	const handleClick = () => {};
 
 	return (
 		<div className={styles.wrapper}>
@@ -230,15 +240,22 @@ function TabComponent({ players = [] }) {
 							/>
 						</div>
 						<p>{error}</p>
-						<div className={styles.panel_buttons_container}>
-							<button
-								type="button"
-								className={styles.nextButton}
-								onClick={handleFirstTabNext}
-							>
-								Next
-							</button>
-						</div>
+					</div>
+					<div className={styles.panel_buttons_container}>
+						<button
+							type="button"
+							className={styles.prevButton}
+							onClick={handleClick}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							className={styles.nextButton}
+							onClick={handleFirstTabNext}
+						>
+							Next
+						</button>
 					</div>
 				</div>
 
@@ -313,9 +330,28 @@ function TabComponent({ players = [] }) {
 					id="three-panel"
 				>
 					<div className={styles.panel_title}>Qr Code</div>
-					<Suspense>
-						<QrGenerate qrStringProp={qrString} />
-					</Suspense>
+					<div className={styles.panel_content}>
+						<Suspense>
+							<QrGenerate qrStringProp={qrString} />
+						</Suspense>
+					</div>
+
+					<div className={styles.panel_buttons_container}>
+						<button
+							type="button"
+							className={styles.prevButton}
+							onClick={handleThirdTabPrev}
+						>
+							Previous
+						</button>
+						<button
+							type="button"
+							className={styles.nextButton}
+							onClick={handleClick}
+						>
+							Done
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
