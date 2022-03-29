@@ -11,7 +11,7 @@
 	dialog {
 		position: fixed;
 		margin: auto;
-		width: 35ch;
+		min-width: 35ch;
 		padding: 1em 0.25em;
 		.dialogButtonsContainer {
 			display: flex;

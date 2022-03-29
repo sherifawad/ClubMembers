@@ -3,6 +3,7 @@ import PlayersList from "../Components/PlayersList";
 import { useState } from "react";
 import CalculatedResult from "../Components/CalculatedResult";
 import Head from "next/head";
+import TabComponent from "../Components/TabComponent";
 
 const HomePage = () => {
 	const [players, setPlayers] = useState([]);
@@ -31,6 +32,7 @@ const HomePage = () => {
 			<div className={styles.container}>
 				<div className={styles.title}>Calculate Sports Payments</div>
 				<PlayersList playersList={setPlayers} />
+				<TabComponent players={players} />
 				{players?.length > 0 && <CalculatedResult players={players} />}
 			</div>
 		</>

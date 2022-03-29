@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CalculatedResult.module.scss";
 import dynamic from "next/dynamic";
+import TabComponent from "./TabComponent";
 // import QrGenerate from "./QrGenerate";
 function CalculatedResult({ players = [] }) {
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
@@ -517,7 +518,8 @@ function CalculatedResult({ players = [] }) {
 			<dialog ref={QrDialogRef}>
 				<div className={styles.discountContainer}>
 					<Suspense>
-						<QrGenerate qrStringProp={qrString} />
+                        <TabComponent />
+						{/* <QrGenerate qrStringProp={qrString} /> */}
 					</Suspense>
 				</div>
 			</dialog>
