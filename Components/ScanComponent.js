@@ -1,16 +1,32 @@
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { QrReader } from "react-qr-reader";
-
+import styles from "../styles/components/ScanComponent.module.scss";
 function ScanComponent() {
 	const [data, setData] = useState("No Result");
-	// const QrReader = dynamic(() => import("react-qr-reader"), {
-	// 	ssr: false
-	// });
 
+	let containerStyle = {
+		display: "grid",
+		width: "clamp(270px, 90vw, 40em)",
+		margin: "auto"
+	};
+	let viewFinderStyle = () => (
+		<div
+			style={{
+				position: "absolute",
+				width: "90%",
+				top: "15%",
+				bottom: "15%",
+				left: "5%",
+				border: "2px solid red",
+				display: "block",
+				zIndex: "9999"
+			}}
+		></div>
+	);
 	return (
-		<>
+		<div>
 			<QrReader
+				containerStyle={containerStyle}
 				delay={300}
 				onResult={(result, error) => {
 					if (!!result) {
@@ -21,10 +37,11 @@ function ScanComponent() {
 						// console.info(error);
 					}
 				}}
-				style={{ width: "100%" }}
+				ViewFinder={viewFinderStyle}
 			/>
+
 			<p>{data}</p>
-		</>
+		</div>
 	);
 }
 

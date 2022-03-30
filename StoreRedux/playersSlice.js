@@ -2,6 +2,8 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { nextPlayerId } from "../Data/utils";
 
 export const playersInitialState = {
+	year: 0,
+	code: 0,
 	SchoolGroupSelected: false,
 	playersState: []
 };
@@ -139,6 +141,18 @@ const playersSlice = createSlice({
 				SchoolGroupSelected: false
 			};
 		},
+		setYear: (state, { payload }) => {
+			return {
+				...state,
+				year: parseInt(payload)
+			};
+		},
+		setCode: (state, { payload }) => {
+			return {
+				...state,
+				code: parseInt(payload)
+			};
+		},
 		updatePlayersSports: updatePlayersSportsData
 	}
 });
@@ -153,7 +167,9 @@ export const {
 	updatePlayer,
 	setSchoolGroup,
 	removeSchoolGroup,
-	updatePlayersSports
+	updatePlayersSports,
+	setYear,
+	setCode
 } = playersSlice.actions;
 
 export const selectPlayers = createSelector(
