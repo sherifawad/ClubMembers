@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/components/TabComponent.module.scss";
+import { useSelector } from "react-redux";
 function TabComponent({ players = [], handleEvent }) {
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
 		loading: () => <h1>....Loading</h1>,
@@ -12,8 +13,11 @@ function TabComponent({ players = [], handleEvent }) {
 	const [error, setError] = useState("");
 	const [checkedPlayers, setCheckedPlayers] = useState([]);
 	const [qrString, setQrString] = useState("");
-
 	const listRef = useRef();
+
+	const privateSchoolGroupSelected = useSelector(
+		state => state.players.SchoolGroupSelected
+	);
 
 	// listen to escape keydown which closes the dialog box then reset values
 	useEffect(() => {
@@ -135,6 +139,7 @@ function TabComponent({ players = [], handleEvent }) {
 		const playersAsString = JSON.stringify({
 			year: memberYear,
 			code: memberCode,
+			SchoolGroupSelected: privateSchoolGroupSelected,
 			list: checkedPlayers
 		});
 		if (playersAsString && playersAsString.length > 0) {
