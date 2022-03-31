@@ -63,21 +63,24 @@
 					border-inline-start: 1px solid var(--clr-neutral-300);
 				}
 				@include mq(small, max) {
-					opacity: 0;
-					width: 1px;
+					display: none;
 				}
+			}
+			@include mq(small, max) {
+				grid-template-columns: 1fr;
 			}
 
 			.table_body {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
-
+				// display: grid;
+				// grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+				display: flex;
+				flex-wrap: wrap;
 				.table_row {
 					display: grid;
 					grid-template-rows: 1fr 6fr;
 
 					grid-template-columns: repeat(var(--sports-length), 1fr);
-
+					flex: 1 1;
 					&:nth-of-type(2n) {
 						background-color: lightgray;
 					}
@@ -125,7 +128,8 @@
 							border-inline-end: 1px solid var(--clr-neutral-300);
 
 							p {
-								text-align: center;
+								white-space: nowrap;
+								overflow: hidden;
 							}
 						}
 					}
@@ -159,6 +163,8 @@
 .discountContainer {
 	display: grid;
 	place-items: center;
+	padding: 2em;
+	background-color: #fff;
 	.discountItemContainer {
 		display: flex;
 		.discountSwitchContainer {

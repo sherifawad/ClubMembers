@@ -3,11 +3,7 @@ import styles from "../styles/components/CalculatedResult.module.scss";
 import dynamic from "next/dynamic";
 import TabComponent from "./TabComponent";
 // import QrGenerate from "./QrGenerate";
-function CalculatedResult({ players = [] }) {
-	const QrGenerate = dynamic(() => import("./QrGenerate"), {
-		loading: () => <h1>....Loading</h1>,
-		ssr: false
-	});
+function CalculatedResult({ players = [], setHandler }) {
 	const [withDiscountList, setWithDiscountList] = useState([]);
 	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
 	const [privateList, setPrivateList] = useState([]);
@@ -16,31 +12,26 @@ function CalculatedResult({ players = [] }) {
 	const [currentRadioValue, setCurrentRadioValue] = useState(0);
 
 	const [totalPrice, setTotalPrice] = useState(0);
-	const [qrString, setQrString] = useState("");
 
 	const firstTimeRender = useRef(false);
 	const dialogRef = useRef();
-	const QrDialogRef = useRef();
-	// useEffect(() => {
-	// 	setCalculate(() => {
-	// 		if (!dialogRef.current.open) {
-	// 			dialogRef.current.showModal();
-	// 		}
-	// 	});
-	// 	// (() => {
-	// 	// 	dialogRef.current.showModal();
-	// 	// })();
-	// }, [setCalculate]);
 
-	// useEffect(() => {
-	// 	if (firstTimeRender.current) {
-	// 		handleNoDiscountList(withNoDiscountList);
-	// 		handlePrivateSwimmingList(privateList);
-	// 		handleDiscountList(withDiscountList);
-	// 		setTotalPrice(price => (price += price * currentRadioValue));
-	// 		firstTimeRender.current = false;
-	// 	}
-	// }, [firstTimeRender.current]);
+	useEffect(() => {
+		setHandler(() => () => {
+			if (!players) return;
+			setWithDiscountList([]);
+			setPrivateList([]);
+			setWithNoDiscountList([]);
+			setTotalPrice(0);
+			firstTimeRender.current = false;
+			players.forEach(element => {
+				playerDivider(element);
+			});
+			if (!dialogRef.current.open) {
+				dialogRef.current.showModal();
+			}
+		});
+	}, [players, setHandler]);
 
 	const toggleChange = () => {
 		setIsToggled(!isToggled);
@@ -402,18 +393,20 @@ function CalculatedResult({ players = [] }) {
 	};
 
 	const calculate = () => {
-		if (!players) return;
-		setWithDiscountList([]);
-		setPrivateList([]);
-		setWithNoDiscountList([]);
-		setTotalPrice(0);
-		firstTimeRender.current = false;
-		players.forEach(element => {
-			playerDivider(element);
+		setHandler(() => () => {
+			if (!players) return;
+			setWithDiscountList([]);
+			setPrivateList([]);
+			setWithNoDiscountList([]);
+			setTotalPrice(0);
+			firstTimeRender.current = false;
+			players.forEach(element => {
+				playerDivider(element);
+			});
+			if (!dialogRef.current.open) {
+				dialogRef.current.showModal();
+			}
 		});
-		if (!dialogRef.current.open) {
-			dialogRef.current.showModal();
-		}
 	};
 
 	const handlePaymentOPtions = () => {
@@ -431,14 +424,6 @@ function CalculatedResult({ players = [] }) {
 			if (dialogRef.current.open) {
 				dialogRef.current.close();
 			}
-		}
-	};
-
-	const handleQrGeneration = () => {
-		const playersAsString = JSON.stringify(players);
-		setQrString(playersAsString);
-		if (!QrDialogRef.current.open) {
-			QrDialogRef.current.showModal();
 		}
 	};
 
@@ -515,23 +500,8 @@ function CalculatedResult({ players = [] }) {
 				</div>
 			</dialog>
 
-			<dialog ref={QrDialogRef}>
-				<div className={styles.discountContainer}>
-					<Suspense>
-						<TabComponent handleEvent={handleQrGeneration} />
-						{/* <QrGenerate qrStringProp={qrString} /> */}
-					</Suspense>
-				</div>
-			</dialog>
 			{totalPrice > 0 && <h3 className={styles.price}>{totalPrice} $</h3>}
 
-			<button
-				type="button"
-				className={styles.calcButton}
-				onClick={calculate}
-			>
-				Calculate
-			</button>
 			{firstTimeRender.current === true && (
 				<div className={styles.result__tablesContainer}>
 					{privateList?.length > 0 && (
@@ -924,11 +894,6 @@ function CalculatedResult({ players = [] }) {
 						</div>
 					)}
 				</div>
-			)}
-			{firstTimeRender.current === true && (
-				<button type="button" onClick={handleQrGeneration}>
-					QR Code
-				</button>
 			)}
 		</div>
 	);
