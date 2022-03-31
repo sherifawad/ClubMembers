@@ -40,6 +40,12 @@ const HomePage = () => {
 			scanResultDialogRef.current.close();
 		}
 	};
+
+	const handleCloseTabComponent = () => {
+		if (QrDialogRef.current.open) {
+			QrDialogRef.current.close();
+		}
+	};
 	return (
 		<>
 			<Head>
@@ -77,7 +83,7 @@ const HomePage = () => {
 						<Suspense>
 							<TabComponent
 								players={players}
-								handleEvent={handleCancelModel}
+								handleEvent={handleCloseTabComponent}
 							/>
 						</Suspense>
 					</div>
@@ -88,16 +94,18 @@ const HomePage = () => {
 						setHandler={setHandler}
 					/>
 				)}
-				<button type="button" onClick={handleOpenModel}>
-					Share
-				</button>
-				<button
-					type="button"
-					className={styles.calcButton}
-					onClick={handler}
-				>
-					Calculate
-				</button>
+				<div className={styles.buttons_container}>
+					<button type="button" onClick={handleOpenModel}>
+						Share
+					</button>
+					<button
+						type="button"
+						className={styles.calcButton}
+						onClick={handler}
+					>
+						Calculate
+					</button>
+				</div>
 			</div>
 		</>
 	);

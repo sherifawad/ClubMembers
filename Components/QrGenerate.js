@@ -13,16 +13,11 @@ function QrGenerate({ qrStringProp = "" }) {
 			text={qrString.length > 0 ? qrString : " "}
 			alt="qr image generated from players list"
 			options={{
-				type: "image/jpeg",
+				type: "image/webp",
 				quality: 1,
 				level: "H",
 				margin: 3,
-				scale: 4,
-				width: 250,
-				color: {
-					dark: "#010599FF",
-					light: "#FFBF60FF"
-				}
+				scale: 8
 			}}
 		/>
 	);

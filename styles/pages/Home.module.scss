@@ -12,6 +12,13 @@
 		border: none;
 		background-color: transparent;
 	}
+
+    .buttons_container{
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 0.5rem;
+    }
 }
 
 .title a {
