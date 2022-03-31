@@ -1,4 +1,7 @@
-import sportReducer, { sportsInitialState } from "./sportSlice";
+import sportReducer, {
+	listenerMiddleware,
+	sportsInitialState
+} from "./sportSlice";
 import playersReducer, { playersInitialState } from "./playersSlice";
 import { useMemo } from "react";
 import { createStore, applyMiddleware, combineReducers } from "redux";
@@ -34,7 +37,9 @@ function makeStore(initialState = storeInitialState) {
 	return createStore(
 		persistedReducer,
 		initialState,
-		composeWithDevTools(applyMiddleware(thunk))
+		composeWithDevTools(
+			applyMiddleware(thunk, listenerMiddleware.middleware)
+		)
 	);
 }
 

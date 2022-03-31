@@ -44,7 +44,7 @@ function ScanComponent() {
 		<>
 			<QrReader
 				containerStyle={containerStyle}
-				// constraints={{ facingMode: "environment" }}
+				constraints={{ facingMode: "environment" }}
 				// facingMode={selfie ? "user" : "environment"}
 				onResult={(result, error) => {
 					if (!!result) {

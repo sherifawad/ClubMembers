@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { overWritePlayersState } from "../StoreRedux/playersSlice";
 import styles from "../styles/components/ScanResult.module.scss";
 function ScanResult({ data = "", handleEvent }) {
 	const [players, setPlayers] = useState([]);
 	const [year, setYear] = useState("");
 	const [code, setCode] = useState("");
-	const [schoolGroupSelected, setSchoolGroupSelected] = useState(false);
+	const [resultData, setResultData] = useState({});
+
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (!data || data.length === 0) return;
 		try {
 			const result = JSON.parse(data);
 			if (result) {
+				setResultData(result);
 				setYear(result.year);
 				setCode(result.code);
-				setSchoolGroupSelected(result.schoolGroupSelected);
 				setPlayers(result.list);
-				if (!dialogRef.current.open) {
-					dialogRef.current.showModal();
-				}
 			}
 		} catch (error) {
 			console.log(
@@ -25,6 +27,15 @@ function ScanResult({ data = "", handleEvent }) {
 			);
 		}
 	}, [data]);
+
+	const handleImport = () => {
+		new Promise((resolve, reject) => {
+			dispatch(overWritePlayersState(resultData));
+			resolve();
+		}).then(() => handleEvent());
+		// dispatch(overWritePlayersState(resultData));
+		// handleEvent();
+	};
 
 	return (
 		<div className={styles.dialog_content}>
@@ -68,7 +79,7 @@ function ScanResult({ data = "", handleEvent }) {
 					<button
 						type="button"
 						className={styles.nextButton}
-						onClick={handleEvent}
+						onClick={handleImport}
 					>
 						Import
 					</button>

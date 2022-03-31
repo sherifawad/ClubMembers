@@ -13,6 +13,7 @@ const HomePage = () => {
 	const [scanResultData, setScanResultData] = useState("");
 	// pass calc option from calculated result components and button in home page
 	const [handler, setHandler] = useState(() => {});
+
 	const QrDialogRef = useRef();
 	const scanResultDialogRef = useRef();
 
@@ -27,12 +28,6 @@ const HomePage = () => {
 			scanResultDialogRef.current.showModal();
 		}
 	}, [router.query]);
-
-	const handleCloseModel = () => {
-		if (QrDialogRef.current.open) {
-			QrDialogRef.current.close();
-		}
-	};
 
 	const handleOpenModel = () => {
 		if (!QrDialogRef.current.open) {
@@ -82,7 +77,7 @@ const HomePage = () => {
 						<Suspense>
 							<TabComponent
 								players={players}
-								handleEvent={handleCloseModel}
+								handleEvent={handleCancelModel}
 							/>
 						</Suspense>
 					</div>

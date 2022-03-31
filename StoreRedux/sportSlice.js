@@ -1,10 +1,11 @@
 import {
+	createListenerMiddleware,
 	createAsyncThunk,
 	createSelector,
 	createSlice
 } from "@reduxjs/toolkit";
 import sportsApi from "../services/sportsApi";
-import { updatePlayersSports } from "./playersSlice";
+import { overWritePlayersState, updatePlayersSports } from "./playersSlice";
 
 export const sportsInitialState = {
 	loading: false,
@@ -50,6 +51,21 @@ export const fetchAllSports = createAsyncThunk(
 		}
 	}
 );
+
+// Create the middleware instance and methods
+export const listenerMiddleware = createListenerMiddleware();
+
+// Add one or more listener entries that look for specific actions.
+// They may contain any sync or async logic, similar to thunks.
+listenerMiddleware.startListening({
+	actionCreator: overWritePlayersState,
+	effect: async (action, listenerApi) => {
+		// Can cancel other running instances
+		listenerApi.cancelActiveListeners();
+
+		listenerApi.dispatch(fetchAllSports());
+	}
+});
 
 const setLoading = state => {
 	state.loading = true;

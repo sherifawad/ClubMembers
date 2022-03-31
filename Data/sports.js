@@ -40,9 +40,9 @@ export const sports = [
 						price: 1800
 					},
 					{
-						type: "Single Session",
-						canDiscount: false,
-						price: 50
+						type: "8 Sessions",
+						canDiscount: true,
+						price: 450
 					}
 				]
 			},

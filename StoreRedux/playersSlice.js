@@ -67,6 +67,13 @@ const updatePlayersSportsData = (state, { payload }) => {
 	state.playersState = players;
 };
 
+const overWriteSliceState = (state, { payload }) => {
+	state.year = payload.year;
+	state.code = payload.code;
+	state.SchoolGroupSelected = payload.schoolGroupSelected;
+	state.playersState = payload.list;
+};
+
 const removeItemFromArray = (state, { payload }) => {
 	// // Construct a new array immutably
 	// const newState = state.filter(state => state.id !== payload);
@@ -153,7 +160,8 @@ const playersSlice = createSlice({
 				code: parseInt(payload)
 			};
 		},
-		updatePlayersSports: updatePlayersSportsData
+		updatePlayersSports: updatePlayersSportsData,
+		overWritePlayersState: overWriteSliceState
 	}
 });
 
@@ -169,7 +177,8 @@ export const {
 	removeSchoolGroup,
 	updatePlayersSports,
 	setYear,
-	setCode
+	setCode,
+	overWritePlayersState
 } = playersSlice.actions;
 
 export const selectPlayers = createSelector(
