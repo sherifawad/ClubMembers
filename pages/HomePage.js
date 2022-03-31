@@ -7,6 +7,7 @@ import Head from "next/head";
 import TabComponent from "../Components/TabComponent";
 import { isBlank } from "../Data/utils";
 import ScanResult from "../Components/ScanResult";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
 	const [players, setPlayers] = useState([]);
@@ -16,8 +17,8 @@ const HomePage = () => {
 
 	const QrDialogRef = useRef();
 	const scanResultDialogRef = useRef();
-
 	const router = useRouter();
+	const { year, code } = useSelector(state => state.players);
 
 	// check for queries
 	useEffect(() => {
@@ -69,6 +70,13 @@ const HomePage = () => {
 			</Head>
 			<div className={styles.container}>
 				<div className={styles.title}>Calculate Sports Payments</div>
+				{year && code && (
+					<div className={styles.memberCode_Container}>
+						<span>{year}</span>
+						<span> / </span>
+						<span>{code}</span>
+					</div>
+				)}
 				<PlayersList playersList={setPlayers} />
 				<dialog ref={scanResultDialogRef}>
 					<ScanResult
