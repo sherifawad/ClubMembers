@@ -94,6 +94,8 @@ const HomePage = () => {
 							<TabComponent
 								players={players}
 								handleEvent={handleCloseTabComponent}
+								year={year}
+								code={code}
 							/>
 						</Suspense>
 					</div>

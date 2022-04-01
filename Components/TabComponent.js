@@ -1,15 +1,15 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/components/TabComponent.module.scss";
 import { useSelector } from "react-redux";
-function TabComponent({ players = [], handleEvent }) {
+function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
 		loading: () => <h1>....Loading</h1>,
 		ssr: false
 	});
 	const [currentRadioValue, setCurrentRadioValue] = useState("one");
-	const [memberYear, setMemberYear] = useState("");
-	const [memberCode, setMemberCode] = useState("");
+	const [memberYear, setMemberYear] = useState(year);
+	const [memberCode, setMemberCode] = useState(code);
 	const [error, setError] = useState("");
 	const [checkedPlayers, setCheckedPlayers] = useState([]);
 	const [qrString, setQrString] = useState("");
@@ -31,7 +31,7 @@ function TabComponent({ players = [], handleEvent }) {
 		return () => {
 			window.removeEventListener("keydown", handleEsc);
 		};
-	}, []);
+	}, [reset]);
 
 	const handleRadioChange = e => {
 		setCurrentRadioValue(e.target.value);
@@ -125,7 +125,7 @@ function TabComponent({ players = [], handleEvent }) {
 			setError("Invalid year");
 			return;
 		}
-		if (!memberCode || memberCode.length < 1) {
+		if (!memberCode || memberCode < 1) {
 			setError("Invalid Code");
 			return;
 		}
@@ -161,7 +161,7 @@ function TabComponent({ players = [], handleEvent }) {
 		handleEvent();
 		reset();
 	};
-	const reset = () => {
+	const reset = useCallback(() => {
 		setCurrentRadioValue("one");
 		setMemberYear("");
 		setMemberCode("");
@@ -171,7 +171,7 @@ function TabComponent({ players = [], handleEvent }) {
 		listRef.current
 			.querySelectorAll("input[type=checkbox]")
 			.forEach(el => (el.checked = false));
-	};
+	}, [code, year]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -260,7 +260,9 @@ function TabComponent({ players = [], handleEvent }) {
 								value={memberYear}
 								onChange={e => {
 									setError("");
-									setMemberYear(e.target.value);
+									if (e.target.value) {
+										setMemberYear(parseInt(e.target.value));
+									}
 								}}
 							/>
 							<p> / </p>
@@ -271,7 +273,9 @@ function TabComponent({ players = [], handleEvent }) {
 								value={memberCode}
 								onChange={e => {
 									setError("");
-									setMemberCode(e.target.value);
+									if (e.target.value) {
+										setMemberCode(parseInt(e.target.value));
+									}
 								}}
 							/>
 						</div>
