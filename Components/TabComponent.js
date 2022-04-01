@@ -360,7 +360,7 @@ function TabComponent({ players = [], handleEvent }) {
 				<div
 					className={
 						currentRadioValue === "three"
-							? `${styles.panel} ${styles.active}`
+							? `${styles.panel} ${styles.active} ${styles.qr}`
 							: styles.panel
 					}
 					id="three-panel"

@@ -81,9 +81,9 @@ $transition-delay: 0.05s;
 
 .button_toggle {
 
-    @include mq(small) {
-        display: none;
-    }
+    // @include mq(small) {
+    //     display: none;
+    // }
     position: absolute;
     display: inline-block;
     width: 20px;
@@ -91,6 +91,7 @@ $transition-delay: 0.05s;
     margin: 25px;
     background-color: transparent;
     border: none;
+    pointer-events: auto;
     cursor: pointer;
     border-radius: 100%;
     transition: $transition-duration + 0.1;

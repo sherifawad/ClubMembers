@@ -27,10 +27,14 @@ function ScanComponent() {
 	useEffect(() => {
 		if (!data || data.length === 0) return;
 		try {
-			router.push({
-				pathname: "/",
-				query: { data: data }
-			});
+			router.push(
+				{
+					pathname: "/",
+					query: { data: data }
+				},
+                // show link address as "/" to hide query string
+				"/"
+			);
 			setData("");
 		} catch (error) {
 			console.log(

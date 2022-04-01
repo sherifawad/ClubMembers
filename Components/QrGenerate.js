@@ -16,8 +16,9 @@ function QrGenerate({ qrStringProp = "" }) {
 				type: "image/webp",
 				quality: 1,
 				level: "H",
-				margin: 3,
-				scale: 8
+				margin: 0,
+				scale: 2,
+                width: "100",
 			}}
 		/>
 	);

@@ -32,11 +32,13 @@
 		max-width: 500px;
 		border-radius: 3px;
 		overflow: hidden;
-		padding: 20px;
+		// padding: 20px;
 		.panel {
 			display: none;
 			animation: fadein 0.8s;
+            padding: 20px;
 			.panel_title {
+                padding-inline: 20px;
 				font-size: 1.5em;
 				font-weight: bold;
 			}
@@ -92,6 +94,12 @@
 		}
 		.active {
 			display: block;
+		}
+        .qr{
+            padding:0;
+            .panel_title{
+                padding: 20px;
+        }
 		}
 	}
 }

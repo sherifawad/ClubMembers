@@ -9,6 +9,8 @@ $dark-pri: #ffcb00;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1.5rem;
+    justify-content: center;
+
 	@include mq(small) {
 		place-content: center;
 	}
