@@ -45,6 +45,7 @@ $transition-delay: 0.05s;
                 color: var(--clr-primary-200);
                 letter-spacing: 0;
                 flex: 1 1;
+                pointer-events: auto;
                 // height: 40px;
                 width: 100%;
                 line-height: 40px;
@@ -67,6 +68,7 @@ $transition-delay: 0.05s;
                 // Hide the lines
                 &:before {
                 opacity: 0;
+                content: none;
                 }
             }
         }
@@ -208,4 +210,7 @@ cursor: pointer;
 
 .itemLink:hover {
 	color: gray;
+}
+.itemLink:active {
+	color: black;
 }

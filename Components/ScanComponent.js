@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { QrReader } from "react-qr-reader";
 function ScanComponent() {
 	const [data, setData] = useState("");
-	const qrRef = useRef();
 	const router = useRouter();
 	let containerStyle = {
 		display: "grid",
@@ -41,34 +40,21 @@ function ScanComponent() {
 		}
 	}, [data, router]);
 
-	// eslint-disable-next-line react/display-name
-	const QRComponent = forwardRef((props, ref) => (
-		<QrReader
-			innerRef={ref}
-			{...props}
-			containerStyle={containerStyle}
-			constraints={{ facingMode: "environment" }}
-			legacyMode={true}
-			onResult={(result, error) => {
-				if (!!result) {
-					setData(result?.text);
-				}
-
-				if (!!error) {
-					// console.info(error);
-				}
-			}}
-			ViewFinder={viewFinderStyle}
-		/>
-	));
-
 	return (
 		<>
-			<QRComponent ref={qrRef} />
-			<input
-				type="button"
-				value="Submit QR Code"
-				onClick={() => qrRef.current.openImageDialog()}
+			<QrReader
+				containerStyle={containerStyle}
+				constraints={{ facingMode: "environment" }}
+				onResult={(result, error) => {
+					if (!!result) {
+						setData(result?.text);
+					}
+
+					if (!!error) {
+						// console.info(error);
+					}
+				}}
+				ViewFinder={viewFinderStyle}
 			/>
 		</>
 	);

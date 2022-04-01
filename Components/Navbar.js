@@ -15,7 +15,7 @@ const Navbar = () => {
 						<a className={styles.itemLink}>Home</a>
 					</Link>
 				</li>
-				<li>
+				<li className={styles.listItem}>
 					<Link href="/AddPage">
 						<a className={styles.itemLink}>Add Player</a>
 					</Link>
