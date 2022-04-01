@@ -1,4 +1,8 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import {
+	createListenerMiddleware,
+	createSelector,
+	createSlice
+} from "@reduxjs/toolkit";
 import { nextPlayerId } from "../Data/utils";
 
 export const playersInitialState = {
@@ -83,6 +87,11 @@ const removeItemFromArray = (state, { payload }) => {
 		state.playersState.findIndex(arrow => arrow.id === payload),
 		1
 	);
+	// if no players remove code and year
+	if (state.playersState?.length < 1) {
+		state.year = 0;
+		state.code = 0;
+	}
 };
 
 const playersSlice = createSlice({

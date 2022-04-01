@@ -70,14 +70,16 @@ const HomePage = () => {
 			</Head>
 			<div className={styles.container}>
 				<div className={styles.title}>Calculate Sports Payments</div>
-				{year && code && (
+				{year > 0 && code > 0 && (
 					<div className={styles.memberCode_Container}>
 						<span>{year}</span>
 						<span> / </span>
 						<span>{code}</span>
 					</div>
 				)}
+
 				<PlayersList playersList={setPlayers} />
+
 				<dialog ref={scanResultDialogRef}>
 					<ScanResult
 						className={styles.dialog}
@@ -102,18 +104,20 @@ const HomePage = () => {
 						setHandler={setHandler}
 					/>
 				)}
-				<div className={styles.buttons_container}>
-					<button type="button" onClick={handleOpenModel}>
-						Share
-					</button>
-					<button
-						type="button"
-						className={styles.calcButton}
-						onClick={handler}
-					>
-						Calculate
-					</button>
-				</div>
+				{players?.length > 0 && (
+					<div className={styles.buttons_container}>
+						<button type="button" onClick={handleOpenModel}>
+							Share
+						</button>
+						<button
+							type="button"
+							className={styles.calcButton}
+							onClick={handler}
+						>
+							Calculate
+						</button>
+					</div>
+				)}
 			</div>
 		</>
 	);
