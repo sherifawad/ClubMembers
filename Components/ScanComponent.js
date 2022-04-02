@@ -6,7 +6,7 @@ function ScanComponent() {
 	const router = useRouter();
 	let containerStyle = {
 		display: "grid",
-		width: "clamp(270px, 90vw, 40em)",
+		width: "clamp(200px, 95vw, 40em)",
 		margin: "auto"
 	};
 	let viewFinderStyle = () => (
@@ -32,7 +32,7 @@ function ScanComponent() {
 					pathname: "/",
 					query: { data: data }
 				},
-                // show link address as "/" to hide query string
+				// show link address as "/" to hide query string
 				"/"
 			);
 			setData("");
@@ -58,7 +58,7 @@ function ScanComponent() {
 						// console.info(error);
 					}
 				}}
-				ViewFinder={viewFinderStyle}
+				// ViewFinder={viewFinderStyle}
 			/>
 		</>
 	);

@@ -8,7 +8,7 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 		ssr: false
 	});
 	const [currentRadioValue, setCurrentRadioValue] = useState("one");
-	const [memberYear, setMemberYear] = useState(year);
+	const [memberYear, setMemberYear] = useState(`${year}`);
 	const [memberCode, setMemberCode] = useState(code);
 	const [error, setError] = useState("");
 	const [checkedPlayers, setCheckedPlayers] = useState([]);
@@ -120,12 +120,26 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 	};
 
 	const handleFirstTabNext = () => {
-		const year = parseInt(memberYear, 10);
+		let year;
+		let code;
+		try {
+			year = parseInt(memberYear, 10);
+		} catch (error) {
+			setError("Invalid year");
+			return;
+		}
 		if (!year || year < 1950 || year > 2050) {
 			setError("Invalid year");
 			return;
 		}
-		if (!memberCode || memberCode < 1) {
+
+		try {
+			code = parseInt(memberCode);
+		} catch (error) {
+			setError("Invalid Code");
+			return;
+		}
+		if (!code || code < 1) {
 			setError("Invalid Code");
 			return;
 		}
@@ -163,8 +177,8 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 	};
 	const reset = useCallback(() => {
 		setCurrentRadioValue("one");
-		setMemberYear("");
-		setMemberCode("");
+		setMemberYear(`${year}`);
+		setMemberCode(code);
 		setError("");
 		setCheckedPlayers([]);
 		setQrString("");
@@ -172,6 +186,15 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 			.querySelectorAll("input[type=checkbox]")
 			.forEach(el => (el.checked = false));
 	}, [code, year]);
+
+	const handleCodeChange = e => {
+		setError("");
+		setMemberCode(e.target.value);
+	};
+	const handleYearChange = e => {
+		setError("");
+		setMemberYear(e.target.value);
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -254,29 +277,19 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 						<p>Year / code</p>
 						<div className={styles.panel_input_container}>
 							<input
-								type="text"
+								type="number"
 								className={styles.panel_input}
 								placeholder="Year"
 								value={memberYear}
-								onChange={e => {
-									setError("");
-									if (e.target.value) {
-										setMemberYear(parseInt(e.target.value));
-									}
-								}}
+								onChange={handleYearChange}
 							/>
 							<p> / </p>
 							<input
-								type="text"
+								type="number"
 								className={styles.panel_input}
 								placeholder="Code"
 								value={memberCode}
-								onChange={e => {
-									setError("");
-									if (e.target.value) {
-										setMemberCode(parseInt(e.target.value));
-									}
-								}}
+								onChange={handleCodeChange}
 							/>
 						</div>
 					</div>
