@@ -167,7 +167,7 @@ function CalculatedResult({ players = [], setHandler }) {
 			});
 		});
 		if (filteredPlayer) {
-			//remove from list then add it last on accumulated players and at last sort by sport pruce
+			//remove from list then add it last on accumulated players and at last sort by sport price
 			list = list
 				.filter(player => player.id !== filteredPlayer.id)
 				.sort((a, b) =>
@@ -184,6 +184,9 @@ function CalculatedResult({ players = [], setHandler }) {
 				filteredPlayer.sports[0].total = filteredPlayer.sports[0].price;
 			}
 		}
+		list = list.sort((a, b) =>
+			a.sports[0].price > b.sports[0].price ? -1 : 1
+		);
 		const players = list?.reduce((accPlayers, player, playerIndex) => {
 			const sports = player.sports?.reduce((accSports, sport) => {
 				//copy sport to edit as redux set values as read only
