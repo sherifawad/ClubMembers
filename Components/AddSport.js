@@ -15,6 +15,8 @@ const AddSport = ({ setSport }) => {
 	const [sportPrice, setSportPrice] = useState(0);
 	const [sportTypeName, setSportTypeName] = useState("");
 	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
+	const [sportTypePenalty, setSportTypePenalty] = useState(false);
+
 	// Extracting sports state from redux store
 	const { list, loading, error, errorMessage } = useSelector(selectSports);
 	const dispatch = useDispatch();
@@ -62,6 +64,7 @@ const AddSport = ({ setSport }) => {
 			setSportTypeName(selectedType["type"]);
 			setSportPrice(selectedType["price"]);
 			setSportTypeDiscount(selectedType["canDiscount"]);
+			setSportTypePenalty(selectedType["penalty"]);
 		}
 	};
 
@@ -84,6 +87,7 @@ const AddSport = ({ setSport }) => {
 			setSportPrice(0);
 			setSportTypeName("");
 			setSportTypeDiscount(false);
+			setSportTypePenalty(false);
 		}
 	};
 
@@ -105,8 +109,10 @@ const AddSport = ({ setSport }) => {
 			category: sportCategory,
 			type: sportTypeName,
 			canDiscount: sportTypeDiscount,
+			penalty: sportTypePenalty,
 			price: sportPrice,
 			discount: -1,
+			penaltyFees: 0,
 			total: -1
 		};
 		if (newSport.price > 0 && !isNullOrEmpty(newSport)) {

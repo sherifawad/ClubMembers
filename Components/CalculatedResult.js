@@ -1,8 +1,5 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CalculatedResult.module.scss";
-import dynamic from "next/dynamic";
-import TabComponent from "./TabComponent";
-// import QrGenerate from "./QrGenerate";
 function CalculatedResult({ players = [], setHandler }) {
 	const [withDiscountList, setWithDiscountList] = useState([]);
 	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
@@ -47,6 +44,19 @@ function CalculatedResult({ players = [], setHandler }) {
 		}
 
 		setCurrentRadioValue(parseFloat(e.target.value));
+	};
+
+	// set penalty or fin after specific date
+	const penaltyDays = (originalPrice, maX = 10, penaltY = 5) => {
+		const date = new Date();
+		const todayAsNumber = parseInt(date.getDate());
+		const max = parseInt(maX);
+		const penalty = parseFloat(penaltY);
+		if (todayAsNumber <= max)
+			return { penalty: 0, finalePrice: originalPrice };
+		const totalPenalty = (todayAsNumber - max) * penalty;
+		const finalPrice = totalPenalty + originalPrice;
+		return { penalty: totalPenalty, finalePrice: finalPrice };
 	};
 
 	// divide player sports to categories and subCategories
@@ -282,11 +292,31 @@ function CalculatedResult({ players = [], setHandler }) {
 									if (sportIndex == 0) {
 										totalPrice += sport.price * 0.9;
 										newSport.discount = 10;
-										newSport.total = sport.price * 0.9;
+										//check if sport can has penalty
+										if (newSport.penalty) {
+											const pent = penaltyDays(
+												sport.price * 0.9
+											);
+											newSport.penaltyFees = pent.penalty;
+											newSport.total = pent.finalePrice;
+										} else {
+											newSport.penaltyFees = 0;
+											newSport.total = sport.price * 0.9;
+										}
 									} else {
 										totalPrice += sport.price;
 										newSport.discount = 0;
-										newSport.total = sport.price;
+										//check if sport can has penalty
+										if (newSport.penalty) {
+											const pent = penaltyDays(
+												sport.price
+											);
+											newSport.penaltyFees = pent.penalty;
+											newSport.total = pent.finalePrice;
+										} else {
+											newSport.penaltyFees = 0;
+											newSport.total = sport.price;
+										}
 									}
 									break;
 
@@ -294,15 +324,45 @@ function CalculatedResult({ players = [], setHandler }) {
 									if (sportIndex == 0) {
 										totalPrice += sport.price * 0.8;
 										newSport.discount = 20;
-										newSport.total = sport.price * 0.8;
+										//check if sport can has penalty
+										if (newSport.penalty) {
+											const pent = penaltyDays(
+												sport.price * 0.8
+											);
+											newSport.penaltyFees = pent.penalty;
+											newSport.total = pent.finalePrice;
+										} else {
+											newSport.penaltyFees = 0;
+											newSport.total = sport.price * 0.8;
+										}
 									} else if (sportIndex == 1) {
 										totalPrice += sport.price * 0.9;
 										newSport.discount = 10;
-										newSport.total = sport.price * 0.9;
+										//check if sport can has penalty
+										if (newSport.penalty) {
+											const pent = penaltyDays(
+												sport.price * 0.9
+											);
+											newSport.penaltyFees = pent.penalty;
+											newSport.total = pent.finalePrice;
+										} else {
+											newSport.penaltyFees = 0;
+											newSport.total = sport.price * 0.9;
+										}
 									} else {
 										totalPrice += sport.price;
 										newSport.discount = 0;
-										newSport.total = sport.price;
+										//check if sport can has penalty
+										if (newSport.penalty) {
+											const pent = penaltyDays(
+												sport.price
+											);
+											newSport.penaltyFees = pent.penalty;
+											newSport.total = pent.finalePrice;
+										} else {
+											newSport.penaltyFees = 0;
+											newSport.total = sport.price;
+										}
 									}
 									break;
 							}
@@ -334,11 +394,27 @@ function CalculatedResult({ players = [], setHandler }) {
 							if (playersWithMultiple.length > 0) {
 								totalPrice += sport.price * 0.9;
 								newSport.discount = 10;
-								newSport.total = sport.price * 0.9;
+								//check if sport can has penalty
+								if (newSport.penalty) {
+									const pent = penaltyDays(sport.price * 0.9);
+									newSport.penaltyFees = pent.penalty;
+									newSport.total = pent.finalePrice;
+								} else {
+									newSport.penaltyFees = 0;
+									newSport.total = sport.price * 0.9;
+								}
 							} else {
 								totalPrice += sport.price;
 								newSport.discount = 0;
-								newSport.total = sport.price;
+								//check if sport can has penalty
+								if (newSport.penalty) {
+									const pent = penaltyDays(sport.price);
+									newSport.penaltyFees = pent.penalty;
+									newSport.total = pent.finalePrice;
+								} else {
+									newSport.penaltyFees = 0;
+									newSport.total = sport.price;
+								}
 							}
 							break;
 						case 2:
@@ -346,21 +422,59 @@ function CalculatedResult({ players = [], setHandler }) {
 								if (playerIndex == 0) {
 									totalPrice += sport.price * 0.8;
 									newSport.discount = 20;
-									newSport.total = sport.price * 0.8;
+									//check if sport can has penalty
+									if (newSport.penalty) {
+										const pent = penaltyDays(
+											sport.price * 0.9
+										);
+										newSport.penaltyFees = pent.penalty;
+										newSport.total = pent.finalePrice;
+									} else {
+										newSport.penaltyFees = 0;
+										newSport.total = sport.price * 0.9;
+									}
 								} else if (playerIndex == 1) {
 									totalPrice += sport.price * 0.9;
 									newSport.discount = 10;
-									newSport.total = sport.price * 0.9;
+									//check if sport can has penalty
+									if (newSport.penalty) {
+										const pent = penaltyDays(
+											sport.price * 0.9
+										);
+										newSport.penaltyFees = pent.penalty;
+										newSport.total = pent.finalePrice;
+									} else {
+										newSport.penaltyFees = 0;
+										newSport.total = sport.price * 0.9;
+									}
 								}
 							} else {
 								if (playerIndex == 0) {
 									totalPrice += sport.price * 0.9;
 									newSport.discount = 10;
-									newSport.total = sport.price * 0.9;
+									//check if sport can has penalty
+									if (newSport.penalty) {
+										const pent = penaltyDays(
+											sport.price * 0.9
+										);
+										newSport.penaltyFees = pent.penalty;
+										newSport.total = pent.finalePrice;
+									} else {
+										newSport.penaltyFees = 0;
+										newSport.total = sport.price * 0.9;
+									}
 								} else if (playerIndex == 1) {
 									totalPrice += sport.price;
 									newSport.discount = 0;
-									newSport.total = sport.price;
+									//check if sport can has penalty
+									if (newSport.penalty) {
+										const pent = penaltyDays(sport.price);
+										newSport.penaltyFees = pent.penalty;
+										newSport.total = pent.finalePrice;
+									} else {
+										newSport.penaltyFees = 0;
+										newSport.total = sport.price;
+									}
 								}
 							}
 							break;
@@ -369,15 +483,39 @@ function CalculatedResult({ players = [], setHandler }) {
 							if (playerIndex == 0) {
 								totalPrice += sport.price * 0.8;
 								newSport.discount = 20;
-								newSport.total = sport.price * 0.8;
+								//check if sport can has penalty
+								if (newSport.penalty) {
+									const pent = penaltyDays(sport.price * 0.8);
+									newSport.penaltyFees = pent.penalty;
+									newSport.total = pent.finalePrice;
+								} else {
+									newSport.penaltyFees = 0;
+									newSport.total = sport.price * 0.8;
+								}
 							} else if (playerIndex == 1) {
 								totalPrice += sport.price * 0.9;
 								newSport.discount = 10;
-								newSport.total = sport.price * 0.9;
+								//check if sport can has penalty
+								if (newSport.penalty) {
+									const pent = penaltyDays(sport.price * 0.9);
+									newSport.penaltyFees = pent.penalty;
+									newSport.total = pent.finalePrice;
+								} else {
+									newSport.penaltyFees = 0;
+									newSport.total = sport.price * 0.9;
+								}
 							} else {
 								totalPrice += sport.price;
 								newSport.discount = 0;
-								newSport.total = sport.price;
+								//check if sport can has penalty
+								if (newSport.penalty) {
+									const pent = penaltyDays(sport.price);
+									newSport.penaltyFees = pent.penalty;
+									newSport.total = pent.finalePrice;
+								} else {
+									newSport.penaltyFees = 0;
+									newSport.total = sport.price;
+								}
 							}
 							break;
 					}
@@ -393,23 +531,6 @@ function CalculatedResult({ players = [], setHandler }) {
 
 		setWithDiscountList(old => [...old, ...single]);
 		setTotalPrice(oldPrice => (oldPrice += totalPrice));
-	};
-
-	const calculate = () => {
-		setHandler(() => () => {
-			if (!players) return;
-			setWithDiscountList([]);
-			setPrivateList([]);
-			setWithNoDiscountList([]);
-			setTotalPrice(0);
-			firstTimeRender.current = false;
-			players.forEach(element => {
-				playerDivider(element);
-			});
-			if (!dialogRef.current.open) {
-				dialogRef.current.showModal();
-			}
-		});
 	};
 
 	const handlePaymentOPtions = () => {
@@ -535,6 +656,10 @@ function CalculatedResult({ players = [], setHandler }) {
 									<p className={styles.table_row_header}>
 										Discount
 									</p>
+
+									<p className={styles.table_row_header}>
+										Penalty
+									</p>
 									<p className={styles.table_row_header}>
 										Total
 									</p>
@@ -612,6 +737,19 @@ function CalculatedResult({ players = [], setHandler }) {
 																</p>
 															</li>
 														)}
+														<li
+															className={
+																styles.data_cell
+															}
+														>
+															<p>
+																+{" "}
+																{
+																	sport.penaltyFees
+																}
+																$
+															</p>
+														</li>
 														{sport.discount >
 															-1 && (
 															<li
@@ -664,6 +802,9 @@ function CalculatedResult({ players = [], setHandler }) {
 									</p>
 									<p className={styles.table_row_header}>
 										Discount
+									</p>
+									<p className={styles.table_row_header}>
+										Penalty
 									</p>
 									<p className={styles.table_row_header}>
 										Total
@@ -743,6 +884,19 @@ function CalculatedResult({ players = [], setHandler }) {
 																</p>
 															</li>
 														)}
+														<li
+															className={
+																styles.data_cell
+															}
+														>
+															<p>
+																+{" "}
+																{
+																	sport.penaltyFees
+																}
+																$
+															</p>
+														</li>
 														{sport.discount >
 															-1 && (
 															<li
@@ -795,6 +949,9 @@ function CalculatedResult({ players = [], setHandler }) {
 									</p>
 									<p className={styles.table_row_header}>
 										Discount
+									</p>
+									<p className={styles.table_row_header}>
+										Penalty
 									</p>
 									<p className={styles.table_row_header}>
 										Total
@@ -857,6 +1014,7 @@ function CalculatedResult({ players = [], setHandler }) {
 																{sport.price}$
 															</p>
 														</li>
+
 														{sport.discount >
 															-1 && (
 															<li
@@ -865,6 +1023,7 @@ function CalculatedResult({ players = [], setHandler }) {
 																}
 															>
 																<p>
+																	-{" "}
 																	{
 																		sport.discount
 																	}
@@ -872,6 +1031,19 @@ function CalculatedResult({ players = [], setHandler }) {
 																</p>
 															</li>
 														)}
+														<li
+															className={
+																styles.data_cell
+															}
+														>
+															<p>
+																+{" "}
+																{
+																	sport.penaltyFees
+																}
+																$
+															</p>
+														</li>
 														{sport.discount >
 															-1 && (
 															<li
