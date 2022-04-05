@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CalculatedResult.module.scss";
 function CalculatedResult({ players = [], setHandler }) {
@@ -7,11 +8,62 @@ function CalculatedResult({ players = [], setHandler }) {
 
 	const [isToggled, setIsToggled] = useState(false);
 	const [currentRadioValue, setCurrentRadioValue] = useState(0);
+	const [privateWrap, setPrivateWrap] = useState(false);
+	const [discountWrap, setDiscountWrap] = useState(false);
+	const [noDiscountWrap, setNoDiscountWrap] = useState(false);
 
 	const [totalPrice, setTotalPrice] = useState(0);
 
 	const firstTimeRender = useRef(false);
 	const dialogRef = useRef();
+	const privateRef = useRef();
+	const discountRef = useRef();
+	const noDiscountRef = useRef();
+
+	//Listen to windows resize event
+	// if the tables bigger than viewPort Wrap it
+	useLayoutEffect(() => {
+		const updateClassList = () => {
+			if (
+				(window.innerWidth || document.documentElement.clientWidth) <=
+				600
+			)
+				return;
+			const privateBounds = privateRef.current.getBoundingClientRect();
+			const discountBounds = discountRef.current.getBoundingClientRect();
+			const noDiscountBounds =
+				noDiscountRef.current.getBoundingClientRect();
+			if (
+				privateBounds.right >
+				(window.innerWidth || document.documentElement.clientWidth)
+			) {
+				setPrivateWrap(true);
+			} else {
+				setPrivateWrap(false);
+			}
+
+			if (
+				discountBounds.right >
+				(window.innerWidth || document.documentElement.clientWidth)
+			) {
+				setDiscountWrap(true);
+			} else {
+				setDiscountWrap(false);
+			}
+
+			if (
+				noDiscountBounds.right >
+				(window.innerWidth || document.documentElement.clientWidth)
+			) {
+				setNoDiscountWrap(true);
+			} else {
+				setNoDiscountWrap(false);
+			}
+		};
+
+		window.addEventListener("resize", updateClassList);
+		return () => window.removeEventListener("resize", updateClassList);
+	}, []);
 
 	useEffect(() => {
 		setHandler(() => () => {
@@ -629,15 +681,29 @@ function CalculatedResult({ players = [], setHandler }) {
 			{firstTimeRender.current === true && (
 				<div className={styles.result__tablesContainer}>
 					{privateList?.length > 0 && (
-						<div className={styles.table_wrapper}>
+						<div ref={privateRef} className={styles.table_wrapper}>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
 									private Sports
 								</div>
 							</div>
 
-							<div className={styles.dataWrapper}>
-								<div className={` ${styles.table_head}`}>
+							<div
+								className={styles.dataWrapper}
+								style={{
+									"--columnTemplate": privateWrap
+										? "1fr"
+										: "1fr 8fr"
+								}}
+							>
+								<div
+									className={` ${styles.table_head}`}
+									style={{
+										"--headDisplay": privateWrap
+											? "none"
+											: "grid"
+									}}
+								>
 									<p
 										className={styles.table_column_header}
 									></p>
@@ -664,7 +730,14 @@ function CalculatedResult({ players = [], setHandler }) {
 										Total
 									</p>
 								</div>
-								<ul className={styles.table_body}>
+								<ul
+									className={styles.table_body}
+									style={{
+										"--wrapBody": privateWrap
+											? "wrap"
+											: "nowrap"
+									}}
+								>
 									{privateList?.map((item, index) => (
 										<li
 											key={index}
@@ -776,15 +849,29 @@ function CalculatedResult({ players = [], setHandler }) {
 					)}
 
 					{withDiscountList?.length > 0 && (
-						<div className={styles.table_wrapper}>
+						<div ref={discountRef} className={styles.table_wrapper}>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
 									Discount Sports
 								</div>
 							</div>
 
-							<div className={styles.dataWrapper}>
-								<div className={` ${styles.table_head}`}>
+							<div
+								className={styles.dataWrapper}
+								style={{
+									"--columnTemplate": discountWrap
+										? "1fr"
+										: "1fr 8fr"
+								}}
+							>
+								<div
+									className={` ${styles.table_head}`}
+									style={{
+										"--headDisplay": discountWrap
+											? "none"
+											: "grid"
+									}}
+								>
 									<p
 										className={styles.table_column_header}
 									></p>
@@ -810,7 +897,14 @@ function CalculatedResult({ players = [], setHandler }) {
 										Total
 									</p>
 								</div>
-								<ul className={styles.table_body}>
+								<ul
+									className={styles.table_body}
+									style={{
+										"--wrapBody": discountWrap
+											? "wrap"
+											: "nowrap"
+									}}
+								>
 									{withDiscountList?.map((item, index) => (
 										<li
 											key={index}
@@ -923,15 +1017,32 @@ function CalculatedResult({ players = [], setHandler }) {
 					)}
 
 					{withNoDiscountList?.length > 0 && (
-						<div className={styles.table_wrapper}>
+						<div
+							ref={noDiscountRef}
+							className={styles.table_wrapper}
+						>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
 									No-Discount Sports
 								</div>
 							</div>
 
-							<div className={styles.dataWrapper}>
-								<div className={` ${styles.table_head}`}>
+							<div
+								className={styles.dataWrapper}
+								style={{
+									"--columnTemplate": noDiscountWrap
+										? "1fr"
+										: "1fr 8fr"
+								}}
+							>
+								<div
+									className={` ${styles.table_head}`}
+									style={{
+										"--headDisplay": noDiscountWrap
+											? "none"
+											: "grid"
+									}}
+								>
 									<p
 										className={styles.table_column_header}
 									></p>
@@ -957,7 +1068,14 @@ function CalculatedResult({ players = [], setHandler }) {
 										Total
 									</p>
 								</div>
-								<ul className={styles.table_body}>
+								<ul
+									className={styles.table_body}
+									style={{
+										"--wrapBody": noDiscountWrap
+											? "wrap"
+											: "nowrap"
+									}}
+								>
 									{withNoDiscountList?.map((item, index) => (
 										<li
 											key={index}

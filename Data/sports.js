@@ -500,34 +500,153 @@ export const sports = [
 	{
 		id: 17,
 		name: "Gymnastics",
-		sportHide: true,
+		sportHide: false,
 		categories: [
 			{
-				normal: [
+				Artistic: [
 					{
-						type: "Artistic",
+						type: "Schools",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 350
+					},
+					{
+						type: "Preparation(6-7)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 400
+					},
+					{
+						type: "Team(8-10)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					},
+					{
+						type: "Team(11-15)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 800
+					},
+					{
+						type: "Team(grade 1&2)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1200
+					}
+				]
+			},
+			{
+				general: [
+					{
+						type: "Academy",
 						hide: false,
 						penalty: false,
 						canDiscount: true,
 						price: 200
 					},
+
 					{
-						type: "Aerobic",
+						type: "Team",
 						hide: false,
 						penalty: false,
 						canDiscount: true,
-						price: 300
+						price: 400
+					}
+				]
+			},
+			{
+				Aerobic: [
+					{
+						type: "Schools",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 400
+					},
+					{
+						type: "Preparation",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 500
+					},
+					{
+						type: "Team(7-11)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 750
+					},
+					{
+						type: "Team(12-..)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 950
+					}
+				]
+			},
+			{
+				Rhythmic: [
+					{
+						type: "Schools",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1000
+					},
+					{
+						type: "Preparation",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1200
+					},
+					{
+						type: "Team(7-10)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1500
+					},
+					{
+						type: "Team(11-15)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1700
+					},
+					{
+						type: "Team(17-grade 1)",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 2000
 					}
 				]
 			},
 			{
 				private: [
 					{
-						type: "Single Session",
+						type: "Internal Trainer",
 						hide: false,
 						penalty: false,
 						canDiscount: false,
-						price: 50
+						price: 100
+					},
+
+					{
+						type: "External Trainer",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 150
 					}
 				]
 			}

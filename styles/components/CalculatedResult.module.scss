@@ -37,6 +37,7 @@
 	flex-direction: column;
 	margin-block-start: 0.5em;
 	gap: 2rem;
+
 	.table_wrapper {
 		display: flex;
 		flex-direction: column;
@@ -45,10 +46,10 @@
 
 		.dataWrapper {
 			display: grid;
-			grid-template-columns: 1fr 8fr;
+			grid-template-columns: var(--columnTemplate, 1fr 8fr);
 			width: 100%;
 			.table_head {
-				display: grid;
+				display: var(--headDisplay, grid);
 				grid-template-rows: repeat(8, 1fr);
 
 				background-color: var(--clr-neutral-400);
@@ -74,7 +75,10 @@
 				// display: grid;
 				// grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
 				display: flex;
-				flex-wrap: wrap;
+				flex-wrap: var(--wrapBody, nowrap);
+				@include mq(small, max) {
+					flex-wrap: wrap;
+				}
 				.table_row {
 					display: grid;
 					grid-template-rows: 1fr 7fr;
