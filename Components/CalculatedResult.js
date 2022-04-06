@@ -22,48 +22,48 @@ function CalculatedResult({ players = [], setHandler }) {
 
 	//Listen to windows resize event
 	// if the tables bigger than viewPort Wrap it
-	useLayoutEffect(() => {
-		const updateClassList = () => {
-			if (
-				(window.innerWidth || document.documentElement.clientWidth) <=
-				600
-			)
-				return;
-			const privateBounds = privateRef.current.getBoundingClientRect();
-			const discountBounds = discountRef.current.getBoundingClientRect();
-			const noDiscountBounds =
-				noDiscountRef.current.getBoundingClientRect();
-			if (
-				privateBounds.right >
-				(window.innerWidth || document.documentElement.clientWidth)
-			) {
-				setPrivateWrap(true);
-			} else {
-				setPrivateWrap(false);
-			}
+	// useLayoutEffect(() => {
+	// 	const updateClassList = () => {
+	// 		if (
+	// 			(window.innerWidth || document.documentElement.clientWidth) <=
+	// 			600
+	// 		)
+	// 			return;
+	// 		const privateBounds = privateRef.current.getBoundingClientRect();
+	// 		const discountBounds = discountRef.current.getBoundingClientRect();
+	// 		const noDiscountBounds =
+	// 			noDiscountRef.current.getBoundingClientRect();
+	// 		if (
+	// 			privateBounds.right >
+	// 			(window.innerWidth || document.documentElement.clientWidth)
+	// 		) {
+	// 			setPrivateWrap(true);
+	// 		} else {
+	// 			setPrivateWrap(false);
+	// 		}
 
-			if (
-				discountBounds.right >
-				(window.innerWidth || document.documentElement.clientWidth)
-			) {
-				setDiscountWrap(true);
-			} else {
-				setDiscountWrap(false);
-			}
+	// 		if (
+	// 			discountBounds.right >
+	// 			(window.innerWidth || document.documentElement.clientWidth)
+	// 		) {
+	// 			setDiscountWrap(true);
+	// 		} else {
+	// 			setDiscountWrap(false);
+	// 		}
 
-			if (
-				noDiscountBounds.right >
-				(window.innerWidth || document.documentElement.clientWidth)
-			) {
-				setNoDiscountWrap(true);
-			} else {
-				setNoDiscountWrap(false);
-			}
-		};
+	// 		if (
+	// 			noDiscountBounds.right >
+	// 			(window.innerWidth || document.documentElement.clientWidth)
+	// 		) {
+	// 			setNoDiscountWrap(true);
+	// 		} else {
+	// 			setNoDiscountWrap(false);
+	// 		}
+	// 	};
 
-		window.addEventListener("resize", updateClassList);
-		return () => window.removeEventListener("resize", updateClassList);
-	}, []);
+	// 	window.addEventListener("resize", updateClassList);
+	// 	return () => window.removeEventListener("resize", updateClassList);
+	// }, []);
 
 	useEffect(() => {
 		setHandler(() => () => {

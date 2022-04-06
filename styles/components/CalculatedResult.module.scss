@@ -63,11 +63,11 @@
 					border-block-end: 1px solid var(--clr-neutral-300);
 					border-inline-start: 1px solid var(--clr-neutral-300);
 				}
-				@include mq(small, max) {
+				@include mq(medium, max) {
 					display: none;
 				}
 			}
-			@include mq(small, max) {
+			@include mq(medium, max) {
 				grid-template-columns: 1fr;
 			}
 
