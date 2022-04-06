@@ -9,6 +9,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
+import settingsReducer, { settingsInitialState } from "./settingsSlice";
 
 // const reducer = {
 // 	sports: sportReducer,
@@ -17,18 +18,20 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 
 const storeInitialState = {
 	players: playersInitialState,
-	sports: sportsInitialState
+	sports: sportsInitialState,
+	settings: settingsInitialState
 };
 
 const rootReducer = combineReducers({
 	sports: sportReducer,
-	players: playersReducer
+	players: playersReducer,
+	settings: settingsReducer
 });
 
 const persistConfig = {
 	key: "primary",
 	storage,
-	whitelist: ["players"],
+	whitelist: ["players", "settings"],
 	blacklist: ["sports"]
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

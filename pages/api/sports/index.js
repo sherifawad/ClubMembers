@@ -1,7 +1,10 @@
 import { sports } from "../../../Data/sports";
+import { sportsAr } from "../../../Data/sportsAr";
 
 export default function handler(req, res) {
-	const sportsWithFilteredTypes = sports.reduce((accSports, sport) => {
+	const { language } = req.query;
+	const sportsList = language && language === "ar" ? sportsAr : sports;
+	const sportsWithFilteredTypes = sportsList.reduce((accSports, sport) => {
 		if (!sport || sport.sportHide === true) return accSports;
 		const filteredCategories = sport.categories.reduce(
 			(accCategories, Categories) => {
