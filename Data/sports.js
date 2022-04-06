@@ -205,11 +205,50 @@ export const sports = [
 			{
 				normal: [
 					{
-						type: "Boxing",
+						type: "Team",
 						hide: false,
 						penalty: false,
 						canDiscount: true,
 						price: 150
+					},
+					{
+						type: "Cubs",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					},
+					{
+						type: "Schools-beginners",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					},
+					{
+						type: "Schools-amateurs",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					}
+				],
+				private: [
+					{
+						type: "Private",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 300
+					}
+				],
+				other: [
+					{
+						type: "GYM",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 200
 					}
 				]
 			}
@@ -281,7 +320,7 @@ export const sports = [
 						hide: false,
 						penalty: false,
 						canDiscount: true,
-						price: 150
+						price: 300
 					}
 				]
 			},
@@ -326,23 +365,44 @@ export const sports = [
 	{
 		id: 14,
 		name: "Squash",
-		sportHide: true,
+		sportHide: false,
 		categories: [
 			{
 				normal: [
-					{
-						type: "Schools",
-						hide: false,
-						penalty: false,
-						canDiscount: true,
-						price: 350
-					},
 					{
 						type: "Team",
 						hide: false,
 						penalty: false,
 						canDiscount: true,
-						price: 400
+						price: 500
+					},
+					{
+						type: "Cubs",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 600
+					},
+					{
+						type: "Schools-beginners",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					},
+					{
+						type: "Schools-special",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 500
+					},
+					{
+						type: "Schools-amateurs",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 600
 					}
 				]
 			},
@@ -353,7 +413,14 @@ export const sports = [
 						hide: false,
 						penalty: false,
 						canDiscount: false,
-						price: 75
+						price: 100
+					},
+					{
+						type: "GYM",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 200
 					}
 				]
 			},
@@ -364,15 +431,21 @@ export const sports = [
 						hide: false,
 						penalty: false,
 						canDiscount: false,
-						price: 35
+						price: 50
 					},
-
 					{
 						type: "Regular-Rental",
 						hide: false,
 						penalty: false,
 						canDiscount: false,
-						price: 75
+						price: 100
+					},
+					{
+						type: "Gym",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 250
 					}
 				]
 			}
@@ -720,6 +793,24 @@ export const sports = [
 						penalty: false,
 						canDiscount: false,
 						price: 325
+					}
+				]
+			}
+		]
+	},
+	{
+		id: 20,
+		name: "Billiard",
+		sportHide: false,
+		categories: [
+			{
+				other: [
+					{
+						type: "Rental",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 40
 					}
 				]
 			}
