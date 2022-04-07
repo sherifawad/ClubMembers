@@ -1,28 +1,34 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSchoolGroup } from "../StoreRedux/playersSlice";
+import {
+	SelectPrivateSchoolGroup,
+	setSchoolGroup
+} from "../StoreRedux/playersSlice";
 import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
-const AddSport = ({ setSport }) => {
+const AddSport = ({ setSport, language = "ar" }) => {
 	const [selectedSportID, setSelectedSportID] = useState(0);
 	const [selectedSport, setSelectedSport] = useState({});
 	const [sportCategoryList, setSportCategoryList] = useState([]);
 	const [sportCategoryIndex, setSportCategoryIndex] = useState(" ");
-	const [sportCategory, setSportCategory] = useState(" ");
+	const [sportCategoryId, setSportCategoryId] = useState(0);
+	const [sportCategory, setSportCategory] = useState({});
 	const [sportTypeList, setSportTypeList] = useState([]);
 	const [sportTypeIndex, setSportTypeIndex] = useState(" ");
+	const [sportTypeId, setSportTypeId] = useState(0);
 	const [sportPrice, setSportPrice] = useState(0);
-	const [sportTypeName, setSportTypeName] = useState("");
+	const [sportTypeName, setSportTypeName] = useState({});
 	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
 	const [sportTypePenalty, setSportTypePenalty] = useState(false);
 
 	// Extracting sports state from redux store
 	const { list, loading, error, errorMessage } = useSelector(selectSports);
 	const dispatch = useDispatch();
-	const privateSchoolGroupSelected = useSelector(
-		state => state.players.SchoolGroupSelected
-	);
+	const privateSchoolGroupSelected = useSelector(SelectPrivateSchoolGroup);
+
+	// const language = useSelector(selectSettingsLanguage);
+	// const language = "ar";
 
 	useEffect(() => {
 		if (list?.length < 1) {
@@ -44,15 +50,12 @@ const AddSport = ({ setSport }) => {
 	const handleSelectedCategory = selectedCategoryIndex => {
 		if (!selectedCategoryIndex) return;
 		resetValues(false, false, true);
-		const cat = Object.keys(
-			selectedSport.categories[selectedCategoryIndex]
-		)[0];
+		const selectedCat = selectedSport.categories[selectedCategoryIndex];
 		setSportCategoryIndex(selectedCategoryIndex);
-		setSportCategory(cat);
-
-		const types = selectedSport.categories[selectedCategoryIndex][`${cat}`];
-		if (types) {
-			setSportTypeList(types);
+		setSportCategoryId(selectedCat.id);
+		setSportCategory(selectedCat.name);
+		if (selectedCat.value) {
+			setSportTypeList(selectedCat.value);
 		}
 	};
 
@@ -61,7 +64,8 @@ const AddSport = ({ setSport }) => {
 		const selectedType = sportTypeList[selectedTypeIndex];
 		if (selectedType) {
 			setSportTypeIndex(selectedTypeIndex);
-			setSportTypeName(selectedType["type"]);
+			setSportTypeId(selectedType.id);
+			setSportTypeName(selectedType.name);
 			setSportPrice(selectedType["price"]);
 			setSportTypeDiscount(selectedType["canDiscount"]);
 			setSportTypePenalty(selectedType["penalty"]);
@@ -77,15 +81,17 @@ const AddSport = ({ setSport }) => {
 		}
 		if (sport) {
 			setSportCategoryList([]);
-			setSportCategory(" ");
+			setSportCategory({});
 			setSportCategoryIndex(" ");
+			setSportCategoryId(0);
 			category = true;
 		}
 		if (category) {
 			setSportTypeList([]);
 			setSportTypeIndex(" ");
+			setSportTypeId(0);
 			setSportPrice(0);
-			setSportTypeName("");
+			setSportTypeName({});
 			setSportTypeDiscount(false);
 			setSportTypePenalty(false);
 		}
@@ -101,13 +107,21 @@ const AddSport = ({ setSport }) => {
 		});
 
 	const addSport = () => {
-		if (privateSchoolGroupSelected && sportTypeName === "Schools Group")
+		if (
+			parseInt(selectedSportID) === 1 &&
+			parseInt(sportTypeId) === 6 &&
+			privateSchoolGroupSelected
+		) {
 			return;
+		}
+
 		const newSport = {
 			id: parseInt(selectedSportID),
 			name: selectedSport.name,
-			category: sportCategory,
-			type: sportTypeName,
+			categoryName: sportCategory,
+			categoryId: sportCategoryId,
+			typeName: sportTypeName,
+			typeId: sportTypeId,
 			canDiscount: sportTypeDiscount,
 			penalty: sportTypePenalty,
 			price: sportPrice,
@@ -115,9 +129,17 @@ const AddSport = ({ setSport }) => {
 			penaltyFees: 0,
 			total: -1
 		};
-		if (newSport.price > 0 && !isNullOrEmpty(newSport)) {
+		if (
+			newSport.price > 0 &&
+			!isNullOrEmpty(newSport) &&
+			newSport.categoryId > 0 &&
+			newSport.typeId > 0
+		) {
 			setSport(newSport);
-			if (sportTypeName === "Schools Group") {
+			if (
+				parseInt(newSport.id) === 1 &&
+				parseInt(newSport.typeId) === 6
+			) {
 				dispatch(setSchoolGroup());
 			}
 		}
@@ -146,7 +168,7 @@ const AddSport = ({ setSport }) => {
 						</option>
 						{list.map(x => (
 							<option key={x.id} value={x.id}>
-								{x.name}
+								{x.name[language]}
 							</option>
 						))}
 					</select>
@@ -164,7 +186,7 @@ const AddSport = ({ setSport }) => {
 						<option value=" " disabled></option>
 						{sportCategoryList.map((x, i) => (
 							<option key={i} value={i}>
-								{Object.keys(x)}
+								{x.name[language]}
 							</option>
 						))}
 					</select>
@@ -180,7 +202,7 @@ const AddSport = ({ setSport }) => {
 						<option value=" " disabled></option>
 						{sportTypeList.map((x, i) => (
 							<option key={i} value={i}>
-								{x.type}
+								{x["name"][language]}
 							</option>
 						))}
 					</select>

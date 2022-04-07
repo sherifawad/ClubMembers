@@ -19,6 +19,8 @@ const HomePage = () => {
 	const scanResultDialogRef = useRef();
 	const router = useRouter();
 	const { year, code } = useSelector(state => state.players);
+	// const language = useSelector(selectSettingsLanguage);
+	const language = "ar";
 
 	// check for queries
 	useEffect(() => {
@@ -78,13 +80,14 @@ const HomePage = () => {
 					</div>
 				)}
 
-				<PlayersList playersList={setPlayers} />
+				<PlayersList playersList={setPlayers} language={language} />
 
 				<dialog ref={scanResultDialogRef}>
 					<ScanResult
 						className={styles.dialog}
 						handleEvent={handleCancelModel}
 						data={scanResultData}
+						language={language}
 					/>
 				</dialog>
 
@@ -96,6 +99,7 @@ const HomePage = () => {
 								handleEvent={handleCloseTabComponent}
 								year={year}
 								code={code}
+								language={language}
 							/>
 						</Suspense>
 					</div>
@@ -104,6 +108,7 @@ const HomePage = () => {
 					<CalculatedResult
 						players={players}
 						setHandler={setHandler}
+						language={language}
 					/>
 				)}
 				{players?.length > 0 && (

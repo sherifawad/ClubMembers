@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/components/PlayersList.module.scss";
 import { deletePlayer, selectPlayers } from "../StoreRedux/playersSlice";
-import { createSelector } from "@reduxjs/toolkit";
 import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 
-function PlayersList({ playersList }) {
+function PlayersList({ playersList, language = "ar" }) {
 	// Extracting players state from redux store
 	const playersItems = useSelector(selectPlayers);
 	// Extracting sports state from redux store
@@ -59,9 +58,9 @@ function PlayersList({ playersList }) {
 								key={index}
 								className={styles.items_body_content}
 							>
-								<span>{sport.name}</span>
-								<span>{sport.category}</span>
-								<span>{sport.type}</span>
+								<span>{sport.name[language]}</span>
+								<span>{sport.categoryName[language]}</span>
+								<span>{sport.typeName[language]}</span>
 								<span>{sport.price}$</span>
 								{sport.discount > 0 && (
 									<span>{sport.discount}$</span>

@@ -8,134 +8,112 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: {
-						ar: "عادي",
-						en: "normal"
+				id: 1,
+				name: {
+					ar: "عادي",
+					en: "normal"
+				},
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "مدارس",
+							en: "Schools"
+						},
+						hide: false,
+						penalty: true,
+						canDiscount: true,
+						price: 250
 					},
-					value: [
-						{
-							type: {
-								id: 1,
-								name: {
-									ar: "مدارس",
-									en: "Schools"
-								}
-							},
-							hide: false,
-							penalty: true,
-							canDiscount: true,
-							price: 250
+					{
+						id: 2,
+						name: {
+							ar: "تجهيزي",
+							en: "Preparation"
 						},
-						{
-							type: {
-								id: 2,
-								name: {
-									ar: "تجهيزي",
-									en: "Preparation"
-								}
-							},
-
-							hide: false,
-							penalty: true,
-							canDiscount: true,
-							price: 250
+						hide: false,
+						penalty: true,
+						canDiscount: true,
+						price: 250
+					},
+					{
+						id: 3,
+						name: {
+							ar: "فريق",
+							en: "Team"
 						},
-						{
-							type: {
-								id: 3,
-								name: {
-									ar: "فريق",
-									en: "Team"
-								}
-							},
-							hide: false,
-							penalty: true,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+						hide: false,
+						penalty: true,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			},
 			{
-				private: {
-					name: {
-						ar: "خاص",
-						en: "Private"
+				id: 2,
+				name: {
+					ar: "خاص",
+					en: "Private"
+				},
+				value: [
+					{
+						id: 4,
+						name: { ar: "تحميل كامل", en: "Full" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1000
 					},
-					value: [
-						{
-							type: {
-								id: 4,
-								name: { ar: "تحميل كامل", en: "Full" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1000
-						},
-						{
-							type: {
-								id: 5,
-								name: { ar: "متقطع", en: "Disconnected" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 600
-						},
-						{
-							type: {
-								id: 6,
-								name: { ar: "مدارس مجمع", en: "Schools Group" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1800
-						},
-						{
-							type: {
-								id: 7,
-								name: { ar: "8 حصص", en: "8 Sessions" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 450
-						},
-						{
-							type: {
-								id: 8,
-								name: { ar: "حصة واحدة", en: "Single Session" }
-							},
-							hide: true,
-							penalty: false,
-							canDiscount: false,
-							price: 50
-						}
-					]
-				}
+					{
+						id: 5,
+						name: { ar: "متقطع", en: "Disconnected" },
+						hide: true,
+						penalty: false,
+						canDiscount: true,
+						price: 600
+					},
+					{
+						id: 6,
+						name: { ar: "مدارس مجمع", en: "Schools Group" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1800
+					},
+					{
+						id: 7,
+						name: { ar: "8 حصص", en: "8 Sessions" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					},
+					{
+						id: 8,
+						name: { ar: "حصة واحدة", en: "Single Session" },
+						hide: true,
+						penalty: false,
+						canDiscount: false,
+						price: 50
+					}
+				]
 			},
 			{
-				other: {
-					name: {
-						ar: "اخرى",
-						en: "other"
-					},
-					value: [
-						{
-							type: {
-								id: 9,
-								name: { ar: "حصة واحدة", en: "Single Session" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 30
-						}
-					]
-				}
+				id: 3,
+				name: {
+					ar: "اخرى",
+					en: "other"
+				},
+				value: [
+					{
+						id: 9,
+						name: { ar: "فترة حرة", en: "Free Swimming" },
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 30
+					}
+				]
 			}
 		]
 	},
@@ -145,21 +123,18 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "كرة يد", en: "HandBall" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "كرة يد", en: "HandBall" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -169,21 +144,18 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "كرة سلة", en: "BasketBall" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "كرة سلة", en: "BasketBall" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -193,21 +165,18 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "كرة طائرة", en: "VolleyBall" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "كرة طائرة", en: "VolleyBall" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -217,31 +186,26 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "مميزة", en: "Special" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 250
-						},
-						{
-							type: {
-								id: 2,
-								name: { ar: "عادي", en: "regular" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "مميزة", en: "Special" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 250
+					},
+					{
+						id: 2,
+						name: { ar: "عادي", en: "regular" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -251,21 +215,18 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "تايكوندو", en: "Taekwondo" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "تايكوندو", en: "Taekwondo" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -275,21 +236,18 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "كاراتيه", en: "Karate" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "كاراتيه", en: "Karate" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -299,87 +257,76 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: {
-								id: 1,
-								name: { ar: "فريق", en: "Team" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: { ar: "فريق", en: "Team" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					},
+					{
+						id: 2,
+						name: { ar: "براعم", en: "Cubs" },
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					},
+					{
+						id: 3,
+						name: {
+							ar: "مدارس مبتدئيين",
+							en: "Schools-beginners"
 						},
-						{
-							type: {
-								id: 2,
-								name: { ar: "براعم", en: "Cubs" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					},
+					{
+						id: 4,
+						name: {
+							ar: "مدارس هواه",
+							en: "Schools-amateurs"
 						},
-						{
-							type: {
-								id: 3,
-								name: {
-									ar: "مدارس مبتدئيين",
-									en: "Schools-beginners"
-								}
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
-						},
-						{
-							type: {
-								id: 4,
-								name: {
-									ar: "مدارس هواه",
-									en: "Schools-amateurs"
-								}
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
-						}
-					]
-				},
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: {
-								id: 5,
-								name: { ar: "خاص", en: "private" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 300
-						}
-					]
-				},
-				other: {
-					name: { ar: "اخرى", en: "other" },
-					value: [
-						{
-							type: {
-								id: 6,
-								name: { ar: "جيم", en: "GYM" }
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 200
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					}
+				]
+			},
+			{
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 5,
+						name: { ar: "خاص", en: "private" },
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 300
+					}
+				]
+			},
+			{
+				id: 3,
+				name: { ar: "اخرى", en: "other" },
+				value: [
+					{
+						id: 6,
+						name: { ar: "جيم", en: "GYM" },
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 200
+					}
+				]
 			}
 		]
 	},
@@ -389,18 +336,21 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "جودو", en: "Judo" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "جودو",
+							en: "Judo"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -410,18 +360,21 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "كمال أجسام", en: "Bodybuilding" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "كمال أجسام",
+							en: "Bodybuilding"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -431,18 +384,21 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "رفع اثقال", en: "Weightlifting" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "رفع اثقال",
+							en: "Weightlifting"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			}
 		]
 	},
@@ -452,60 +408,69 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "تنس طاولة", en: "PingPong" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 300
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						ar: "تنس طاولة",
+						en: "PingPong",
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 300
+					}
+				]
 			},
 			{
-				other: {
-					name: { ar: "اخرى", en: "other" },
-					value: [
-						{
-							type: { ar: "ايجار", en: "Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 25
-						}
-					]
-				}
+				id: 3,
+				name: { ar: "اخرى", en: "other" },
+				value: [
+					{
+						id: 2,
+						ar: "ايجار",
+						en: "Rental",
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 25
+					}
+				]
 			}
 		]
 	},
 	{
 		id: 13,
-		name: { ar: "تنس طاولة", en: "ModernPentathlon" },
+		name: { ar: "خماسي حديث", en: "ModernPentathlon" },
 		sportHide: true,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "ثنائي", en: "laser-run" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "ثنائي",
+							en: "laser-run"
 						},
-						{
-							type: { ar: "ثلاثي", en: "with Swimming" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 250
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					},
+					{
+						id: 2,
+						name: {
+							ar: "ثلاثي",
+							en: "with Swimming"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 250
+					}
+				]
 			}
 		]
 	},
@@ -515,98 +480,132 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "فريق", en: "Team" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 500
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "فريق",
+							en: "Team"
 						},
-						{
-							type: { ar: "براعم", en: "Cubs" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 600
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 500
+					},
+					{
+						id: 2,
+						name: {
+							ar: "براعم",
+							en: "Cubs"
 						},
-						{
-							type: {
-								ar: "مدارس مبتدئيين",
-								en: "Schools-beginners"
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 450
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 600
+					},
+					{
+						id: 3,
+						name: {
+							ar: "مدارس مبتدئيين",
+							en: "Schools-beginners"
 						},
-						{
-							type: { ar: "مدارس مميز", en: "Schools-special" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 500
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					},
+					{
+						id: 4,
+						name: {
+							ar: "مدارس مميز",
+							en: "Schools-special"
 						},
-						{
-							type: { ar: "مدارس هواه", en: "Schools-amateurs" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 600
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 500
+					},
+					{
+						id: 5,
+						name: {
+							ar: "مدارس هواه",
+							en: "Schools-amateurs"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 600
+					}
+				]
 			},
 			{
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: { ar: "خاص", en: "private" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 100
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 6,
+						name: {
+							ar: "خاص",
+							en: "private"
 						},
-						{
-							type: { ar: "جيم", en: "GYM" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 200
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 100
+					},
+					{
+						id: 7,
+						name: {
+							ar: "جيم",
+							en: "GYM"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 200
+					}
+				]
 			},
 			{
-				other: {
-					name: { ar: "اخرى", en: "other" },
-					value: [
-						{
-							type: { ar: "ايجار للفريق", en: "Team-Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 50
+				id: 3,
+				name: { ar: "اخرى", en: "other" },
+				value: [
+					{
+						id: 8,
+						name: {
+							ar: "ايجار للفريق",
+							en: "Team-Rental"
 						},
-						{
-							type: { ar: "ايجار عادي", en: "Regular-Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 100
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 50
+					},
+					{
+						id: 9,
+						name: {
+							ar: "ايجار عادي",
+							en: "Regular-Rental"
 						},
-						{
-							type: { ar: "جيم", en: "Gym" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 250
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 100
+					},
+					{
+						id: 10,
+						name: {
+							ar: "جيم",
+							en: "Gym"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 250
+					}
+				]
 			}
 		]
 	},
@@ -616,96 +615,133 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "مدارس", en: "Schools" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 300
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "مدارس",
+							en: "Schools"
 						},
-						{
-							type: { ar: "فريق", en: "Team" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 450
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 300
+					},
+					{
+						id: 2,
+						name: {
+							ar: "فريق",
+							en: "Team"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					}
+				]
 			},
 			{
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: { ar: "فردي صباحي", en: "Morning-Single" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 60
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 3,
+						name: {
+							ar: "فردي صباحي",
+							en: "Morning-Single"
 						},
-						{
-							type: { ar: "زوجي صباحي", en: "Morning-Double" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 70
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 60
+					},
+					{
+						id: 4,
+						name: {
+							ar: "زوجي صباحي",
+							en: "Morning-Double"
 						},
-						{
-							type: { ar: "ثلاثي صباحي", en: "Morning-Triple" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 90
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 70
+					},
+					{
+						id: 5,
+						name: {
+							ar: "ثلاثي صباحي",
+							en: "Morning-Triple"
 						},
-						{
-							type: { ar: "فردي مسائي", en: "Evening-Single" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 90
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 90
+					},
+					{
+						id: 6,
+						name: {
+							ar: "فردي مسائي",
+							en: "Evening-Single"
 						},
-						{
-							type: { ar: "زوجي مسائي", en: "Evening-Double" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 130
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 90
+					},
+					{
+						id: 7,
+						name: {
+							ar: "زوجي مسائي",
+							en: "Evening-Double"
 						},
-						{
-							type: { ar: "ثلاثي مسائي", en: "Evening-Triple" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 135
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 130
+					},
+					{
+						id: 8,
+						name: {
+							ar: "ثلاثي مسائي",
+							en: "Evening-Triple"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 135
+					}
+				]
 			},
 			{
-				other: {
-					name: { ar: "اخرى", en: "other" },
-					value: [
-						{
-							type: { ar: "إيجار صباحي", en: "Morning-Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 40
+				id: 3,
+				name: { ar: "اخرى", en: "other" },
+				value: [
+					{
+						id: 9,
+						name: {
+							ar: "إيجار صباحي",
+							en: "Morning-Rental"
 						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 40
+					},
 
-						{
-							type: { ar: "إيجار مسائي", en: "Evening-Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 100
-						}
-					]
-				}
+					{
+						id: 10,
+						name: {
+							ar: "إيجار مسائي",
+							en: "Evening-Rental"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 100
+					}
+				]
 			}
 		]
 	},
@@ -715,32 +751,38 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "other" },
-					value: [
-						{
-							type: { ar: "عادي", en: "other" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "عادي",
+							en: "normal"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					}
+				]
 			},
 			{
-				private: {
-					name: { ar: "خاص", en: "other" },
-					value: [
-						{
-							type: { ar: "خاص", en: "other" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 100
-						}
-					]
-				}
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 2,
+						name: {
+							ar: "خاص",
+							en: "private"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 100
+					}
+				]
 			}
 		]
 	},
@@ -750,173 +792,234 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				Artistic: {
-					name: { ar: "فني", en: "Artistic" },
-					value: [
-						{
-							type: { ar: "مدارس", en: "Schools" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 350
+				id: 1,
+				name: { ar: "فني", en: "Artistic" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "مدارس",
+							en: "Schools"
 						},
-						{
-							type: { ar: "تجهيزي 6-7", en: "Preparation(6-7)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 400
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 350
+					},
+					{
+						id: 2,
+						name: {
+							ar: "تجهيزي 6-7",
+							en: "Preparation(6-7)"
 						},
-						{
-							type: { ar: "فريق 8-10", en: "Team(8-10)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 450
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 400
+					},
+					{
+						id: 3,
+						name: {
+							ar: "فريق 8-10",
+							en: "Team(8-10)"
 						},
-						{
-							type: { ar: "فريق 11-15", en: "Team(11-15)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 800
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 450
+					},
+					{
+						id: 4,
+						name: {
+							ar: "فريق 11-15",
+							en: "Team(11-15)"
 						},
-						{
-							type: {
-								ar: "فريق درجة 1 و",
-								en: "Team(grade 1&2)"
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1200
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 800
+					},
+					{
+						id: 5,
+						name: {
+							ar: "فريق درجة 1 و",
+							en: "Team(grade 1&2)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1200
+					}
+				]
 			},
 			{
-				general: {
-					name: { ar: "عام", en: "general" },
-					value: [
-						{
-							type: { ar: "أكاديمية", en: "Academy" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 6,
+						name: {
+							ar: "مدرب داخلي",
+							en: "Internal Trainer"
 						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 100
+					},
 
-						{
-							type: { ar: "فريق", en: "Team" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 400
-						}
-					]
-				}
+					{
+						id: 7,
+						name: {
+							ar: "فريق خارجي",
+							en: "External Trainer"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 150
+					}
+				]
 			},
 			{
-				Aerobic: {
-					name: { ar: "ايروبك", en: "Aerobic" },
-					value: [
-						{
-							type: { ar: "مدارس", en: "Schools" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 400
+				id: 3,
+				name: { ar: "عام", en: "general" },
+				value: [
+					{
+						id: 8,
+						name: {
+							ar: "أكاديمية",
+							en: "Academy"
 						},
-						{
-							type: { ar: "تجهيزي", en: "Preparation" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 500
-						},
-						{
-							type: { ar: "فريق 7 -11", en: "Team(7-11)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 750
-						},
-						{
-							type: { ar: "فريق 12 فما فوق", en: "Team(12-..)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 950
-						}
-					]
-				}
-			},
-			{
-				Rhythmic: {
-					name: { ar: "إيقاعي", en: "Rhythmic" },
-					value: [
-						{
-							type: { ar: "مدارس", en: "Schools" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1000
-						},
-						{
-							type: { ar: "تجهيزي", en: "Preparation" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1200
-						},
-						{
-							type: { ar: "فريق 7-10", en: "Team(7-10)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1500
-						},
-						{
-							type: { ar: "فريق 11-15", en: "Team(11-15)" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 1700
-						},
-						{
-							type: {
-								ar: "فريق 17 و درجه 1",
-								en: "Team(17-grade 1)"
-							},
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 2000
-						}
-					]
-				}
-			},
-			{
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: { ar: "مدرب داخلي", en: "Internal Trainer" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 100
-						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					},
 
-						{
-							type: { ar: "فريق خارجي", en: "External Trainer" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 150
-						}
-					]
-				}
+					{
+						id: 9,
+						name: {
+							ar: "فريق",
+							en: "Team"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 400
+					}
+				]
+			},
+			{
+				id: 4,
+				name: { ar: "ايروبك", en: "Aerobic" },
+				value: [
+					{
+						id: 10,
+						name: {
+							ar: "مدارس",
+							en: "Schools"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 400
+					},
+					{
+						id: 11,
+						name: {
+							ar: "تجهيزي",
+							en: "Preparation"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 500
+					},
+					{
+						id: 12,
+						name: {
+							ar: "فريق 7 -11",
+							en: "Team(7-11)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 750
+					},
+					{
+						id: 13,
+						name: {
+							ar: "فريق 12 فما فوق",
+							en: "Team(12-..)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 950
+					}
+				]
+			},
+			{
+				id: 5,
+				name: { ar: "إيقاعي", en: "Rhythmic" },
+				value: [
+					{
+						id: 14,
+						name: {
+							ar: "مدارس",
+							en: "Schools"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1000
+					},
+					{
+						id: 15,
+						name: {
+							ar: "تجهيزي",
+							en: "Preparation"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1200
+					},
+					{
+						id: 16,
+						name: {
+							ar: "فريق 7-10",
+							en: "Team(7-10)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1500
+					},
+					{
+						id: 17,
+						name: {
+							ar: "فريق 11-15",
+							en: "Team(11-15)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 1700
+					},
+					{
+						id: 18,
+						name: {
+							ar: "فريق 17 و درجه 1",
+							en: "Team(17-grade 1)"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 2000
+					}
+				]
 			}
 		]
 	},
@@ -926,32 +1029,38 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "شيش", en: "Sheesh" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "شيش",
+							en: "Sheesh"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					}
+				]
 			},
 			{
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: { ar: "حصة واحدة", en: "Single Session" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 40
-						}
-					]
-				}
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 2,
+						name: {
+							ar: "حصة واحدة",
+							en: "Single Session"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 40
+					}
+				]
 			}
 		]
 	},
@@ -961,47 +1070,61 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				normal: {
-					name: { ar: "عادي", en: "normal" },
-					value: [
-						{
-							type: { ar: "عادي", en: "normal" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 200
+				id: 1,
+				name: { ar: "عادي", en: "normal" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "عادي",
+							en: "normal"
 						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 200
+					},
 
-						{
-							type: { ar: "حديد", en: "only-Steel" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 150
-						}
-					]
-				}
+					{
+						id: 2,
+						name: {
+							ar: "حديد",
+							en: "only-Steel"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 150
+					}
+				]
 			},
 			{
-				private: {
-					name: { ar: "خاص", en: "private" },
-					value: [
-						{
-							type: { ar: "حصة واحدة", en: "Single Session" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 40
+				id: 2,
+				name: { ar: "خاص", en: "private" },
+				value: [
+					{
+						id: 3,
+						name: {
+							ar: "حصة واحدة",
+							en: "Single Session"
 						},
-						{
-							type: { ar: "كامل", en: "Full" },
-							hide: false,
-							penalty: false,
-							canDiscount: false,
-							price: 325
-						}
-					]
-				}
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 40
+					},
+					{
+						id: 4,
+						name: {
+							ar: "كامل",
+							en: "Full"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: false,
+						price: 325
+					}
+				]
 			}
 		]
 	},
@@ -1011,18 +1134,21 @@ export const sportsMulti = [
 		sportHide: false,
 		categories: [
 			{
-				other: {
-					name: { ar: "اخرى", en: "other" },
-					value: [
-						{
-							type: { ar: "إيجار", en: "Rental" },
-							hide: false,
-							penalty: false,
-							canDiscount: true,
-							price: 40
-						}
-					]
-				}
+				id: 1,
+				name: { ar: "اخرى", en: "other" },
+				value: [
+					{
+						id: 1,
+						name: {
+							ar: "إيجار",
+							en: "Rental"
+						},
+						hide: false,
+						penalty: false,
+						canDiscount: true,
+						price: 40
+					}
+				]
 			}
 		]
 	}

@@ -6,7 +6,7 @@ import {
 import { nextPlayerId } from "../Data/utils";
 
 export const settingsInitialState = {
-	language: "en"
+	language: "ar"
 };
 
 const settingsSlice = createSlice({
@@ -16,10 +16,10 @@ const settingsSlice = createSlice({
 		setLanguage: (state, { payload }) => {
 			switch (payload) {
 				case "en":
-					state.language = payload;
+					state.language = "en";
 					break;
 				case "ar":
-					state.language = payload;
+					state.language = "ar";
 					break;
 				default:
 					break;

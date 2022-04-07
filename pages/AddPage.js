@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import AddSport from "../Components/AddSport";
 import SportsList from "../Components/SportsList";
 import { isBlank } from "../Data/utils";
-import { addPlayer, updatePlayer } from "../StoreRedux/playersSlice";
+import {
+	addPlayer,
+	removeSchoolGroup,
+	updatePlayer
+} from "../StoreRedux/playersSlice";
 import styles from "../styles/pages/AddPage.module.scss";
 import { createSelector } from "@reduxjs/toolkit";
 import Head from "next/head";
+import { selectSettingsLanguage } from "../StoreRedux/settingsSlice";
 
 const AddPage = () => {
 	const router = useRouter();
@@ -19,11 +24,15 @@ const AddPage = () => {
 	);
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [playerId, setPlayerId] = useState(0);
+	const [removeSwimmingGroup, setRemoveSwimmingGroup] = useState(0);
+
 	const selectPlayers = createSelector(
 		state => state.players,
 		players => players.playersState
 	);
 	const players = useSelector(selectPlayers);
+	// const language = useSelector(selectSettingsLanguage);
+	const language = "ar";
 
 	const dispatch = useDispatch();
 
@@ -68,6 +77,9 @@ const AddPage = () => {
 			} else {
 				dispatch(addPlayer(player));
 			}
+			if (removeSwimmingGroup) {
+				dispatch(removeSchoolGroup());
+			}
 			router.push("/");
 		} catch (err) {
 			console.error(
@@ -94,12 +106,14 @@ const AddPage = () => {
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
-				<AddSport setSport={setSport} />
+				<AddSport setSport={setSport} language={language} />
 
 				<SportsList
 					sport={sport}
 					setPlayerSportsList={setPlayerSportsList}
 					receivedPlayerSportsList={receivedPlayerSportsList}
+					language={language}
+					setRemoveSwimmingGroup={setRemoveSwimmingGroup}
 				/>
 				<button type="button" onClick={handlePlayerAddition}>
 					{isUpdate ? "Update Player" : "Add Player"}

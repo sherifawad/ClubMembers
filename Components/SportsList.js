@@ -2,20 +2,20 @@ import Image from "next/image";
 import deleteIcon from "../public/deleteIcon.svg";
 import { useEffect, useState } from "react";
 import styles from "../styles/components/SportsList.module.scss";
-import { useDispatch } from "react-redux";
-import { removeSchoolGroup } from "../StoreRedux/playersSlice";
 
 const SportsList = ({
 	sport,
 	setPlayerSportsList,
-	receivedPlayerSportsList
+	receivedPlayerSportsList,
+	language = "ar",
+	setRemoveSwimmingGroup = false
 }) => {
 	const [sportsList, setSportsList] = useState([]);
-	const dispatch = useDispatch();
 	const removeSport = index => {
-		const sportType = sportsList[index].type;
-		if (sportType === "Schools Group") {
-			dispatch(removeSchoolGroup());
+		const sportToRemove = sportsList[index];
+		if (sportToRemove.id === 1 && sportToRemove.typeId === 6) {
+			// inform parent to change status
+			setRemoveSwimmingGroup(true);
 		}
 		setSportsList(sportsList.filter((_, i) => i !== index));
 	};
@@ -24,7 +24,7 @@ const SportsList = ({
 		if (sport) {
 			const duplicateSport = sportsList.find(
 				item =>
-					item.name === sport.name && item.category === sport.category
+					item.id === sport.id && item.categoryId === sport.categoryId
 			);
 			if (duplicateSport) return;
 			setSportsList(oldList => [...oldList, sport]);
@@ -48,11 +48,11 @@ const SportsList = ({
 					<li key={index} className={styles.item_content}>
 						<div className={styles.item_data}>
 							<div className={styles.item_header}>
-								<h4>{sport.name}</h4>
-								<h5>({sport.category})</h5>
+								<h4>{sport.name[language]}</h4>
+								<h5>({sport.categoryName[language]})</h5>
 							</div>
 							<div className={styles.item_body}>
-								<h5>{sport.type}</h5>
+								<h5>{sport.typeName[language]}</h5>
 								<h5>
 									<span>$</span>
 									{sport.price}

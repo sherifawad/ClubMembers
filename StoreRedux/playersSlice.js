@@ -17,48 +17,42 @@ const addItemToArray = (state, { payload }) => {
 };
 
 const updatePlayersSportsData = (state, { payload }) => {
+	state.SchoolGroupSelected = false;
+	state.year = 0;
+	state.code = 0;
 	if (state?.playersState.length < 1) return { ...state };
 	const players = state.playersState.reduce((accPlayers, player) => {
 		if (player?.sports?.length < 1) return null;
 		const newSports = player.sports.reduce((accSports, sport) => {
 			// check sport in payload list
-			// if exists update data
-			let sportExist = payload.find(s => s.id === sport.id);
-			if (sportExist) {
-				// get sport discount option and price to update
-				//get sport categories
-				const sportsCategories = sportExist["categories"];
-				if (sportsCategories?.length < 1) return accSports;
-				// find a key which categories sub keys equal to player sport category => private === private
-				const categoryKey = sportsCategories.find(
-					cat => Object.keys(cat) == sport.category
-				);
-				if (!categoryKey) return accSports;
-				// get selected category sport types
-				const sportTypes = categoryKey[`${sport.category}`];
-				//then find in the object key array a type equal to sport type  => full === full
-				if (sportTypes?.length < 1) return accSports;
-				const sportDetails = sportTypes.find(
-					t => t["type"] === sport.type
-				);
-				if (!sportDetails || sportDetails === undefined)
-					return accSports;
-				// const { canDiscount, price } = sportExist["categories"]
-				// 	?.find(cat => Object.keys(cat) == sport.category)
-				// 	[`${sport.category}`]?.find(t => t["type"] === sport.type);
-				// if (!canDiscount || !price) return;
-				const newSport = {
-					id: sport.id,
-					name: sport.name,
-					category: sport.category,
-					type: sport.type,
-					canDiscount: sportDetails.canDiscount,
-					price: sportDetails.price,
-					discount: -1,
-					total: -1
-				};
-				accSports.push(newSport);
+			const resultSport = payload.find(s => s.id === sport.id);
+			if (!resultSport) return accSports;
+			// find category id match
+			const resultCategory = resultSport.categories.find(
+				c => c.id === sport.categoryId
+			);
+			if (!resultCategory) return accSports;
+			// find sport type id match
+			const resultType = resultCategory.value.find(
+				v => v.id === sport.typeId
+			);
+			if (!resultType) return accSports;
+
+			const newSport = {
+				...sport,
+				canDiscount: sport.canDiscount,
+				penalty: sport.penalty,
+				price: sport.price,
+				discount: -1,
+				penaltyFees: 0,
+				total: -1
+			};
+			accSports.push(newSport);
+			// if specified sport exists change state
+			if (newSport.id === 1 && newSport.typeId) {
+				state.SchoolGroupSelected = false;
 			}
+
 			return accSports;
 		}, []);
 		// if no sports skip
@@ -146,16 +140,10 @@ const playersSlice = createSlice({
 			}
 		},
 		setSchoolGroup: (state, { payload }) => {
-			return {
-				...state,
-				SchoolGroupSelected: true
-			};
+			state.SchoolGroupSelected = true;
 		},
 		removeSchoolGroup: (state, { payload }) => {
-			return {
-				...state,
-				SchoolGroupSelected: false
-			};
+			state.SchoolGroupSelected = false;
 		},
 		setYear: (state, { payload }) => {
 			return {
@@ -193,6 +181,11 @@ export const {
 export const selectPlayers = createSelector(
 	state => state.players,
 	players => players.playersState
+);
+
+export const SelectPrivateSchoolGroup = createSelector(
+	state => state.players,
+	players => players.SchoolGroupSelected
 );
 
 export default playersSlice.reducer;

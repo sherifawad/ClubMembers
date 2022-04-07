@@ -1,6 +1,6 @@
 const localServer = "http://localhost:3000";
 const sportsApi = {
-	async fetchAll(language = "en") {
+	async fetchAll(language = "") {
 		let res = await fetch(`/api/sports?language=${language}`);
 		res = await res.json();
 		return res || [];

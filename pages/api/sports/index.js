@@ -1,25 +1,21 @@
 import { sports } from "../../../Data/sports";
 import { sportsAr } from "../../../Data/sportsAr";
+import { sportsMulti } from "../../../Data/sportsMulti";
 
 export default function handler(req, res) {
 	const { language } = req.query;
-	const sportsList = language && language === "ar" ? sportsAr : sports;
+	let sportsList = sportsMulti;
+	// sportsList = language && language === "ar" ? sportsAr : sports;
 	const sportsWithFilteredTypes = sportsList.reduce((accSports, sport) => {
 		if (!sport || sport.sportHide === true) return accSports;
 		const filteredCategories = sport.categories.reduce(
-			(accCategories, Categories) => {
-				if (!Categories || Categories.length < 1) return accCategories;
+			(accCategories, category) => {
+				if (!category || category.length < 1) return accCategories;
 
-				// get keys and check for hide property
-				const keyName = Object.keys(Categories)[0];
-				const keyValue = Categories[`${keyName}`]?.filter(
-					x => x.hide === false
-				);
+				const values = category?.value?.filter(x => x.hide === false);
 
-				if (keyValue && keyValue.length > 0) {
-					accCategories.push({
-						[keyName]: keyValue
-					});
+				if (values && values.length > 0) {
+					accCategories.push({ ...category, value: values });
 				}
 				return accCategories;
 			},

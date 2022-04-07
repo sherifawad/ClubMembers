@@ -2,7 +2,13 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/components/TabComponent.module.scss";
 import { useSelector } from "react-redux";
-function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
+function TabComponent({
+	players = [],
+	handleEvent,
+	year = 0,
+	code = 0,
+	language = "ar"
+}) {
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
 		loading: () => <h1>....Loading</h1>,
 		ssr: false
@@ -337,8 +343,8 @@ function TabComponent({ players = [], handleEvent, year = 0, code = 0 }) {
 													styles.sportsContainer
 												}
 											>
-												<p>{s.name}</p>
-												<p>{s.type}</p>
+												<p>{s.name[language]}</p>
+												<p>{s.typeName[language]}</p>
 												<input
 													type="checkbox"
 													value={p.id}
