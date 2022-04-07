@@ -67,7 +67,7 @@ export const sportsMulti = [
 					{
 						id: 5,
 						name: { ar: "متقطع", en: "Disconnected" },
-						hide: true,
+						hide: false,
 						penalty: false,
 						canDiscount: true,
 						price: 600
