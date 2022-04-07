@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/components/TabComponent.module.scss";
@@ -9,8 +10,9 @@ function TabComponent({
 	code = 0,
 	language = "ar"
 }) {
+	const t = useTranslations("Home");
 	const QrGenerate = dynamic(() => import("./QrGenerate"), {
-		loading: () => <h1>....Loading</h1>,
+		loading: () => <h1>....{t("loading")}</h1>,
 		ssr: false
 	});
 	const [currentRadioValue, setCurrentRadioValue] = useState("one");
@@ -244,7 +246,7 @@ function TabComponent({
 					id="one-tab"
 					htmlFor="one"
 				>
-					No
+					{t("num")}
 				</label>
 				<label
 					className={
@@ -255,7 +257,7 @@ function TabComponent({
 					id="two-tab"
 					htmlFor="two"
 				>
-					Players
+					{t("players")}
 				</label>
 				<label
 					className={
@@ -266,7 +268,7 @@ function TabComponent({
 					id="three-tab"
 					htmlFor="three"
 				>
-					Qr
+					{t("qr")}
 				</label>
 			</div>
 			<div className={styles.panels}>
@@ -280,7 +282,9 @@ function TabComponent({
 				>
 					<div className={styles.panel_title}>MemberShip Number</div>
 					<div className={styles.panel_content}>
-						<p>Year / code</p>
+						<p>
+							{t("year")} / {t("code")}
+						</p>
 						<div className={styles.panel_input_container}>
 							<input
 								type="number"
@@ -293,7 +297,7 @@ function TabComponent({
 							<input
 								type="number"
 								className={styles.panel_input}
-								placeholder="Code"
+								placeholder={t("code")}
 								value={memberCode}
 								onChange={handleCodeChange}
 							/>
@@ -306,14 +310,14 @@ function TabComponent({
 							className={styles.prevButton}
 							onClick={handleClick}
 						>
-							Cancel
+							{t("cancel")}
 						</button>
 						<button
 							type="button"
 							className={styles.nextButton}
 							onClick={handleFirstTabNext}
 						>
-							Next
+							{t("next")}
 						</button>
 					</div>
 				</div>
@@ -369,14 +373,14 @@ function TabComponent({
 							className={styles.prevButton}
 							onClick={handleSecondTabPrev}
 						>
-							Previous
+							{t("previous")}
 						</button>
 						<button
 							type="button"
 							className={styles.nextButton}
 							onClick={handleSecondTabNext}
 						>
-							Next
+							{t("next")}
 						</button>
 					</div>
 				</div>
@@ -388,7 +392,7 @@ function TabComponent({
 					}
 					id="three-panel"
 				>
-					<div className={styles.panel_title}>Qr Code</div>
+					<div className={styles.panel_title}>{t("qr")}</div>
 					<div className={styles.panel_content}>
 						<Suspense>
 							<QrGenerate qrStringProp={qrString} />
@@ -401,14 +405,14 @@ function TabComponent({
 							className={styles.prevButton}
 							onClick={handleThirdTabPrev}
 						>
-							Previous
+							{t("previous")}
 						</button>
 						<button
 							type="button"
 							className={styles.nextButton}
 							onClick={handleClick}
 						>
-							Done
+							{t("done")}
 						</button>
 					</div>
 				</div>

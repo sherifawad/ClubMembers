@@ -1,4 +1,5 @@
 import styles from "../styles/pages/Home.module.scss";
+import { useTranslations } from "next-intl";
 import PlayersList from "../Components/PlayersList";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
@@ -17,20 +18,20 @@ const HomePage = () => {
 
 	const QrDialogRef = useRef();
 	const scanResultDialogRef = useRef();
-	const router = useRouter();
+
+	const t = useTranslations("Home");
+	const { locale, query } = useRouter();
 	const { year, code } = useSelector(state => state.players);
-	// const language = useSelector(selectSettingsLanguage);
-	const language = "ar";
 
 	// check for queries
 	useEffect(() => {
-		const { data } = router.query;
+		const { data } = query;
 		if (!data || isBlank(data)) return;
 		setScanResultData(data);
 		if (!scanResultDialogRef.current.open) {
 			scanResultDialogRef.current.showModal();
 		}
-	}, [router.query]);
+	}, [query]);
 
 	const handleOpenModel = () => {
 		if (!QrDialogRef.current.open) {
@@ -52,7 +53,7 @@ const HomePage = () => {
 	return (
 		<>
 			<Head>
-				<title>Club Members</title>
+				<title>{t("clubMembers")}</title>
 				<meta
 					name="description"
 					content="A site that Save sports subscriptions an calculate the total payments including the discounts that may be applied and the payment type cash or with credit card"
@@ -71,7 +72,7 @@ const HomePage = () => {
 				/>
 			</Head>
 			<div className={styles.container}>
-				<div className={styles.title}>Calculate Sports Payments</div>
+				<div className={styles.title}>{t("title")}</div>
 				{year > 0 && code > 0 && (
 					<div className={styles.memberCode_Container}>
 						<span>{year}</span>
@@ -80,14 +81,14 @@ const HomePage = () => {
 					</div>
 				)}
 
-				<PlayersList playersList={setPlayers} language={language} />
+				<PlayersList playersList={setPlayers} language={locale} />
 
 				<dialog ref={scanResultDialogRef}>
 					<ScanResult
 						className={styles.dialog}
 						handleEvent={handleCancelModel}
 						data={scanResultData}
-						language={language}
+						language={locale}
 					/>
 				</dialog>
 
@@ -99,7 +100,7 @@ const HomePage = () => {
 								handleEvent={handleCloseTabComponent}
 								year={year}
 								code={code}
-								language={language}
+								language={locale}
 							/>
 						</Suspense>
 					</div>
@@ -108,20 +109,20 @@ const HomePage = () => {
 					<CalculatedResult
 						players={players}
 						setHandler={setHandler}
-						language={language}
+						language={locale}
 					/>
 				)}
 				{players?.length > 0 && (
 					<div className={styles.buttons_container}>
 						<button type="button" onClick={handleOpenModel}>
-							Export
+							{t("export")}
 						</button>
 						<button
 							type="button"
 							className={styles.calcButton}
 							onClick={handler}
 						>
-							Calculate
+							{t("calculate")}
 						</button>
 					</div>
 				)}
@@ -130,4 +131,14 @@ const HomePage = () => {
 	);
 };
 
+export async function getStaticProps({ locale }) {
+	return {
+		props: {
+			// You can get the messages from anywhere you like. The recommended
+			// pattern is to put them in JSON files separated by language and read
+			// the desired one based on the `locale` received from Next.js.
+			messages: (await import(`../translations/${locale}.json`)).default
+		}
+	};
+}
 export default HomePage;

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +22,7 @@ const AddSport = ({ setSport, language = "ar" }) => {
 	const [sportTypeName, setSportTypeName] = useState({});
 	const [sportTypeDiscount, setSportTypeDiscount] = useState(false);
 	const [sportTypePenalty, setSportTypePenalty] = useState(false);
+	const t = useTranslations("Add");
 
 	// Extracting sports state from redux store
 	const { list, loading, error, errorMessage } = useSelector(selectSports);
@@ -147,7 +149,7 @@ const AddSport = ({ setSport, language = "ar" }) => {
 	};
 
 	if (loading) {
-		return <h1>....Loading</h1>;
+		return <h1>....{t("loading")}</h1>;
 	}
 
 	if (error) {
@@ -157,14 +159,16 @@ const AddSport = ({ setSport, language = "ar" }) => {
 		<div className={styles.container}>
 			<div className={styles.selectionContainer}>
 				<div className={styles.selectionItemContainer}>
-					<h5 className={styles.selectionItemLabel}>Choose Sport</h5>
+					<h5 className={styles.selectionItemLabel}>
+						{t("chooseSport")}
+					</h5>
 					<select
 						className={styles.selectItem}
 						onChange={e => handleSelectedSport(e.target.value)}
 						value={selectedSportID}
 					>
 						<option value={0} disabled>
-							Choose Sport
+							{t("chooseSport")}
 						</option>
 						{list.map(x => (
 							<option key={x.id} value={x.id}>
@@ -176,7 +180,7 @@ const AddSport = ({ setSport, language = "ar" }) => {
 
 				<div className={styles.selectionItemContainer}>
 					<h5 className={styles.selectionItemLabel}>
-						Choose Category
+						{t("chooseCategory")}
 					</h5>
 					<select
 						className={styles.selectItem}
@@ -193,7 +197,10 @@ const AddSport = ({ setSport, language = "ar" }) => {
 				</div>
 
 				<div className={styles.selectionItemContainer}>
-					<h5 className={styles.selectionItemLabel}>Choose Type</h5>
+					<h5 className={styles.selectionItemLabel}>
+						{" "}
+						{t("chooseType")}
+					</h5>
 					<select
 						className={styles.selectItem}
 						onChange={e => handleSelectedType(e.target.value)}
@@ -210,10 +217,10 @@ const AddSport = ({ setSport, language = "ar" }) => {
 			</div>
 			<div className={styles.buttonContainer}>
 				<button className={styles.add_button} onClick={addSport}>
-					Add
+                {t("add")}
 				</button>
 				<button className={styles.cancel_button} onClick={resetValues}>
-					Cancel
+                {t("cancel")}
 				</button>
 			</div>
 		</div>

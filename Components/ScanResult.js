@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { overWritePlayersState } from "../StoreRedux/playersSlice";
@@ -7,6 +8,7 @@ function ScanResult({ data = "", handleEvent }) {
 	const [year, setYear] = useState("");
 	const [code, setCode] = useState("");
 	const [resultData, setResultData] = useState({});
+	const t = useTranslations("Home");
 
 	const dispatch = useDispatch();
 
@@ -59,8 +61,8 @@ function ScanResult({ data = "", handleEvent }) {
 											className={styles.sportsContainer}
 										>
 											<p>{s.name}</p>
-											<p>{s.category}</p>
-											<p>{s.type}</p>
+											<p>{s.categoryName}</p>
+											<p>{s.typeName}</p>
 										</li>
 									))}
 								</ul>
@@ -74,14 +76,14 @@ function ScanResult({ data = "", handleEvent }) {
 						className={styles.prevButton}
 						onClick={handleEvent}
 					>
-						Cancel
+						{t("cancel")}
 					</button>
 					<button
 						type="button"
 						className={styles.nextButton}
 						onClick={handleImport}
 					>
-						Import
+						{t("import")}
 					</button>
 				</div>
 			</div>

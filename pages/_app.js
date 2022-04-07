@@ -1,9 +1,12 @@
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import MainLayout from "../layout/mainlayout";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import "../styles/globals.scss";
 import { useStore } from "../StoreRedux/store";
+import { NextIntlProvider } from "next-intl";
+import { selectSettingsLanguage } from "../StoreRedux/settingsSlice";
+import { IntlProvider } from "../hooks/intl";
 
 function MyApp({ Component, pageProps }) {
 	const store = useStore(pageProps.initialReduxState);
@@ -12,25 +15,12 @@ function MyApp({ Component, pageProps }) {
 	});
 	return (
 		<Provider store={store}>
-			<PersistGate
-				loading={
-					<h2
-						style={{
-							display: "grid",
-							placeContent: "center",
-							placeItems: "center",
-							margin: "auto",
-							height: "100vh"
-						}}
-					>
-						....loading
-					</h2>
-				}
-				persistor={persister}
-			>
-				<MainLayout>
-					<Component {...pageProps} />
-				</MainLayout>
+			<PersistGate loading={null} persistor={persister}>
+				<NextIntlProvider messages={pageProps.messages}>
+					<MainLayout>
+						<Component {...pageProps} />
+					</MainLayout>
+				</NextIntlProvider>
 			</PersistGate>
 		</Provider>
 	);

@@ -6,11 +6,11 @@ import styles from "../styles/components/PlayersList.module.scss";
 import { deletePlayer, selectPlayers } from "../StoreRedux/playersSlice";
 import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 
-function PlayersList({ playersList, language = "ar" }) {
+function PlayersList({ playersList, language }) {
 	// Extracting players state from redux store
 	const playersItems = useSelector(selectPlayers);
 	// Extracting sports state from redux store
-	const { list, loading, error } = useSelector(selectSports);
+	const { list } = useSelector(selectSports);
 	const dispatch = useDispatch();
 	const [players, setPlayers] = useState([]);
 

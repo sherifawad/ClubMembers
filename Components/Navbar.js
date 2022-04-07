@@ -1,7 +1,10 @@
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useState } from "react";
 import styles from "../styles/components/Navbar.module.scss";
+import LocaleSelect from "./LocaleSelect";
 const Navbar = () => {
+	const t = useTranslations("Navigation");
 	//on mobile hamburger  menu if link item is clicked close menu
 	const [checked, setChecked] = useState(false);
 	// handle link clicked
@@ -30,7 +33,7 @@ const Navbar = () => {
 							className={styles.itemLink}
 							onClick={handleLinkClick}
 						>
-							Home
+							{t("home")}
 						</a>
 					</Link>
 				</li>
@@ -40,7 +43,7 @@ const Navbar = () => {
 							className={styles.itemLink}
 							onClick={handleLinkClick}
 						>
-							Add Player
+							{t("addPlayer")}
 						</a>
 					</Link>
 				</li>
@@ -50,9 +53,12 @@ const Navbar = () => {
 							className={styles.itemLink}
 							onClick={handleLinkClick}
 						>
-							Scan
+							{t("scan")}
 						</a>
 					</Link>
+				</li>
+				<li className={styles.listItem}>
+					<LocaleSelect />
 				</li>
 			</ul>
 		</div>

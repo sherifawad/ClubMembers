@@ -1,12 +1,7 @@
-import {
-	createListenerMiddleware,
-	createSelector,
-	createSlice
-} from "@reduxjs/toolkit";
-import { nextPlayerId } from "../Data/utils";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 export const settingsInitialState = {
-	language: "ar"
+	language: ""
 };
 
 const settingsSlice = createSlice({

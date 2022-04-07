@@ -1,6 +1,9 @@
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CalculatedResult.module.scss";
 function CalculatedResult({ players = [], setHandler, language = "ar" }) {
+	const t = useTranslations("CalculatedResult");
+
 	const [withDiscountList, setWithDiscountList] = useState([]);
 	const [withNoDiscountList, setWithNoDiscountList] = useState([]);
 	const [privateList, setPrivateList] = useState([]);
@@ -558,8 +561,8 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 							/>
 							<label
 								className={styles.tglBtn}
-								data-tg-off="VISA OFF"
-								data-tg-on="VISA ON"
+								data-tg-off={t("visaOff")}
+								data-tg-on={t("visaOn")}
 								htmlFor="cb3"
 							></label>
 						</div>
@@ -574,7 +577,9 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 									onChange={handleRadioChange}
 									checked={currentRadioValue === 0.01}
 								/>
-								<label htmlFor="radio-item-1"> Ahly Bank</label>
+								<label htmlFor="radio-item-1">
+									{t("ahlyBank")}
+								</label>
 							</div>
 
 							<div>
@@ -588,7 +593,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 								/>
 								<label htmlFor="radio-item-2">
 									{" "}
-									Other Bank
+									{t("otherBank")}
 								</label>
 							</div>
 						</div>
@@ -602,7 +607,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 								handlePaymentOPtions();
 							}}
 						>
-							Calculate
+							{t("calculate")}
 						</button>
 						<button
 							type="button"
@@ -610,7 +615,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 								dialogRef.current.close();
 							}}
 						>
-							Cancel
+							{t("cancel")}
 						</button>
 					</div>
 				</div>
@@ -624,7 +629,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
-									private Sports
+									{t("privateSwimming")}
 								</div>
 							</div>
 
@@ -634,26 +639,26 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 										className={styles.table_column_header}
 									></p>
 									<p className={styles.table_row_header}>
-										Name
+										{t("name")}
 									</p>
 									<p className={styles.table_row_header}>
-										Category
+										{t("category")}
 									</p>
 									<p className={styles.table_row_header}>
-										type
+										{t("type")}
 									</p>
 									<p className={styles.table_row_header}>
-										Price
+										{t("price")}
 									</p>
 									<p className={styles.table_row_header}>
-										Discount
+										{t("discount")}
 									</p>
 
 									<p className={styles.table_row_header}>
-										Penalty
+										{t("penalty")}
 									</p>
 									<p className={styles.table_row_header}>
-										Total
+										{t("total")}
 									</p>
 								</div>
 								<ul className={styles.table_body}>
@@ -789,7 +794,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
-									Discount Sports
+									{t("discountSports")}
 								</div>
 							</div>
 
@@ -798,26 +803,28 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 									<p
 										className={styles.table_column_header}
 									></p>
+
 									<p className={styles.table_row_header}>
-										Name
+										{t("name")}
 									</p>
 									<p className={styles.table_row_header}>
-										Category
+										{t("category")}
 									</p>
 									<p className={styles.table_row_header}>
-										type
+										{t("type")}
 									</p>
 									<p className={styles.table_row_header}>
-										Price
+										{t("price")}
 									</p>
 									<p className={styles.table_row_header}>
-										Discount
+										{t("discount")}
+									</p>
+
+									<p className={styles.table_row_header}>
+										{t("penalty")}
 									</p>
 									<p className={styles.table_row_header}>
-										Penalty
-									</p>
-									<p className={styles.table_row_header}>
-										Total
+										{t("total")}
 									</p>
 								</div>
 								<ul className={styles.table_body}>
@@ -954,7 +961,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 						<div className={styles.table_wrapper}>
 							<div className={styles.table_header}>
 								<div className={styles.title}>
-									No-Discount Sports
+									{t("withoutDiscountSports")}
 								</div>
 							</div>
 
@@ -963,26 +970,28 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 									<p
 										className={styles.table_column_header}
 									></p>
+
 									<p className={styles.table_row_header}>
-										Name
+										{t("name")}
 									</p>
 									<p className={styles.table_row_header}>
-										Category
+										{t("category")}
 									</p>
 									<p className={styles.table_row_header}>
-										type
+										{t("type")}
 									</p>
 									<p className={styles.table_row_header}>
-										Price
+										{t("price")}
 									</p>
 									<p className={styles.table_row_header}>
-										Discount
+										{t("discount")}
+									</p>
+
+									<p className={styles.table_row_header}>
+										{t("penalty")}
 									</p>
 									<p className={styles.table_row_header}>
-										Penalty
-									</p>
-									<p className={styles.table_row_header}>
-										Total
+										{t("total")}
 									</p>
 								</div>
 								<ul className={styles.table_body}>

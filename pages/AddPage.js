@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 import AddSport from "../Components/AddSport";
 import SportsList from "../Components/SportsList";
 import { isBlank } from "../Data/utils";
@@ -12,10 +13,10 @@ import {
 import styles from "../styles/pages/AddPage.module.scss";
 import { createSelector } from "@reduxjs/toolkit";
 import Head from "next/head";
-import { selectSettingsLanguage } from "../StoreRedux/settingsSlice";
 
 const AddPage = () => {
-	const router = useRouter();
+	const t = useTranslations("Add");
+	const { locale, query } = useRouter();
 	const [name, setName] = useState("");
 	const [sport, setSport] = useState();
 	const [playerSportsList, setPlayerSportsList] = useState([]);
@@ -31,14 +32,12 @@ const AddPage = () => {
 		players => players.playersState
 	);
 	const players = useSelector(selectPlayers);
-	// const language = useSelector(selectSettingsLanguage);
-	const language = "ar";
 
 	const dispatch = useDispatch();
 
 	// check for queries
 	useEffect(() => {
-		const { pid } = router.query;
+		const { pid } = query;
 		if (!pid || isBlank(pid) || pid === "0") return;
 		const playerExists = players.find(
 			player => player.id === parseInt(pid)
@@ -50,7 +49,7 @@ const AddPage = () => {
 			setIsUpdate(true);
 			setPlayerId(playerExists.id);
 		}
-	}, [players, router.query]);
+	}, [players, query]);
 
 	const handlePlayerAddition = () => {
 		if (isBlank(name) || playerSportsList.length < 1) return;
@@ -92,7 +91,7 @@ const AddPage = () => {
 	return (
 		<>
 			<Head>
-				<title>Club Members: Player</title>
+				<title>{t("title")}</title>
 				<meta
 					name="description"
 					content="Add or update player information player name and plyer sports"
@@ -102,25 +101,34 @@ const AddPage = () => {
 				<input
 					type="text"
 					className={styles.searchInput}
-					placeholder="Player Name"
+					placeholder={t("nameHolder")}
 					value={name}
 					onChange={e => setName(e.target.value)}
 				/>
-				<AddSport setSport={setSport} language={language} />
+				<AddSport setSport={setSport} language={locale} />
 
 				<SportsList
 					sport={sport}
 					setPlayerSportsList={setPlayerSportsList}
 					receivedPlayerSportsList={receivedPlayerSportsList}
-					language={language}
+					language={locale}
 					setRemoveSwimmingGroup={setRemoveSwimmingGroup}
 				/>
 				<button type="button" onClick={handlePlayerAddition}>
-					{isUpdate ? "Update Player" : "Add Player"}
+					{isUpdate ? t("updatePlayer") : t("addPlayer")}
 				</button>
 			</div>
 		</>
 	);
 };
-
+export async function getStaticProps({ locale }) {
+	return {
+		props: {
+			// You can get the messages from anywhere you like. The recommended
+			// pattern is to put them in JSON files separated by language and read
+			// the desired one based on the `locale` received from Next.js.
+			messages: (await import(`../translations/${locale}.json`)).default
+		}
+	};
+}
 export default AddPage;

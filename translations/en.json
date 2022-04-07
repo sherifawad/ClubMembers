@@ -1,0 +1,59 @@
+{
+	"Home": {
+		"clubMembers": "Club Members",
+		"title": "Calculate Sports Payments",
+		"add": "Add",
+		"next": "Next",
+		"previous": "Previous",
+		"done": "Done",
+		"cancel": "Cancel",
+		"loading": "Loading",
+		"import": "Import",
+		"num": "No",
+		"players": "Players",
+		"qr": "Qr",
+		"year": "Year",
+		"code": "Code",
+		"export": "Export",
+		"calculate": "Calculate"
+	},
+	"CalculatedResult": {
+		"visaOff": "Cash",
+		"visaOn": "VISA ON",
+		"ahlyBank": "Ahly Bank",
+		"otherBank": "Other Bank",
+		"calculate": "Calculate",
+		"cancel": "Cancel",
+		"privateSwimming": "private Swimming",
+		"discountSports": "Sports With Discount",
+		"withoutDiscountSports": "Sports Without Discount",
+		"name": "Sport Name",
+		"category": "Sport Category",
+		"type": "Sport Type",
+		"price": "Price",
+		"discount": "Discount",
+		"penalty": "Penalty",
+		"total": "Total"
+	},
+	"Add": {
+		"title": "Club Members: Player",
+		"nameHolder": "Player Name",
+		"chooseSport": "Choose Sport",
+		"chooseCategory": "Choose Category",
+		"chooseType": "Choose Type",
+		"addPlayer": "Add Player",
+		"updatePlayer": "Update Player",
+		"add": "Add",
+		"cancel": "Cancel",
+		"loading": "Loading"
+	},
+	"Scan": {
+		"loading": "Loading",
+		"title": "Club Members: Scan"
+	},
+	"Navigation": {
+		"home": "Home",
+		"addPlayer": "Add Player",
+		"scan": "Scan"
+	}
+}

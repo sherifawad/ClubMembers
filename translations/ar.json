@@ -1,0 +1,59 @@
+{
+	"Home": {
+		"clubMembers": "اعضاء النادي",
+		"title": "احسب مدفوعات الالعاب",
+		"add": "اضف",
+		"next": "التالي",
+		"previous": "السابق",
+		"done": "تم",
+		"cancel": "الغ",
+		"loading": "تحميل",
+		"import": "استيراد",
+		"num": "رقم",
+		"players": "لاعبيين",
+		"qr": "كود Qr",
+		"year": "سنة",
+		"code": "كود",
+		"export": "تصدير",
+		"calculate": "احسب"
+	},
+	"CalculatedResult": {
+		"visaOff": "كاش",
+		"visaOn": "فيزا",
+		"ahlyBank": "البنك الأهلي",
+		"otherBank": "بنك اخر",
+		"calculate": "احسب",
+		"cancel": "الغ",
+		"privateSwimming": "السباحة خاص",
+		"discountSports": "العاب قد يطبق الخصم",
+		"withoutDiscountSports": "العاب بلا خصم",
+		"name": "اسم اللعبة",
+		"category": "فئة اللعبة",
+		"type": "نوع اللعبة",
+		"price": "السعر",
+		"discount": "الخصم",
+		"penalty": "الغرامة",
+		"total": "المجموع"
+	},
+	"Add": {
+		"title": "اعضاء النادي:لاعب",
+		"nameHolder": "اسم اللاعب",
+		"chooseSport": "اختر رياضة",
+		"chooseCategory": "اختر فئه",
+		"chooseType": "اختر نوع",
+		"addPlayer": "اضف لاعب",
+		"updatePlayer": "تحديث لاعب",
+		"add": "اضف",
+		"cancel": "الغ",
+		"loading": "تحميل"
+	},
+	"Scan": {
+		"loading": "تحميل",
+		"title": "اعضاء النادي: مسح الكود"
+	},
+	"Navigation": {
+		"home": "الرئيسية",
+		"addPlayer": "إضافة لاعب",
+		"scan": "مسح كود"
+	}
+}
