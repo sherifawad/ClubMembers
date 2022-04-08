@@ -148,9 +148,14 @@ $hamburger-menu-margin: 25px;
 
 // Showing nav items as lines, making up the hamburger menu icon
 .listItem {
-	&:last-of-type {
-		margin-inline-start: auto;
-		margin-inline-end: 2em;
+	@include mq(small) {
+		&:last-of-type {
+			margin-inline-start: auto;
+			margin-inline-end: 2em;
+		}
+		&:first-of-type {
+			z-index: 1;
+		}
 	}
 	margin-inline-start: 2em;
 	@include mq(small, max) {

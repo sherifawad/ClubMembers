@@ -54,18 +54,24 @@ function PlayersList({ playersList, language }) {
 
 					<div className={styles.items_body}>
 						{player.sports.map((sport, index) => (
-							<div
+							<Link
+								href={{
+									pathname: "/AddPage",
+									query: { pid: player.id }
+								}}
 								key={index}
 								className={styles.items_body_content}
 							>
-								<span>{sport.name[language]}</span>
-								<span>{sport.categoryName[language]}</span>
-								<span>{sport.typeName[language]}</span>
-								<span>{sport.price}$</span>
-								{sport.discount > 0 && (
-									<span>{sport.discount}$</span>
-								)}
-							</div>
+								<a className={styles.items_body_content}>
+									<span>{sport.name[language]}</span>
+									<span>{sport.categoryName[language]}</span>
+									<span>{sport.typeName[language]}</span>
+									<span>{sport.price}$</span>
+									{sport.discount > 0 && (
+										<span>{sport.discount}$</span>
+									)}
+								</a>
+							</Link>
 						))}
 					</div>
 				</div>

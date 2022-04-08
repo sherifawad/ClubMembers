@@ -160,9 +160,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 		let today = parseInt(newDate.getDate());
 		//get player with schools group sport type
 		let filteredPlayer;
+
 		list.forEach(player => {
 			player.sports.forEach(sport => {
-				if (sport.id === 1 && sport.typeID === 6) {
+				if (sport.id === 1 && sport.typeId === 6) {
+					list = list.filter(p => p.id !== player.id);
 					//copy player as redux set values as read only
 					filteredPlayer = {
 						...player,
@@ -173,11 +175,9 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 		});
 		if (filteredPlayer) {
 			//remove from list then add it last on accumulated players and at last sort by sport price
-			list = list
-				.filter(player => player.id !== filteredPlayer.id)
-				.sort((a, b) =>
-					a.sports[0].price > b.sports[0].price ? -1 : 1
-				);
+			list = list.sort((a, b) =>
+				a.sports[0].price > b.sports[0].price ? -1 : 1
+			);
 			//check if calculation within first 5 days of the month
 			if (today <= 5) {
 				totalPrice += filteredPlayer.sports[0].price * 0.9;
