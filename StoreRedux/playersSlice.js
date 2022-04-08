@@ -18,8 +18,6 @@ const addItemToArray = (state, { payload }) => {
 
 const updatePlayersSportsData = (state, { payload }) => {
 	state.SchoolGroupSelected = false;
-	state.year = 0;
-	state.code = 0;
 	if (state?.playersState.length < 1) return { ...state };
 	const players = state.playersState.reduce((accPlayers, player) => {
 		if (player?.sports?.length < 1) return null;
@@ -66,6 +64,10 @@ const updatePlayersSportsData = (state, { payload }) => {
 };
 
 const overWriteSliceState = (state, { payload }) => {
+	console.log(
+		"🚀 ~ file: playersSlice.js ~ line 69 ~ overWriteSliceState ~ payload",
+		payload
+	);
 	state.year = payload.year;
 	state.code = payload.code;
 	state.SchoolGroupSelected = payload.schoolGroupSelected;

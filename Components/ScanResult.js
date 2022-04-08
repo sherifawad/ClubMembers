@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { overWritePlayersState } from "../StoreRedux/playersSlice";
 import styles from "../styles/components/ScanResult.module.scss";
-function ScanResult({ data = "", handleEvent }) {
+function ScanResult({ data = "", handleEvent, language }) {
 	const [players, setPlayers] = useState([]);
-	const [year, setYear] = useState("");
-	const [code, setCode] = useState("");
+	const [year, setYear] = useState(0);
+	const [code, setCode] = useState(0);
 	const [resultData, setResultData] = useState({});
 	const t = useTranslations("Home");
 
@@ -17,10 +17,19 @@ function ScanResult({ data = "", handleEvent }) {
 		try {
 			const result = JSON.parse(data);
 			if (result) {
-				setResultData(result);
-				setYear(result.year);
-				setCode(result.code);
-				setPlayers(result.list);
+				if (
+					result.year &&
+					result.year > 0 &&
+					result.code &&
+					result.code > 0 &&
+					result.list &&
+					result.list.length > 0
+				) {
+					setResultData(result);
+					setYear(result.year);
+					setCode(result.code);
+					setPlayers(result.list);
+				}
 			}
 		} catch (error) {
 			console.log(
@@ -42,9 +51,11 @@ function ScanResult({ data = "", handleEvent }) {
 	return (
 		<div className={styles.dialog_content}>
 			<div className={styles.panel}>
-				<div className={styles.panel_title}>
-					<span>{year}</span> <span> / </span> <span>{code}</span>
-				</div>
+				{year > 0 && code > 0 && (
+					<div className={styles.panel_title}>
+						<span>{year}</span> <span> / </span> <span>{code}</span>
+					</div>
+				)}
 				{
 					<ul>
 						{players?.map((p, playerIndex) => (
@@ -60,9 +71,9 @@ function ScanResult({ data = "", handleEvent }) {
 											key={sportIndex}
 											className={styles.sportsContainer}
 										>
-											<p>{s.name}</p>
-											<p>{s.categoryName}</p>
-											<p>{s.typeName}</p>
+											<p>{s.name[language]}</p>
+											<p>{s.categoryName[language]}</p>
+											<p>{s.typeName[language]}</p>
 										</li>
 									))}
 								</ul>

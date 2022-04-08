@@ -35,6 +35,7 @@ function ScanComponent() {
 				// show link address as "/" to hide query string
 				"/"
 			);
+
 			setData("");
 		} catch (error) {
 			console.log(

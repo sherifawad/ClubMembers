@@ -66,6 +66,7 @@ $dark-pri: #ffcb00;
 .items_body_content {
 	padding: 10px;
 	display: flex;
+    flex-wrap: wrap;
 	justify-content: space-around;
 	// background-color: lightblue;
 	font-size: 13px;

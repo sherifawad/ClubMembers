@@ -568,7 +568,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 						</div>
 
 						<div className={styles.radioContainer}>
-							<div>
+							<div className={styles.radioItem}>
 								<input
 									id="radio-item-1"
 									name="radio-item-1"
@@ -582,7 +582,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 								</label>
 							</div>
 
-							<div>
+							<div className={styles.radioItem}>
 								<input
 									id="radio-item-2"
 									name="radio-item-2"

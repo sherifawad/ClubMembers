@@ -284,9 +284,18 @@
 		}
 
 		.radioContainer {
+			white-space: nowrap;
 			display: flex;
-			input {
-				margin-inline-start: 0.5em;
+			place-items: center;
+			gap: 0.5em;
+			.radioItem {
+				display: flex;
+				gap: 0.5em;
+				place-items: center;
+				place-content: center;
+				input {
+					align-items: center;
+				}
 			}
 		}
 	}
