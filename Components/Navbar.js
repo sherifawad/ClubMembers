@@ -47,7 +47,7 @@ const Navbar = () => {
 						</a>
 					</Link>
 				</li>
-				<li className={styles.listItem}>
+				{/* <li className={styles.listItem}>
 					<Link href="/ScanPage">
 						<a
 							className={styles.itemLink}
@@ -56,7 +56,7 @@ const Navbar = () => {
 							{t("scan")}
 						</a>
 					</Link>
-				</li>
+				</li> */}
 				<li className={styles.listItem}>
 					<LocaleSelect />
 				</li>

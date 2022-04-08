@@ -114,9 +114,9 @@ const HomePage = () => {
 				)}
 				{players?.length > 0 && (
 					<div className={styles.buttons_container}>
-						<button type="button" onClick={handleOpenModel}>
+						{/* <button type="button" onClick={handleOpenModel}>
 							{t("export")}
-						</button>
+						</button> */}
 						<button
 							type="button"
 							className={styles.calcButton}
