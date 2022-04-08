@@ -45,7 +45,12 @@
 		"updatePlayer": "Update Player",
 		"add": "Add",
 		"cancel": "Cancel",
-		"loading": "Loading"
+		"loading": "Loading",
+		"nameEmpty": "Player name is empty",
+		"addSport": "Add Sport",
+		"nameDuplicate": "Player name already exists",
+		"sportExist": "Sport already exists in the list",
+		"sportIncludes": "Sport already included in the membership"
 	},
 	"Scan": {
 		"loading": "Loading",

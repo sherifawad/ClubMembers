@@ -16,13 +16,15 @@ import Head from "next/head";
 
 const AddPage = () => {
 	const t = useTranslations("Add");
-	const { locale, query } = useRouter();
+	const { locale, query, push } = useRouter();
 	const [name, setName] = useState("");
 	const [sport, setSport] = useState();
 	const [playerSportsList, setPlayerSportsList] = useState([]);
 	const [receivedPlayerSportsList, setReceivedPlayerSportsList] = useState(
 		[]
 	);
+	const [nameError, setNameError] = useState("");
+	const [sportError, setSportError] = useState("");
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [playerId, setPlayerId] = useState(0);
 	const [removeSwimmingGroup, setRemoveSwimmingGroup] = useState(0);
@@ -51,8 +53,23 @@ const AddPage = () => {
 		}
 	}, [players, query]);
 
+	const handlePlayerNameChange = e => {
+		if (nameError.length > 0) {
+			setNameError("");
+		}
+		setName(e.target.value);
+	};
+
 	const handlePlayerAddition = () => {
-		if (isBlank(name) || playerSportsList.length < 1) return;
+		if (isBlank(name)) {
+			setNameError(t("nameEmpty"));
+			return;
+		}
+		if (!playerSportsList || playerSportsList.length < 1) {
+			setSportError(t("addSport"));
+			return;
+		}
+
 		//sort sports descending by price
 		const sports = playerSportsList
 			.slice()
@@ -67,7 +84,10 @@ const AddPage = () => {
 				player.name.toLocaleLowerCase() === name.toLocaleLowerCase()
 		);
 		if (playerExists) {
-			if (!isUpdate || (isUpdate && playerExists.id !== playerId)) return;
+			if (!isUpdate || (isUpdate && playerExists.id !== playerId)) {
+				setNameError(t("nameDuplicate"));
+				return;
+			}
 		}
 		try {
 			if (isUpdate) {
@@ -79,7 +99,7 @@ const AddPage = () => {
 			if (removeSwimmingGroup) {
 				dispatch(removeSchoolGroup());
 			}
-			router.push("/");
+			push("/");
 		} catch (err) {
 			console.error(
 				"🚀 ~ file: AddPage.js ~ line 29 ~ handlePlayerAddition ~ err",
@@ -103,9 +123,15 @@ const AddPage = () => {
 					className={styles.searchInput}
 					placeholder={t("nameHolder")}
 					value={name}
-					onChange={e => setName(e.target.value)}
+					onChange={handlePlayerNameChange}
 				/>
-				<AddSport setSport={setSport} language={locale} />
+				<p className={styles.errorMessage}>{nameError}</p>
+				<AddSport
+					setSport={setSport}
+					language={locale}
+					setSportError={setSportError}
+				/>
+				<p className={styles.errorMessage}>{sportError}</p>
 
 				<SportsList
 					sport={sport}
@@ -113,6 +139,7 @@ const AddPage = () => {
 					receivedPlayerSportsList={receivedPlayerSportsList}
 					language={locale}
 					setRemoveSwimmingGroup={setRemoveSwimmingGroup}
+					setSportError={setSportError}
 				/>
 				<button type="button" onClick={handlePlayerAddition}>
 					{isUpdate ? t("updatePlayer") : t("addPlayer")}

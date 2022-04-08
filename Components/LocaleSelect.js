@@ -10,10 +10,6 @@ const LocaleSelect = () => {
 	const [lang, setLang] = useState("");
 	const { push, pathname, asPath } = useRouter();
 	const language = useSelector(selectSettingsLanguage);
-	console.log(
-		"🚀 ~ file: LocaleSelect.js ~ line 12 ~ LocaleSelect ~ language",
-		language
-	);
 	const dispatch = useDispatch();
 	const changeLanguage = e => {
 		const locale = e.target.value;

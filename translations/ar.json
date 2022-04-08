@@ -45,7 +45,12 @@
 		"updatePlayer": "تحديث لاعب",
 		"add": "اضف",
 		"cancel": "الغ",
-		"loading": "تحميل"
+		"loading": "تحميل",
+		"addSport": "اضف لعبه",
+		"nameEmpty": "اسم اللاعب خالي",
+		"nameDuplicate": "الاسم مكرر",
+		"sportExist": "اللعبة موجودة في القائمة",
+		"sportIncludes": "اللعبة موجودة في مجمل الالعاب"
 	},
 	"Scan": {
 		"loading": "تحميل",

@@ -7,8 +7,9 @@ const SportsList = ({
 	sport,
 	setPlayerSportsList,
 	receivedPlayerSportsList,
-	language = "ar",
-	setRemoveSwimmingGroup = false
+	language,
+	setRemoveSwimmingGroup = false,
+	setSportError
 }) => {
 	const [sportsList, setSportsList] = useState([]);
 	const removeSport = index => {
@@ -21,6 +22,7 @@ const SportsList = ({
 	};
 
 	useEffect(() => {
+		setSportError("");
 		if (sport) {
 			const duplicateSport = sportsList.find(
 				item =>

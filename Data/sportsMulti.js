@@ -553,7 +553,7 @@ export const sportsMulti = [
 						hide: false,
 						penalty: false,
 						canDiscount: false,
-						price: 100
+						price: 200
 					},
 					{
 						id: 7,

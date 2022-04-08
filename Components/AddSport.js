@@ -8,7 +8,7 @@ import {
 import { fetchAllSports, selectSports } from "../StoreRedux/sportSlice";
 import styles from "../styles/components/AddSport.module.scss";
 
-const AddSport = ({ setSport, language = "ar" }) => {
+const AddSport = ({ setSport, language, setSportError }) => {
 	const [selectedSportID, setSelectedSportID] = useState(0);
 	const [selectedSport, setSelectedSport] = useState({});
 	const [sportCategoryList, setSportCategoryList] = useState([]);
@@ -75,6 +75,7 @@ const AddSport = ({ setSport, language = "ar" }) => {
 	};
 
 	const resetValues = (all = true, sport = false, category = false) => {
+		setSportError("");
 		if (all) {
 			sport = true;
 			category = true;
@@ -114,6 +115,7 @@ const AddSport = ({ setSport, language = "ar" }) => {
 			parseInt(sportTypeId) === 6 &&
 			privateSchoolGroupSelected
 		) {
+			setSportError(t("sportIncludes"));
 			return;
 		}
 
@@ -217,10 +219,10 @@ const AddSport = ({ setSport, language = "ar" }) => {
 			</div>
 			<div className={styles.buttonContainer}>
 				<button className={styles.add_button} onClick={addSport}>
-                {t("add")}
+					{t("add")}
 				</button>
 				<button className={styles.cancel_button} onClick={resetValues}>
-                {t("cancel")}
+					{t("cancel")}
 				</button>
 			</div>
 		</div>

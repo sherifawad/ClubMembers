@@ -19,6 +19,11 @@
 		padding: 0.5em;
 	}
 
+	.errorMessage {
+		color: var(--clr-neutral-500);
+		text-align: center;
+	}
+
 	button {
 		margin-bottom: 0.25rem;
 	}
