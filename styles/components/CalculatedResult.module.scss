@@ -7,6 +7,7 @@
 	padding: 0 2rem 2rem;
 	display: flex;
 	flex-direction: column;
+	place-items: center;
 
 	dialog {
 		position: fixed;
@@ -138,6 +139,17 @@
 							p {
 								white-space: nowrap;
 								overflow: hidden;
+								display: flex;
+								flex-direction: column;
+								place-items: center;
+								@include mq(medium, max) {
+									&[data-title]:before {
+										content: attr(data-title);
+										font-size: 0.5em;
+										color: rgba(0, 0, 0, 0.54);
+										margin-block-end: 0.5em;
+									}
+								}
 							}
 						}
 					}
@@ -295,6 +307,246 @@
 				place-content: center;
 				input {
 					align-items: center;
+				}
+			}
+		}
+	}
+}
+
+// Breakpoints
+$bp-maggie: 15em;
+$bp-lisa: 30em;
+$bp-bart: 48em;
+$bp-marge: 62em;
+$bp-homer: 75em;
+
+.tableContainer {
+	margin: 5% 3%;
+
+	@media (min-width: $bp-bart) {
+		margin: 2%;
+	}
+
+	@media (min-width: $bp-homer) {
+		margin: 2em auto;
+		max-width: $bp-homer;
+	}
+}
+
+.responsive_table {
+	width: 100%;
+	margin-bottom: 1.5em;
+	border-spacing: 0;
+
+	@media (min-width: $bp-bart) {
+		font-size: 0.9em;
+	}
+
+	@media (min-width: $bp-marge) {
+		font-size: 1em;
+	}
+
+	thead {
+		// Accessibly hide <thead> on narrow viewports
+		position: absolute;
+		clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		padding: 0;
+		border: 0;
+		height: 1px;
+		width: 1px;
+		overflow: hidden;
+
+		@media (min-width: $bp-bart) {
+			// Unhide <thead> on wide viewports
+			position: relative;
+			clip: auto;
+			height: auto;
+			width: auto;
+			overflow: auto;
+		}
+
+		.tableHead {
+			background-color: rgba(38, 137, 13, 1);
+			border: 1px solid rgba(134, 188, 37, 1);
+			font-weight: normal;
+			text-align: center;
+			color: white;
+
+			&:first-of-type {
+				text-align: left;
+			}
+		}
+	}
+	.sportsHeaderContainer,
+	.sportsBodyContainer {
+		display: block;
+		@media (min-width: $bp-bart) {
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+		}
+	}
+
+	.sportsBodyContainer {
+		&:nth-of-type(even) {
+			background-color: rgba(0, 0, 0, 0.12);
+		}
+	}
+
+	// Set these items to display: block for narrow viewports
+	tbody,
+	.tableRow,
+	.tableHead,
+	.tableData {
+		display: block;
+		padding: 0;
+		text-align: left;
+		white-space: normal;
+	}
+
+	.tableRow {
+		@media (min-width: $bp-bart) {
+			// Undo display: block
+			display: table-row;
+		}
+	}
+
+	.tableHead,
+	.tableData {
+		padding: 0.5em;
+		vertical-align: middle;
+
+		@media (min-width: $bp-lisa) {
+			padding: 0.75em 0.5em;
+		}
+
+		@media (min-width: $bp-bart) {
+			// Undo display: block
+			display: table-cell;
+			padding: 0.5em;
+		}
+
+		@media (min-width: $bp-marge) {
+			padding: 0.75em 0.5em;
+		}
+
+		@media (min-width: $bp-homer) {
+			padding: 0.75em;
+		}
+	}
+
+	caption {
+		margin-bottom: 1em;
+		font-size: 1em;
+		font-weight: bold;
+		text-align: center;
+
+		@media (min-width: $bp-bart) {
+			font-size: 1.5em;
+		}
+	}
+
+	tbody {
+		@media (min-width: $bp-bart) {
+			// Undo display: block
+			display: table-row-group;
+		}
+
+		.tableRow {
+			margin-bottom: 1em;
+
+			@media (min-width: $bp-bart) {
+				// Undo display: block
+				display: table-row;
+				border-width: 1px;
+			}
+
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+
+			&:nth-of-type(even) {
+				@media (min-width: $bp-bart) {
+					background-color: rgba(0, 0, 0, 0.12);
+				}
+			}
+		}
+
+		.tableHead[scope="row"] {
+			background-color: rgba(38, 137, 13, 1);
+			color: white;
+
+			@media (min-width: $bp-lisa) {
+				border-left: 1px solid rgba(134, 188, 37, 1);
+				border-bottom: 1px solid rgba(134, 188, 37, 1);
+			}
+
+			@media (min-width: $bp-bart) {
+				background-color: transparent;
+				color: rgba(0, 0, 0.87);
+				text-align: left;
+			}
+		}
+
+		.tableData {
+			text-align: right;
+			[dir="rtl"] & {
+				text-align: left;
+			}
+
+			@media (min-width: $bp-bart) {
+				border-left: 1px solid rgba(134, 188, 37, 1);
+				border-bottom: 1px solid rgba(134, 188, 37, 1);
+				text-align: center;
+			}
+
+			&:last-of-type {
+				@media (min-width: $bp-bart) {
+					border-right: 1px solid rgba(134, 188, 37, 1);
+				}
+			}
+		}
+
+		.tableData[data-type="currency"] {
+			text-align: right;
+
+			[dir="rtl"] & {
+				text-align: left;
+			}
+		}
+
+		.tableData[data-title]:before {
+			content: attr(data-title);
+			float: left;
+			[dir="rtl"] & {
+				content: none;
+			}
+			font-size: 0.8em;
+			color: rgba(0, 0, 0, 0.54);
+
+			@media (min-width: $bp-lisa) {
+				font-size: 0.9em;
+			}
+
+			@media (min-width: $bp-bart) {
+				// Don’t show data-title labels
+				content: none;
+			}
+		}
+
+		[dir="rtl"] & {
+			.tableData[data-title]:after {
+				content: attr(data-title);
+				float: right;
+				font-size: 0.8em;
+				color: rgba(0, 0, 0, 0.54);
+
+				@media (min-width: $bp-lisa) {
+					font-size: 0.9em;
+				}
+
+				@media (min-width: $bp-bart) {
+					// Don’t show data-title labels
+					content: none;
 				}
 			}
 		}

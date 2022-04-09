@@ -858,7 +858,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"name"
+																)}
+															>
 																{
 																	sport.name[
 																		language
@@ -871,7 +875,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"category"
+																)}
+															>
 																{
 																	sport
 																		.categoryName[
@@ -885,7 +893,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"type"
+																)}
+															>
 																{
 																	sport
 																		.typeName[
@@ -899,7 +911,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"price"
+																)}
+															>
 																{sport.price}$
 															</p>
 														</li>
@@ -910,7 +926,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"discount"
+																	)}
+																>
 																	-{" "}
 																	{
 																		sport.discount
@@ -924,7 +944,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"penalty"
+																)}
+															>
 																+{" "}
 																{
 																	sport.penaltyFees
@@ -939,7 +963,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"total"
+																	)}
+																>
 																	{
 																		sport.total
 																	}
@@ -1125,6 +1153,169 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 					)}
 				</div>
 			)}
+
+			{/* {firstTimeRender.current === true && (
+				<div className={styles.tableContainer}>
+					{withDiscountList?.length > 0 && (
+						<table className={styles.responsive_table}>
+							<caption>{t("discountSports")}</caption>
+							<thead>
+								<tr className={styles.tableRow}>
+									<th
+										className={styles.tableHead}
+										scope="col"
+									></th>
+									<div
+										className={styles.sportsHeaderContainer}
+									>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("name")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("category")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("type")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("price")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("discount")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("penalty")}
+										</th>
+										<th
+											className={styles.tableHead}
+											scope="col"
+										>
+											{t("total")}
+										</th>
+									</div>
+								</tr>
+							</thead>
+							<tbody>
+								{withDiscountList?.map((item, index) => (
+									<tr className={styles.tableRow} key={index}>
+										<th
+											className={styles.tableHead}
+											scope="row"
+										>
+											{item?.name}
+										</th>
+										{item?.sports?.map(
+											(sport, sportIndex) => (
+												<div
+													key={sportIndex}
+													className={
+														styles.sportsBodyContainer
+													}
+												>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t("name")}
+													>
+														{sport.name[language]}
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t(
+															"category"
+														)}
+													>
+														{
+															sport.categoryName[
+																language
+															]
+														}
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t("type")}
+													>
+														{
+															sport.typeName[
+																language
+															]
+														}
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t("price")}
+														data-type="currency"
+													>
+														{sport.price} $
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t(
+															"discount"
+														)}
+													>
+														- {sport.discount} %
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t(
+															"penalty"
+														)}
+														data-type="currency"
+													>
+														+ {sport.penaltyFees} $
+													</td>
+													<td
+														className={
+															styles.tableData
+														}
+														data-title={t("total")}
+														data-type="currency"
+													>
+														{sport.total} $
+													</td>
+												</div>
+											)
+										)}
+									</tr>
+								))}
+							</tbody>
+						</table>
+					)}
+				</div>
+			)} */}
+
+
+
 		</div>
 	);
 }
