@@ -678,6 +678,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 											>
 												{item.name}
 											</p>
+
 											{item.sports?.map(
 												(sport, index) => (
 													<ul
@@ -691,7 +692,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"name"
+																)}
+															>
 																{
 																	sport.name[
 																		language
@@ -704,7 +709,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"category"
+																)}
+															>
 																{
 																	sport
 																		.categoryName[
@@ -718,7 +727,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"type"
+																)}
+															>
 																{
 																	sport
 																		.typeName[
@@ -732,7 +745,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"price"
+																)}
+															>
 																{sport.price}$
 															</p>
 														</li>
@@ -743,7 +760,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"discount"
+																	)}
+																>
 																	-{" "}
 																	{
 																		sport.discount
@@ -757,7 +778,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"penalty"
+																)}
+															>
 																+{" "}
 																{
 																	sport.penaltyFees
@@ -772,7 +797,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"total"
+																	)}
+																>
 																	{
 																		sport.total
 																	}
@@ -1039,6 +1068,7 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 											>
 												{item.name}
 											</p>
+
 											{item.sports?.map(
 												(sport, index) => (
 													<ul
@@ -1052,7 +1082,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"name"
+																)}
+															>
 																{
 																	sport.name[
 																		language
@@ -1065,7 +1099,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"category"
+																)}
+															>
 																{
 																	sport
 																		.categoryName[
@@ -1079,7 +1117,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"type"
+																)}
+															>
 																{
 																	sport
 																		.typeName[
@@ -1093,11 +1135,14 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"price"
+																)}
+															>
 																{sport.price}$
 															</p>
 														</li>
-
 														{sport.discount >
 															-1 && (
 															<li
@@ -1105,7 +1150,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"discount"
+																	)}
+																>
 																	-{" "}
 																	{
 																		sport.discount
@@ -1119,7 +1168,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																styles.data_cell
 															}
 														>
-															<p>
+															<p
+																data-title={t(
+																	"penalty"
+																)}
+															>
 																+{" "}
 																{
 																	sport.penaltyFees
@@ -1134,7 +1187,11 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 																	styles.data_cell
 																}
 															>
-																<p>
+																<p
+																	data-title={t(
+																		"total"
+																	)}
+																>
 																	{
 																		sport.total
 																	}
@@ -1313,9 +1370,6 @@ function CalculatedResult({ players = [], setHandler, language = "ar" }) {
 					)}
 				</div>
 			)} */}
-
-
-
 		</div>
 	);
 }
