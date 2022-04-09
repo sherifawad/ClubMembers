@@ -4,6 +4,7 @@ $items: 3;
 $transition-duration: 0.5s;
 $transition-delay: 0.05s;
 $hamburger-menu-margin: 25px;
+$displayItems: inline-block;
 
 .container {
 	display: grid;
@@ -59,6 +60,10 @@ $hamburger-menu-margin: 25px;
 						margin-top: 0;
 						opacity: 1;
 						transform: scaleY(1);
+						&:last-of-type {
+							display: $displayItems;
+						}
+
 						transition: $transition-duration, opacity 0.1s;
 
 						// Setting delays for the nav items in open transition
@@ -169,7 +174,7 @@ $hamburger-menu-margin: 25px;
 			float: right;
 		}
 		position: relative;
-		display: inline-block;
+		display: $displayItems;
 		clear: both;
 		color: transparent;
 		font-size: 14px;
@@ -179,6 +184,11 @@ $hamburger-menu-margin: 25px;
 		text-transform: uppercase;
 		white-space: nowrap;
 		transform: scaleY(0.2);
+
+		&:last-of-type {
+			display: none;
+		}
+
 		transition: $transition-duration, opacity 1s;
 
 		//Set delays for the nav items in close transition
@@ -208,24 +218,24 @@ $hamburger-menu-margin: 25px;
 			}
 		}
 
-		// Adjusting width for second line
-		&:nth-child(3) {
-			letter-spacing: -6px;
-			[dir="rtl"] & {
-				letter-spacing: -6px;
-			}
-		}
+		// // Adjusting width for second line
+		// &:nth-child(3) {
+		// 	letter-spacing: -6px;
+		// 	[dir="rtl"] & {
+		// 		letter-spacing: -6px;
+		// 	}
+		// }
 
-		// Adjusting the fourth element onwards
-		&:nth-child(n + 4) {
-			letter-spacing: -8px;
-			margin-top: -7px;
-			[dir="rtl"] & {
-				letter-spacing: -5px;
-				margin-top: -5px;
-			}
-			opacity: 0;
-		}
+		// // Adjusting the fourth element onwards
+		// &:nth-child(n + 4) {
+		// 	letter-spacing: -8px;
+		// 	margin-top: -7px;
+		// 	[dir="rtl"] & {
+		// 		letter-spacing: -5px;
+		// 		margin-top: -5px;
+		// 	}
+		// 	opacity: 0;
+		// }
 
 		//getting lines for the hamburger menu icon
 		&:before {
@@ -244,12 +254,14 @@ $hamburger-menu-margin: 25px;
 
 .itemLink {
 	font-size: var(--fs-700);
-	display: block;
+	display: $displayItems;
 	cursor: pointer;
 }
 
 .itemLink:hover {
-	color: gray;
+	@include mq(small) {
+		color: gray;
+	}
 }
 .itemLink:active {
 	color: black;
